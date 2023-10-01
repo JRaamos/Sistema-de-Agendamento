@@ -1,0 +1,70 @@
+.container-agendamentos {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+  height: 98vh;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.section-mensagem {
+  align-items: center;
+  background: #290e33;
+  border-radius: 23px;
+  display: flex;
+  justify-content: center;
+  margin: 15px;
+  padding: 8px;
+  width: 310px;
+}
+
+.section-name {
+  background: #161347;
+  border-radius: 23px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 260px;
+}
+
+.section-mensagem-usuario {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+  width: 310px;
+}
+
+.rodape {
+  align-items: center;
+  bottom: 10px;
+  display: flex;
+  justify-content: center;
+  left: 0;
+  position: fixed;
+  right: 0;
+  width: 100%;
+}
+
+.input-usuario {
+  background: #161347;
+  border: none;
+  border-radius: 15px;
+  flex-grow: 1;
+  font-size: 20px;
+  height: 35px;
+  margin-right: 10px;
+  padding: 5px 15px;
+  width: 85%;
+}
+
+.button-usuario {
+  background: #5b5d74;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 18px;
+  height: 45px;
+  padding: 5px;
+  width: 80px;
+}
