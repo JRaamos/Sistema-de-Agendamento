@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import fetchAPi from "../types/fetchApi";
+import fetchAPi from "../utils/fetchApi";
 import "../styles/services.css";
 function Services() {
   const [services, setServices] = useState([]);
@@ -19,7 +19,7 @@ function Services() {
               <label className="label-services">
                 <input
                   className="input-services"
-                  type="radio"
+                  type="checkbox"
                   name="services"
                   value={service.services}
                 />

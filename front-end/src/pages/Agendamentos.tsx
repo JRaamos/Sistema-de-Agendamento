@@ -2,23 +2,24 @@ import React, { useEffect, useRef, useState } from "react";
 import messagensInicials from "../utils/mensagens";
 import "../styles/agendamentos.css";
 import Services from "../components/Services";
+import Welcome from "../components/Welcome";
 
 function Agendamentos() {
   const [name, setName] = useState("");
+  const [values, setValues] = useState({
+    name: "",
+    phone: "",
+    date: "",
+    hour: "",
+    services: "",
+  });
   const [isName, setIsName] = useState(false);
   const [disableButton, setDisableButton] = useState(true);
   const [text, setText] = useState("");
   const [text2, setText2] = useState("");
   const [istext, setIsText] = useState(false);
+  const [isServices, setIsServices] = useState(false);
 
-  const nameAndButton = (name: string) => {
-    setName(name);
-    if (name.length > 3) {
-      setDisableButton(false);
-    } else {
-      setDisableButton(true);
-    }
-  };
   useEffect(() => {
     const textoArray1 = messagensInicials.mensagem01.split("");
     const textoArray2 = messagensInicials.mensagem02.split("");
@@ -58,30 +59,35 @@ function Agendamentos() {
       {isName && (
         <section className="section-mensagem-usuario">
           <section className="section-name">
-            <p>{name}</p>
+            <p>{values.name}</p>
           </section>
         </section>
       )}
-      {isName && (
-        <div>
-          <section className="section-mensagem">
-            <p>{messagensInicials.mensagem03(name)}</p>
-          </section>
-
-          <section className="section-mensagem">
-            <p>{messagensInicials.mensagem04}</p>
-          </section>
+      <div>
+        {isName && (
+          <div>
+            {" "}
+            {<Welcome name={values.name} setIsServices={setIsServices} />}
+          </div>
+        )}
+        {isServices && (
           <section className="section-mensagem msg-bottom">
             <p>{<Services />}</p>
           </section>
-        </div>
-      )}
+        )}
+      </div>
       <form className="rodape">
         <label htmlFor="input-usuario">
           <input
             className="input-usuario"
+            value={name}
             onChange={({ target }) => {
-              nameAndButton(target.value);
+              setName(target.value);
+              if (target.value.length > 3) {
+                setDisableButton(false);
+              } else {
+                setDisableButton(true);
+              }
             }}
             type="text"
           />
@@ -89,7 +95,13 @@ function Agendamentos() {
         <button
           type="button"
           className="button-usuario"
-          onClick={() => setIsName(true)}
+          onClick={() => {
+            if (!values.name) {
+              setIsName(true);
+              setValues({ ...values, name });
+              setName("");
+            }
+          }}
           disabled={disableButton}
         >
           Enviar
