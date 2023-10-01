@@ -1,8 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import fetchAPi from "../utils/fetchApi";
 import "../styles/services.css";
+import AgendamentosContext from "../context/AgendamentosContext";
 function Services() {
   const [services, setServices] = useState([]);
+  const { servicesSelected, setServicesSelected }: any =
+    useContext(AgendamentosContext);
+
   useEffect(() => {
     const fecthData = async () => {
       const response = await fetchAPi();
@@ -21,6 +25,11 @@ function Services() {
                   className="input-services"
                   type="checkbox"
                   name="services"
+                  onChange={({ target }) => {
+                    if (target.checked) {
+                      setServicesSelected([...servicesSelected, target.value]);
+                    }
+                  }}
                   value={service.services}
                 />
                 {service.services}

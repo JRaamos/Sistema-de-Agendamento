@@ -1,25 +1,20 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import messagensInicials from "../utils/mensagens";
 import "../styles/agendamentos.css";
 import Services from "../components/Services";
 import Welcome from "../components/Welcome";
+import AgendamentosContext from "../context/AgendamentosContext";
 
 function Agendamentos() {
   const [name, setName] = useState("");
-  const [values, setValues] = useState({
-    name: "",
-    phone: "",
-    date: "",
-    hour: "",
-    services: "",
-  });
   const [isName, setIsName] = useState(false);
   const [disableButton, setDisableButton] = useState(true);
   const [text, setText] = useState("");
   const [text2, setText2] = useState("");
   const [istext, setIsText] = useState(false);
-  const [isServices, setIsServices] = useState(false);
 
+  const { values, setValues, isServices, setIsServices }: any =
+    useContext(AgendamentosContext);
   useEffect(() => {
     const textoArray1 = messagensInicials.mensagem01.split("");
     const textoArray2 = messagensInicials.mensagem02.split("");
@@ -42,6 +37,22 @@ function Agendamentos() {
     return () => clearInterval(typingInterval);
   }, []);
 
+  const renderName = () => {
+    if (!values.name) {
+      setIsName(true);
+      setValues({ ...values, name });
+      setName("");
+    }
+  };
+  const randonOnchange = (target: EventTarget & HTMLInputElement) => {
+    setName(target.value);
+    if (target.value.length > 3) {
+      setDisableButton(false);
+    } else {
+      setDisableButton(true);
+    }
+  };
+  const servicesSelected = () => {};
   return (
     <div className="container-agendamentos">
       <div>
@@ -64,12 +75,7 @@ function Agendamentos() {
         </section>
       )}
       <div>
-        {isName && (
-          <div>
-            {" "}
-            {<Welcome name={values.name} setIsServices={setIsServices} />}
-          </div>
-        )}
+        {isName && <div>{<Welcome />}</div>}
         {isServices && (
           <section className="section-mensagem msg-bottom">
             <p>{<Services />}</p>
@@ -82,12 +88,7 @@ function Agendamentos() {
             className="input-usuario"
             value={name}
             onChange={({ target }) => {
-              setName(target.value);
-              if (target.value.length > 3) {
-                setDisableButton(false);
-              } else {
-                setDisableButton(true);
-              }
+              randonOnchange(target);
             }}
             type="text"
           />
@@ -96,11 +97,7 @@ function Agendamentos() {
           type="button"
           className="button-usuario"
           onClick={() => {
-            if (!values.name) {
-              setIsName(true);
-              setValues({ ...values, name });
-              setName("");
-            }
+            renderName();
           }}
           disabled={disableButton}
         >
