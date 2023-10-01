@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import messagensInicials from "../utils/mensagens";
 import "../styles/agendamentos.css";
+import Services from "../components/Services";
 
 function Agendamentos() {
   const [name, setName] = useState("");
@@ -10,7 +11,6 @@ function Agendamentos() {
   const [text2, setText2] = useState("");
   const [istext, setIsText] = useState(false);
 
-  const textName = `Seja bem vindo ${name} a Stylus Barbearia`;
   const nameAndButton = (name: string) => {
     setName(name);
     if (name.length > 3) {
@@ -70,6 +70,9 @@ function Agendamentos() {
 
           <section className="section-mensagem">
             <p>{messagensInicials.mensagem04}</p>
+          </section>
+          <section className="section-mensagem msg-bottom">
+            <p>{<Services />}</p>
           </section>
         </div>
       )}
