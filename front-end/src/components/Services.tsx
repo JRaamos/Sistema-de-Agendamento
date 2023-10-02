@@ -1,8 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import fetchAPi from "../utils/fetchApi";
 import "../styles/services.css";
+import AgendamentosContext from "../context/AgendamentosContext";
 function Services() {
   const [services, setServices] = useState([]);
+  const {
+    servicesSelected,
+    setServicesSelected,
+    setDisableButton,
+    setIsServicesSelected,
+  }: any = useContext(AgendamentosContext);
+
   useEffect(() => {
     const fecthData = async () => {
       const response = await fetchAPi();
@@ -10,6 +18,22 @@ function Services() {
     };
     fecthData();
   }, []);
+  const renderServices = (target: any) => {
+    if (target.checked) {
+      setServicesSelected([...servicesSelected, target.value]);
+      setDisableButton(false);
+      setIsServicesSelected(true);
+    } else {
+      setServicesSelected(
+        servicesSelected.filter((service: any) => service !== target.value)
+      );
+    }
+
+    if (!target.checked && servicesSelected.length === 1) {
+      setDisableButton(true);
+      setIsServicesSelected(false);
+    }
+  };
   return (
     <div>
       <div>
@@ -21,6 +45,9 @@ function Services() {
                   className="input-services"
                   type="checkbox"
                   name="services"
+                  onChange={({ target }) => {
+                    renderServices(target);
+                  }}
                   value={service.services}
                 />
                 {service.services}

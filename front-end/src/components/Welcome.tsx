@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import messagensInicials from "../utils/mensagens";
+import AgendamentosContext from "../context/AgendamentosContext";
 
-function Welcome({ name, setIsServices }) {
+function Welcome() {
   const [text, setText] = useState("");
   const [text2, setText2] = useState("");
   const [istext, setIsText] = useState(false);
-  const mensagem = messagensInicials.mensagem03(name);
+  const { values, setIsServices }: any = useContext(AgendamentosContext);
+  const mensagem = messagensInicials.mensagem03(values.name);
 
   useEffect(() => {
     const textoArray1 = mensagem.split("");
