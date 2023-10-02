@@ -6,8 +6,8 @@ function Welcome() {
   const [text, setText] = useState("");
   const [text2, setText2] = useState("");
   const [istext, setIsText] = useState(false);
-  const { name, setIsServices }: any = useContext(AgendamentosContext);
-  const mensagem = messagensInicials.mensagem03(name);
+  const { values, setIsServices }: any = useContext(AgendamentosContext);
+  const mensagem = messagensInicials.mensagem03(values.name);
 
   useEffect(() => {
     const textoArray1 = mensagem.split("");

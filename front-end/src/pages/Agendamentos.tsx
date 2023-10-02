@@ -4,17 +4,25 @@ import "../styles/agendamentos.css";
 import Services from "../components/Services";
 import Welcome from "../components/Welcome";
 import AgendamentosContext from "../context/AgendamentosContext";
+import MensagemDate from "../components/MensagemDate";
 
 function Agendamentos() {
-  const [name, setName] = useState("");
+  const [inputValue, setInputValue] = useState("");
   const [isName, setIsName] = useState(false);
-  const [disableButton, setDisableButton] = useState(true);
   const [text, setText] = useState("");
   const [text2, setText2] = useState("");
   const [istext, setIsText] = useState(false);
+  const [isDate, setIsDate] = useState(false);
+  const {
+    values,
+    setValues,
+    isServices,
+    servicesSelected,
+    disableButton,
+    isServicesSelected,
+    setDisableButton,
+  }: any = useContext(AgendamentosContext);
 
-  const { values, setValues, isServices, setIsServices }: any =
-    useContext(AgendamentosContext);
   useEffect(() => {
     const textoArray1 = messagensInicials.mensagem01.split("");
     const textoArray2 = messagensInicials.mensagem02.split("");
@@ -40,19 +48,25 @@ function Agendamentos() {
   const renderName = () => {
     if (!values.name) {
       setIsName(true);
-      setValues({ ...values, name });
-      setName("");
+      setValues({ ...values, name: inputValue });
+      setInputValue("");
+      setDisableButton(true);
+    }
+    if (values.name && !values.services) {
+      setValues({ ...values, services: servicesSelected });
+      setInputValue("");
+      setDisableButton(true);
+      setIsDate(true);
     }
   };
   const randonOnchange = (target: EventTarget & HTMLInputElement) => {
-    setName(target.value);
+    setInputValue(target.value);
     if (target.value.length > 3) {
       setDisableButton(false);
     } else {
       setDisableButton(true);
     }
   };
-  const servicesSelected = () => {};
   return (
     <div className="container-agendamentos">
       <div>
@@ -77,16 +91,50 @@ function Agendamentos() {
       <div>
         {isName && <div>{<Welcome />}</div>}
         {isServices && (
-          <section className="section-mensagem msg-bottom">
-            <p>{<Services />}</p>
+          <section
+            className={
+              isServicesSelected
+                ? "section-mensagem"
+                : "section-mensagem msg-bottom"
+            }
+          >
+            <section>{<Services />}</section>
           </section>
         )}
       </div>
+      {isServicesSelected && (
+        <div>
+          {servicesSelected && (
+            <div className="section-mensagem-usuario ">
+              <section
+                className={
+                  isDate
+                    ? "section-name msg-selected"
+                    : "section-name msg-selected msg-bottom"
+                }
+              >
+                {servicesSelected.map((service: any) => (
+                  <p key={service} className="services-selected">
+                    {service}
+                  </p>
+                ))}
+              </section>
+            </div>
+          )}
+        </div>
+      )}
+      {isDate && (
+        <div>
+          <section className="section-mensagem msg-bottom">
+            <section>{<MensagemDate />}</section>
+          </section>
+        </div>
+      )}
       <form className="rodape">
         <label htmlFor="input-usuario">
           <input
             className="input-usuario"
-            value={name}
+            value={inputValue}
             onChange={({ target }) => {
               randonOnchange(target);
             }}

@@ -7,6 +7,8 @@ type UseProviderProps = {
 function AgendamentosProvider({ children }: UseProviderProps) {
   const [servicesSelected, setServicesSelected] = useState([]);
   const [isServices, setIsServices] = useState(false);
+  const [disableButton, setDisableButton] = useState(true);
+  const [isServicesSelected, setIsServicesSelected] = useState(false);
   const [values, setValues] = useState({
     name: "",
     phone: "",
@@ -18,12 +20,16 @@ function AgendamentosProvider({ children }: UseProviderProps) {
   return (
     <AgendamentosContext.Provider
       value={{
-        servicesSelected,
-        setServicesSelected,
         values,
         setValues,
         isServices,
         setIsServices,
+        disableButton,
+        setDisableButton,
+        servicesSelected,
+        isServicesSelected,
+        setServicesSelected,
+        setIsServicesSelected,
       }}
     >
       {children}
