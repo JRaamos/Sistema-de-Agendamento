@@ -2,8 +2,12 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Agendamentos from "./pages/Agendamentos";
 import AgendamentosProvider from "./context/AgendamentosProvider";
+import { useEffect } from "react";
 
 function App() {
+  useEffect(() => {
+    document.title = "Stylu's!";
+  }, []);
   return (
     <div>
       <AgendamentosProvider>
