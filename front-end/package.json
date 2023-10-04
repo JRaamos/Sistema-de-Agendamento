@@ -7,6 +7,7 @@
   },
   "scripts": {
     "dev": "vite --open",
+    "start": "react-scripts start",
     "build": "tsc && vite build",
     "lint": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json . --ext .js,.jsx,.ts,.tsx",
     "preview": "vite preview"
@@ -16,7 +17,6 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.16.0",
     "stylelint-order": "5.0.0"
-
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
