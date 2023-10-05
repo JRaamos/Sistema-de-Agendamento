@@ -5,6 +5,7 @@ import Services from "../components/Services";
 import Welcome from "../components/Welcome";
 import AgendamentosContext from "../context/AgendamentosContext";
 import MensagemDate from "../components/MensagemDate";
+import Calendar from "../components/Calendario";
 
 function Agendamentos() {
   const [inputValue, setInputValue] = useState("");
@@ -126,9 +127,10 @@ function Agendamentos() {
       )}
       {isDate && (
         <div>
-          <section className="section-mensagem msg-bottom">
+          <section className="section-mensagem ">
             <section>{<MensagemDate />}</section>
           </section>
+          <section className="msg-bottom">{<Calendar />}</section>
         </div>
       )}
       <form className="rodape">
