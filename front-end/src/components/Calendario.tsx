@@ -5,9 +5,22 @@ import interactionPlugin from "@fullcalendar/interaction";
 import moment from "moment";
 import ptBrLocale from "@fullcalendar/core/locales/pt-br";
 import "../styles/calendario.css";
+
 const Calendar = () => {
   const calendarRef = useRef(null);
   moment.locale("pt-br");
+
+  const [selectedDate, setSelectedDate] = useState(null); // Estado para armazenar a data selecionada
+
+  // Função para lidar com a seleção de datas
+  const handleDateClick = (info: any) => {
+    const selectedInfo: any = {
+      date: info.dateStr, // Data selecionada no formato "YYYY-MM-DD"
+      dayName: moment(info.date).format("dddd"), // Nome do dia (ex: "segunda-feira")
+      month: moment(info.date).format("MMMM"), // Nome do mês (ex: "outubro")
+    };
+    setSelectedDate(selectedInfo);
+  };
 
   return (
     <div className="calendar-container">
@@ -17,6 +30,8 @@ const Calendar = () => {
         initialView="dayGridMonth"
         locale={ptBrLocale}
         headerToolbar={false}
+        dateClick={handleDateClick} // Configurar a função de clique na data
+        selectable={true} // Permitir seleção de datas
       />
     </div>
   );
