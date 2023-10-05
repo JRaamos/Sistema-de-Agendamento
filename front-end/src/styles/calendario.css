@@ -1,0 +1,13 @@
+/* CSS Responsivo para Telas de Celular */
+.calendar-container {
+  height: 200px; /* Preencher a altura da tela */
+  margin: 0 auto;
+  margin-bottom: 120px;
+  width: 310px; /* Preencher a largura da tela */
+}
+
+/* Aumentar o tamanho da fonte para nomes dos dias e datas em telas pequenas */
+.fc-scrollgrid-sync-inner {
+  font-size: 16px; /* Ajuste o tamanho da fonte conforme necessário */
+  text-align: center;
+}
