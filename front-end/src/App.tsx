@@ -4,7 +4,12 @@ import Agendamentos from "./pages/Agendamentos";
 import AgendamentosProvider from "./context/AgendamentosProvider";
 import Calendar from "./components/Calendario";
 
+import { useEffect } from "react";
+
 function App() {
+  useEffect(() => {
+    document.title = "Stylu's!";
+  }, []);
   return (
     <div>
       <AgendamentosProvider>

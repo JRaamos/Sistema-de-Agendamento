@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "vite --open",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "lint": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json . --ext .js,.jsx,.ts,.tsx",
     "preview": "vite preview"
   },

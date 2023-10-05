@@ -18,6 +18,7 @@ function Agendamentos() {
     values,
     setValues,
     isServices,
+    setIsServices,
     servicesSelected,
     disableButton,
     isServicesSelected,
@@ -148,6 +149,7 @@ function Agendamentos() {
           className="button-usuario"
           onClick={() => {
             renderName();
+            setIsServices(false);
           }}
           disabled={disableButton}
         >

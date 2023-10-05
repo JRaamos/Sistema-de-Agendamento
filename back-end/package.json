@@ -5,7 +5,8 @@
   "main": "src/server.js",
   "scripts": {
     "dev": "nodemon src/server.js",
-    "createstart": "npx sequelize-cli db:create && npx sequelize-cli db:migrate",
+    "start": "node .",
+    "prestart": "npx sequelize-cli db:create && npx sequelize-cli db:migrate",
     "drop": "npx sequelize-cli db:drop",
     "seed": "npx sequelize-cli db:seed:all",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -14,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "4.18.2",
     "express-async-errors": "3.1.1",
     "mysql2": "2.1.0",
