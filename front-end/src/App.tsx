@@ -3,7 +3,6 @@ import Home from "./pages/Home";
 import Agendamentos from "./pages/Agendamentos";
 import AgendamentosProvider from "./context/AgendamentosProvider";
 import Calendar from "./components/Calendario";
-
 import { useEffect } from "react";
 
 function App() {
