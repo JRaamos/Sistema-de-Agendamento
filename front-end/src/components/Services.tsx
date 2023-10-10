@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import fetchAPi from "../utils/fetchApi";
 import "../styles/services.css";
 import AgendamentosContext from "../context/AgendamentosContext";
+import services from "../utils/services.json";
+
 function Services() {
-  const [services, setServices] = useState([]);
   const {
     servicesSelected,
     setServicesSelected,
@@ -11,13 +11,6 @@ function Services() {
     setIsServicesSelected,
   }: any = useContext(AgendamentosContext);
 
-  useEffect(() => {
-    const fecthData = async () => {
-      const response = await fetchAPi();
-      setServices(response);
-    };
-    fecthData();
-  }, []);
   const renderServices = (target: any) => {
     if (target.checked) {
       setServicesSelected([...servicesSelected, target.value]);
@@ -57,7 +50,7 @@ function Services() {
               {service.services === "Pigmentação" ? (
                 <p className="pigmentacao">{`A partir de R$ ${service.price}`}</p>
               ) : (
-                <p>{`R$ ${service.price}`}</p>
+                <p>{`R$ ${service.price},00`}</p>
               )}
               {service.duration !== null ? (
                 <p>{`${service.duration}min`}</p>

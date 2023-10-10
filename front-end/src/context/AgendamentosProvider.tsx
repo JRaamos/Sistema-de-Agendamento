@@ -9,6 +9,8 @@ function AgendamentosProvider({ children }: UseProviderProps) {
   const [isServices, setIsServices] = useState(false);
   const [disableButton, setDisableButton] = useState(true);
   const [isServicesSelected, setIsServicesSelected] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(null);
+
   const [values, setValues] = useState({
     name: "",
     phone: "",
@@ -30,6 +32,8 @@ function AgendamentosProvider({ children }: UseProviderProps) {
         isServicesSelected,
         setServicesSelected,
         setIsServicesSelected,
+        selectedDate,
+        setSelectedDate,
       }}
     >
       {children}

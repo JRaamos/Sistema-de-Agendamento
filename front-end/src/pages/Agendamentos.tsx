@@ -6,6 +6,7 @@ import Welcome from "../components/Welcome";
 import AgendamentosContext from "../context/AgendamentosContext";
 import MensagemDate from "../components/MensagemDate";
 import Calendar from "../components/Calendario";
+import AppointmentTimes from "../components/AppointmentTimes";
 
 function Agendamentos() {
   const [inputValue, setInputValue] = useState("");
@@ -23,6 +24,7 @@ function Agendamentos() {
     disableButton,
     isServicesSelected,
     setDisableButton,
+    selectedDate,
   }: any = useContext(AgendamentosContext);
 
   useEffect(() => {
@@ -130,7 +132,19 @@ function Agendamentos() {
           <section className="section-mensagem ">
             <section>{<MensagemDate />}</section>
           </section>
-          <section className="msg-bottom">{<Calendar />}</section>
+          <section>{<Calendar />}</section>
+        </div>
+      )}
+      {selectedDate && (
+        <div className="hours">
+          <section className="msg-bottom">
+            {
+              <AppointmentTimes
+                selectedDate={selectedDate}
+                selectedServices={servicesSelected}
+              />
+            }
+          </section>
         </div>
       )}
       <form className="rodape">

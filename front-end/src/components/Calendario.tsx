@@ -1,25 +1,25 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import moment from "moment";
 import ptBrLocale from "@fullcalendar/core/locales/pt-br";
 import "../styles/calendario.css";
+import AgendamentosContext from "../context/AgendamentosContext";
 
 const Calendar = () => {
+  const { setSelectedDate, setValues } = useContext(AgendamentosContext);
   const calendarRef = useRef(null);
   moment.locale("pt-br");
-
-  const [selectedDate, setSelectedDate] = useState(null); // Estado para armazenar a data selecionada
 
   // Função para lidar com a seleção de datas
   const handleDateClick = (info: any) => {
     const selectedInfo: any = {
-      date: info.dateStr, // Data selecionada no formato "YYYY-MM-DD"
-      dayName: moment(info.date).format("dddd"), // Nome do dia (ex: "segunda-feira")
-      month: moment(info.date).format("MMMM"), // Nome do mês (ex: "outubro")
+      // Data selecionada no formato "YYYY-MM-DD"
+      date: info.dateStr,
     };
     setSelectedDate(selectedInfo);
+    setValues({ ...setValues, date: selectedInfo.date });
   };
 
   return (
@@ -30,8 +30,8 @@ const Calendar = () => {
         initialView="dayGridMonth"
         locale={ptBrLocale}
         headerToolbar={false}
-        dateClick={handleDateClick} // Configurar a função de clique na data
-        selectable={true} // Permitir seleção de datas
+        dateClick={handleDateClick}
+        selectable={true}
       />
     </div>
   );
