@@ -3,7 +3,6 @@ import Home from "./pages/Home";
 import Agendamentos from "./pages/Agendamentos";
 import AgendamentosProvider from "./context/AgendamentosProvider";
 import { useEffect } from "react";
-import DateRenderer from "./components/testenado";
 
 function App() {
   useEffect(() => {

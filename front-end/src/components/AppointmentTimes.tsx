@@ -17,7 +17,7 @@ const AppointmentTimes = ({ selectedDate, selectedServices }) => {
       return;
     }
 
-    const dayOfWeek = dayjs(selectedDate.date).format("dddd");
+    const dayOfWeek = dayjs(selectedDate).format("dddd");
 
     const totalDuration = selectedServices.reduce((acc, selectedService) => {
       const serviceInfo = services.find(
@@ -30,11 +30,11 @@ const AppointmentTimes = ({ selectedDate, selectedServices }) => {
       return acc;
     }, 0);
 
-    const startTime = moment(selectedDate.date).set({ hour: 7, minute: 0 });
-    let endTime = moment(selectedDate.date).set({ hour: 20, minute: 0 });
+    const startTime = moment(selectedDate).set({ hour: 7, minute: 0 });
+    let endTime = moment(selectedDate).set({ hour: 20, minute: 0 });
 
     if (dayOfWeek === "Saturday") {
-      endTime = moment(selectedDate.date).set({ hour: 19, minute: 0 });
+      endTime = moment(selectedDate).set({ hour: 19, minute: 0 });
     }
 
     const times = [];

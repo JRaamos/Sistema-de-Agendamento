@@ -132,9 +132,9 @@ function Agendamentos() {
           <section className="section-mensagem ">
             <section>{<MensagemDate />}</section>
           </section>
-          <section>{<Calendar />}</section>
         </div>
       )}
+      <section>{<Calendar />}</section>
       {selectedDate && (
         <div className="hours">
           <section className="msg-bottom">
