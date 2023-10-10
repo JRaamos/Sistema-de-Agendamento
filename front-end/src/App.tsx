@@ -15,7 +15,6 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/agendamentos" element={<Agendamentos />} />
-          <Route path="/test" element={<DateRenderer />} />
         </Routes>
       </AgendamentosProvider>
     </div>
