@@ -5,7 +5,7 @@ import Services from "../components/Services";
 import Welcome from "../components/Welcome";
 import AgendamentosContext from "../context/AgendamentosContext";
 import MensagemDate from "../components/MensagemDate";
-import Calendar from "../components/Calendario";
+import Calendar from "../components/Calendar";
 import AppointmentTimes from "../components/AppointmentTimes";
 
 function Agendamentos() {

@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import moment from "moment";
 import dayjs from "dayjs";
-
 import services from "../utils/services.json";
-
+import "../styles/appointmentTimes.css";
+import AgendamentosContext from "../context/AgendamentosContext";
 const AppointmentTimes = ({ selectedDate, selectedServices }) => {
   const [availableTimes, setAvailableTimes] = useState([]);
   const [bookedTimes, setBookedTimes] = useState([]);
   const [selectedTimes, setSelectedTimes] = useState([]);
+  const { values, setValues } = useContext(AgendamentosContext);
 
   // Função para calcular os horários disponíveis com base nos serviços selecionados e na data
   const calculateAvailableTimes = () => {
@@ -50,10 +51,9 @@ const AppointmentTimes = ({ selectedDate, selectedServices }) => {
         }
       }
     }
-    console.log(dayOfWeek);
 
     setAvailableTimes(times);
-    if (dayOfWeek === "Tuesday") {
+    if (dayOfWeek === "Tuesday" || dayOfWeek === "Sunday") {
       setAvailableTimes(["Sem horarios disponiveis"]);
     }
   };
@@ -61,9 +61,13 @@ const AppointmentTimes = ({ selectedDate, selectedServices }) => {
   // Função para lidar com a seleção de horários
   const handleTimeClick = (time) => {
     if (selectedTimes.includes(time)) {
-      setSelectedTimes(selectedTimes.filter((selected) => selected !== time));
+      setSelectedTimes(
+        selectedTimes.filter((selectedTime) => selectedTime !== time)
+      );
+      setValues({ ...values, hour: "" });
     } else {
-      setSelectedTimes([...selectedTimes, time]);
+      setSelectedTimes([selectedTimes, time]);
+      setValues({ ...values, hour: time });
     }
   };
 
@@ -80,6 +84,7 @@ const AppointmentTimes = ({ selectedDate, selectedServices }) => {
             <button
               onClick={() => handleTimeClick(time)}
               disabled={selectedTimes.includes(time)}
+              className="button-time"
             >
               {time}
             </button>

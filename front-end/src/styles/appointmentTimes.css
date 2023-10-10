@@ -1,0 +1,13 @@
+.hours {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 280px;
+}
+
+.button-time {
+  height: 30px;
+  margin: 5px;
+  width: 80px;
+}
