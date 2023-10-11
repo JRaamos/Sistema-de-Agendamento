@@ -5,9 +5,11 @@ import "../styles/calendar.css";
 import AgendamentosContext from "../context/AgendamentosContext";
 
 const Calendar = () => {
-  const { selectedDate, setSelectedDate } = useContext(AgendamentosContext);
+  const { selectedDate, setSelectedDate, values, setValues } =
+    useContext(AgendamentosContext);
   const currentDate = new Date();
   const [dates, setDates] = useState([]);
+  const [isSelected, setIsSelected] = useState(false);
 
   useEffect(() => {
     const dayAbbreviations = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
@@ -17,7 +19,7 @@ const Calendar = () => {
       const date = addDays(currentDate, i);
       const dayIndex = date.getDay();
       const formattedDateName = dayAbbreviations[dayIndex];
-      const formattedDate = format(date, "dd/MM/yy", {
+      const formattedDate = format(date, "MM/dd/yyyy", {
         locale: ptBR,
       });
 
@@ -29,19 +31,25 @@ const Calendar = () => {
 
   const handleButtonClick = (dayInfo) => {
     setSelectedDate(dayInfo);
+    setIsSelected(true);
+    setValues({ ...values, date: dayInfo });
   };
 
   return (
-    <div className="date-container msg-bottom">
+    <div className="date-container">
       {dates.map((dateInfo, index) => (
         <button
           key={index}
-          className="dateInfor-container"
+          className={
+            isSelected && selectedDate === dateInfo.date
+              ? "selected-date"
+              : "dateInfor-container"
+          }
           onClick={() => handleButtonClick(dateInfo.date)}
         >
           <div className="rool">
             <div className="dayName">{dateInfo.dayName}</div>
-            <div className="dateInfor">{dateInfo.date.split("/")[0]}</div>
+            <div className="dateInfor">{dateInfo.date.split("/")[1]}</div>
           </div>
         </button>
       ))}

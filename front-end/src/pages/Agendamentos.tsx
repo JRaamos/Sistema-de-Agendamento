@@ -7,6 +7,12 @@ import AgendamentosContext from "../context/AgendamentosContext";
 import MensagemDate from "../components/MensagemDate";
 import Calendar from "../components/Calendar";
 import AppointmentTimes from "../components/AppointmentTimes";
+import dayjs from "dayjs";
+import { format } from "date-fns";
+
+import ptBR from "date-fns/locale/pt-BR";
+import MensagemPhone from "../components/MensagemPhone";
+import { isMatchWithOptions } from "date-fns/fp";
 
 function Agendamentos() {
   const [inputValue, setInputValue] = useState("");
@@ -15,6 +21,8 @@ function Agendamentos() {
   const [text2, setText2] = useState("");
   const [istext, setIsText] = useState(false);
   const [isDate, setIsDate] = useState(false);
+  const [agendamentos, setAgendamentos] = useState("");
+  const [isAgendamentos, setIsAgendamentos] = useState(false);
   const {
     values,
     setValues,
@@ -25,6 +33,8 @@ function Agendamentos() {
     isServicesSelected,
     setDisableButton,
     selectedDate,
+    isPhone,
+    isDates,
   }: any = useContext(AgendamentosContext);
 
   useEffect(() => {
@@ -48,7 +58,13 @@ function Agendamentos() {
 
     return () => clearInterval(typingInterval);
   }, []);
-
+  const rendleAgendamentos = () => {
+    const inputDate = new Date(values.date); // Substitua isso pela sua data
+    const formattedDate = format(inputDate, "EEE, dd 'de' MMMM 'de' yyyy", {
+      locale: ptBR,
+    });
+    setAgendamentos(`${formattedDate} as ${values.hour}`);
+  };
   const renderName = () => {
     if (!values.name) {
       setIsName(true);
@@ -109,7 +125,7 @@ function Agendamentos() {
       {isServicesSelected && (
         <div>
           {servicesSelected && (
-            <div className="section-mensagem-usuario ">
+            <div className="section-mensagem-usuario">
               <section
                 className={
                   isDate
@@ -134,10 +150,14 @@ function Agendamentos() {
           </section>
         </div>
       )}
-      <section>{<Calendar />}</section>
+      {isDates && (
+        <section className={selectedDate ? "" : "msg-bottom"}>
+          {<Calendar />}
+        </section>
+      )}
       {selectedDate && (
         <div className="hours">
-          <section className="msg-bottom">
+          <section className={isAgendamentos ? "" : "msg-bottom"}>
             {
               <AppointmentTimes
                 selectedDate={selectedDate}
@@ -145,6 +165,18 @@ function Agendamentos() {
               />
             }
           </section>
+        </div>
+      )}
+      {isAgendamentos && (
+        <div className="section-mensagem-usuario">
+          <section className="section-name msg-bottom section-agendamento">
+            {agendamentos}
+          </section>
+        </div>
+      )}
+      {isPhone && (
+        <div>
+          <section className="section-mensagem">{<MensagemPhone />}</section>
         </div>
       )}
       <form className="rodape">
@@ -161,9 +193,15 @@ function Agendamentos() {
         <button
           type="button"
           className="button-usuario"
-          onClick={() => {
+          onClick={(e) => {
+            e.preventDefault();
             renderName();
             setIsServices(false);
+            if (values.date) {
+              rendleAgendamentos();
+              setDisableButton(false);
+              setIsAgendamentos(true);
+            }
           }}
           disabled={disableButton}
         >

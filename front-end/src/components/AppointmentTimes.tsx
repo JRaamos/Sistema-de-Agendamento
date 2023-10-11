@@ -8,7 +8,8 @@ const AppointmentTimes = ({ selectedDate, selectedServices }) => {
   const [availableTimes, setAvailableTimes] = useState([]);
   const [bookedTimes, setBookedTimes] = useState([]);
   const [selectedTimes, setSelectedTimes] = useState([]);
-  const { values, setValues } = useContext(AgendamentosContext);
+  const { values, setValues, setDisableButton } =
+    useContext(AgendamentosContext);
 
   // Função para calcular os horários disponíveis com base nos serviços selecionados e na data
   const calculateAvailableTimes = () => {
@@ -76,15 +77,19 @@ const AppointmentTimes = ({ selectedDate, selectedServices }) => {
   }, [selectedDate, selectedServices]);
 
   return (
-    <div>
-      <h2>Horários disponíveis:</h2>
+    <div className="hours-contain">
+      <p className="section-mensagem">Horários disponíveis:</p>
       <div className="hours">
         {availableTimes.map((time) => (
           <div key={time}>
             <button
-              onClick={() => handleTimeClick(time)}
-              disabled={selectedTimes.includes(time)}
-              className="button-time"
+              onClick={() => {
+                handleTimeClick(time);
+                setDisableButton(false);
+              }}
+              className={
+                !selectedTimes.includes(time) ? "button-time" : "hours-selected"
+              }
             >
               {time}
             </button>

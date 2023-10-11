@@ -5,6 +5,7 @@
   font-size: 20px;
   height: 98vh;
   margin: 0 auto;
+  overflow-y: scroll;
   text-align: center;
 }
 
@@ -26,6 +27,15 @@
   flex-direction: column;
   justify-content: flex-end;
   width: 275px;
+}
+
+.section-agendamento {
+  align-items: center;
+  display: flex;
+  height: 50px;
+  justify-content: center;
+  margin-top: 15px;
+  width: 298px;
 }
 
 .section-mensagem-usuario {
