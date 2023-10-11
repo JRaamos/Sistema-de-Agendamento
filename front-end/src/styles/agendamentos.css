@@ -32,10 +32,10 @@
 .section-agendamento {
   align-items: center;
   display: flex;
-  height: 50px;
   justify-content: center;
   margin-top: 15px;
-  width: 298px;
+  padding: 8px;
+  width: 299px;
 }
 
 .section-mensagem-usuario {

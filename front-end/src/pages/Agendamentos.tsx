@@ -22,6 +22,7 @@ function Agendamentos() {
   const [istext, setIsText] = useState(false);
   const [isDate, setIsDate] = useState(false);
   const [agendamentos, setAgendamentos] = useState("");
+  const [phone, setPhone] = useState("");
   const [isAgendamentos, setIsAgendamentos] = useState(false);
   const {
     values,
@@ -34,6 +35,7 @@ function Agendamentos() {
     setDisableButton,
     selectedDate,
     isPhone,
+    setIsPhone,
     isDates,
   }: any = useContext(AgendamentosContext);
 
@@ -59,7 +61,7 @@ function Agendamentos() {
     return () => clearInterval(typingInterval);
   }, []);
   const rendleAgendamentos = () => {
-    const inputDate = new Date(values.date); // Substitua isso pela sua data
+    const inputDate = new Date(values.date);
     const formattedDate = format(inputDate, "EEE, dd 'de' MMMM 'de' yyyy", {
       locale: ptBR,
     });
@@ -78,6 +80,12 @@ function Agendamentos() {
       setDisableButton(true);
       setIsDate(true);
     }
+    if (values.services && values.date && values.hour && !values.phone) {
+      setValues({ ...values, phone: inputValue });
+      setPhone(inputValue);
+      setInputValue("");
+      setDisableButton(true);
+    }
   };
   const randonOnchange = (target: EventTarget & HTMLInputElement) => {
     setInputValue(target.value);
@@ -85,6 +93,19 @@ function Agendamentos() {
       setDisableButton(false);
     } else {
       setDisableButton(true);
+    }
+  };
+  const handleButtonClick = () => {
+    renderName();
+    setIsServices(false);
+
+    if (values.date) {
+      rendleAgendamentos();
+      setDisableButton(false);
+      setIsAgendamentos(true);
+    }
+    if (isAgendamentos) {
+      setIsPhone(true);
     }
   };
   return (
@@ -169,14 +190,29 @@ function Agendamentos() {
       )}
       {isAgendamentos && (
         <div className="section-mensagem-usuario">
-          <section className="section-name msg-bottom section-agendamento">
+          <section
+            className={
+              isPhone
+                ? "section-name section-agendamento"
+                : "section-name msg-bottom section-agendamento"
+            }
+          >
             {agendamentos}
           </section>
         </div>
       )}
       {isPhone && (
-        <div>
+        <div className={phone ? "" : "msg-bottom"}>
           <section className="section-mensagem">{<MensagemPhone />}</section>
+        </div>
+      )}
+      {phone && (
+        <div className={phone && "msg-bottom"}>
+          <section className="section-mensagem-usuario">
+            <section className="section-name">
+              <p>{phone}</p>
+            </section>
+          </section>
         </div>
       )}
       <form className="rodape">
@@ -187,7 +223,7 @@ function Agendamentos() {
             onChange={({ target }) => {
               randonOnchange(target);
             }}
-            type="text"
+            type={isPhone ? "number" : "text"}
           />
         </label>
         <button
@@ -195,13 +231,7 @@ function Agendamentos() {
           className="button-usuario"
           onClick={(e) => {
             e.preventDefault();
-            renderName();
-            setIsServices(false);
-            if (values.date) {
-              rendleAgendamentos();
-              setDisableButton(false);
-              setIsAgendamentos(true);
-            }
+            handleButtonClick();
           }}
           disabled={disableButton}
         >

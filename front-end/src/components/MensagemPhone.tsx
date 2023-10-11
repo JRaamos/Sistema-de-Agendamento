@@ -4,7 +4,6 @@ import messagensInicials from "../utils/mensagens";
 
 function MensagemPhone() {
   const [text, setText] = useState("");
-  const { isPhone, setIsPhone } = useContext(AgendamentosContext);
 
   useEffect(() => {
     const textoArray1 = messagensInicials.mensagem06.split("");
