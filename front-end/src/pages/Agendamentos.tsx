@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import messagensInicials from "../utils/mensagens";
 import "../styles/agendamentos.css";
 import Services from "../components/Services";
@@ -7,12 +7,10 @@ import AgendamentosContext from "../context/AgendamentosContext";
 import MensagemDate from "../components/MensagemDate";
 import Calendar from "../components/Calendar";
 import AppointmentTimes from "../components/AppointmentTimes";
-import dayjs from "dayjs";
 import { format } from "date-fns";
 
 import ptBR from "date-fns/locale/pt-BR";
 import MensagemPhone from "../components/MensagemPhone";
-import { isMatchWithOptions } from "date-fns/fp";
 
 function Agendamentos() {
   const [inputValue, setInputValue] = useState("");
@@ -37,6 +35,8 @@ function Agendamentos() {
     isPhone,
     setIsPhone,
     isDates,
+    disableInput,
+    setDisableInput,
   }: any = useContext(AgendamentosContext);
 
   useEffect(() => {
@@ -55,9 +55,9 @@ function Agendamentos() {
         setText2(currentText2);
       } else {
         clearInterval(typingInterval);
+        setDisableInput(false);
       }
     }, 30);
-
     return () => clearInterval(typingInterval);
   }, []);
   const rendleAgendamentos = () => {
@@ -67,12 +67,13 @@ function Agendamentos() {
     });
     setAgendamentos(`${formattedDate} as ${values.hour}`);
   };
-  const renderName = () => {
+  const renderValues = () => {
     if (!values.name) {
       setIsName(true);
       setValues({ ...values, name: inputValue });
       setInputValue("");
       setDisableButton(true);
+      setDisableInput(true);
     }
     if (values.name && !values.services) {
       setValues({ ...values, services: servicesSelected });
@@ -89,22 +90,29 @@ function Agendamentos() {
   };
   const randonOnchange = (target: EventTarget & HTMLInputElement) => {
     setInputValue(target.value);
-    if (target.value.length > 3) {
-      setDisableButton(false);
-    } else {
-      setDisableButton(true);
+    if (!values.name) {
+      if (target.value.length > 3) {
+        setDisableButton(false);
+      } else {
+        setDisableButton(true);
+      }
+    }
+    if (values.name && !values.services) {
+      if (target.value.length > 3) {
+        setDisableButton(false);
+      } else {
+        setDisableButton(true);
+      }
     }
   };
   const handleButtonClick = () => {
-    renderName();
+    renderValues();
     setIsServices(false);
 
     if (values.date) {
       rendleAgendamentos();
       setDisableButton(false);
       setIsAgendamentos(true);
-    }
-    if (isAgendamentos) {
       setIsPhone(true);
     }
   };
@@ -224,6 +232,7 @@ function Agendamentos() {
               randonOnchange(target);
             }}
             type={isPhone ? "number" : "text"}
+            disabled={disableInput}
           />
         </label>
         <button

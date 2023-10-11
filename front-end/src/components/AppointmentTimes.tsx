@@ -43,9 +43,7 @@ const AppointmentTimes = ({ selectedDate, selectedServices }) => {
     if (dayOfWeek !== "Tuesday") {
       while (startTime.isBefore(endTime)) {
         const currentTime = startTime.format("HH:mm");
-        if (!bookedTimes.includes(currentTime)) {
-          times.push(currentTime);
-        }
+        times.push(currentTime);
         startTime.add(totalDuration, "minutes");
         if (startTime.isSameOrAfter(endTime)) {
           break;

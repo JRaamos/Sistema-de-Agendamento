@@ -4,6 +4,7 @@ import messagensInicials from "../utils/mensagens";
 
 function MensagemPhone() {
   const [text, setText] = useState("");
+  const { setDisableInput } = useContext(AgendamentosContext);
 
   useEffect(() => {
     const textoArray1 = messagensInicials.mensagem06.split("");
@@ -14,6 +15,7 @@ function MensagemPhone() {
         currentText1 += textoArray1.shift();
         setText(currentText1);
       } else {
+        setDisableInput(false);
         clearInterval(typingInterval);
       }
     }, 40);
@@ -21,7 +23,7 @@ function MensagemPhone() {
     return () => clearInterval(typingInterval);
   }, []);
 
-  return <div className="container-msg-date">{<p>{text}</p>}</div>;
+  return <div>{<p>{text}</p>}</div>;
 }
 
 export default MensagemPhone;

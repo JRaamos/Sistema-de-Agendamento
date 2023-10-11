@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import messagensInicials from "../utils/mensagens";
-import "../styles/mensagemDate.css";
 import AgendamentosContext from "../context/AgendamentosContext";
 
 function MensagemDate() {
@@ -24,6 +23,6 @@ function MensagemDate() {
     return () => clearInterval(typingInterval);
   }, []);
 
-  return <div className="container-msg-date">{<p>{text}</p>}</div>;
+  return <div>{<p>{text}</p>}</div>;
 }
 export default MensagemDate;
