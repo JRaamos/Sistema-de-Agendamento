@@ -2,9 +2,10 @@
   align-items: center;
   display: flex;
   flex-direction: column;
-  font-size: 20px;
+  font-size: 18px;
   height: 98vh;
   margin: 0 auto;
+  overflow-y: scroll;
   text-align: center;
 }
 
@@ -13,6 +14,7 @@
   background: #290e33;
   border-radius: 23px;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   margin: 15px;
   padding: 8px;
@@ -26,6 +28,15 @@
   flex-direction: column;
   justify-content: flex-end;
   width: 275px;
+}
+
+.section-agendamento {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+  padding: 8px;
+  width: 299px;
 }
 
 .section-mensagem-usuario {
@@ -82,4 +93,14 @@
 
 .msg-bottom {
   margin-bottom: 70px;
+}
+
+input {
+  color: #f5f5f6;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
 }

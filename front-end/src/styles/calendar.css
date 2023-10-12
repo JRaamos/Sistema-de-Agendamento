@@ -1,0 +1,42 @@
+.date-container {
+  display: flex;
+  overflow: auto;
+  scroll-snap-type: x mandatory;
+  width: 300px;
+}
+
+.dateInfor-container {
+  background: #aa5e28;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  color: #030303;
+  display: flex;
+  flex-direction: column;
+  height: 68px;
+  margin: 5px;
+  min-width: 75px;
+  scroll-snap-align: start;
+}
+
+.selected-date {
+  background: #5b5d74;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  color: #eeecec;
+  display: flex;
+  flex-direction: column;
+  height: 68px;
+  margin: 5px;
+  min-width: 75px;
+  scroll-snap-align: start;
+}
+
+.rool {
+  display: flex;
+  flex-direction: column;
+  font-size: 18px;
+  height: 100%;
+  justify-content: space-around;
+  object-fit: cover;
+  width: 100%;
+}

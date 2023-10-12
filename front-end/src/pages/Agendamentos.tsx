@@ -1,11 +1,17 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import messagensInicials from "../utils/mensagens";
 import "../styles/agendamentos.css";
 import Services from "../components/Services";
 import Welcome from "../components/Welcome";
 import AgendamentosContext from "../context/AgendamentosContext";
 import MensagemDate from "../components/MensagemDate";
-import Calendar from "../components/Calendario";
+import Calendar from "../components/Calendar";
+import AppointmentTimes from "../components/AppointmentTimes";
+import { format } from "date-fns";
+
+import ptBR from "date-fns/locale/pt-BR";
+import MensagemPhone from "../components/MensagemPhone";
+import MensageConclusão from "../components/MensageConclusão";
 
 function Agendamentos() {
   const [inputValue, setInputValue] = useState("");
@@ -14,6 +20,8 @@ function Agendamentos() {
   const [text2, setText2] = useState("");
   const [istext, setIsText] = useState(false);
   const [isDate, setIsDate] = useState(false);
+  const [phone, setPhone] = useState("");
+  const [isAgendamentos, setIsAgendamentos] = useState(false);
   const {
     values,
     setValues,
@@ -23,6 +31,15 @@ function Agendamentos() {
     disableButton,
     isServicesSelected,
     setDisableButton,
+    selectedDate,
+    phoneBottom,
+    isPhone,
+    setIsPhone,
+    isDates,
+    agendamentos,
+    setAgendamentos,
+    disableInput,
+    setDisableInput,
   }: any = useContext(AgendamentosContext);
 
   useEffect(() => {
@@ -41,18 +58,27 @@ function Agendamentos() {
         setText2(currentText2);
       } else {
         clearInterval(typingInterval);
+        setDisableInput(false);
       }
     }, 30);
-
     return () => clearInterval(typingInterval);
   }, []);
 
-  const renderName = () => {
+  const rendleAgendamentos = () => {
+    const inputDate = new Date(values.date);
+    const formattedDate = format(inputDate, "EEE, dd 'de' MMMM 'de' yyyy", {
+      locale: ptBR,
+    });
+    setAgendamentos(`${formattedDate} as ${values.hour}`);
+  };
+
+  const handleValues = () => {
     if (!values.name) {
       setIsName(true);
       setValues({ ...values, name: inputValue });
       setInputValue("");
       setDisableButton(true);
+      setDisableInput(true);
     }
     if (values.name && !values.services) {
       setValues({ ...values, services: servicesSelected });
@@ -60,13 +86,48 @@ function Agendamentos() {
       setDisableButton(true);
       setIsDate(true);
     }
+    if (values.services && values.date && values.hour && !values.phone) {
+      setValues({ ...values, phone: inputValue });
+      setPhone(inputValue);
+      setInputValue("");
+      setDisableButton(true);
+      setDisableInput(true);
+    }
   };
+
   const randonOnchange = (target: EventTarget & HTMLInputElement) => {
     setInputValue(target.value);
-    if (target.value.length > 3) {
+    if (!values.name) {
+      if (target.value.length > 3) {
+        setDisableButton(false);
+      } else {
+        setDisableButton(true);
+      }
+    }
+    if (values.name && !values.services) {
+      if (target.value.length > 3) {
+        setDisableButton(false);
+      } else {
+        setDisableButton(true);
+      }
+    }
+    if (values.services && values.date && values.hour && !values.phone) {
+      if (target.value.length > 9) {
+        setDisableButton(false);
+      } else {
+        setDisableButton(true);
+      }
+    }
+  };
+  const handleButtonClick = () => {
+    handleValues();
+    setIsServices(false);
+
+    if (values.date) {
+      rendleAgendamentos();
       setDisableButton(false);
-    } else {
-      setDisableButton(true);
+      setIsAgendamentos(true);
+      setIsPhone(true);
     }
   };
   return (
@@ -107,7 +168,7 @@ function Agendamentos() {
       {isServicesSelected && (
         <div>
           {servicesSelected && (
-            <div className="section-mensagem-usuario ">
+            <div className="section-mensagem-usuario">
               <section
                 className={
                   isDate
@@ -130,9 +191,56 @@ function Agendamentos() {
           <section className="section-mensagem ">
             <section>{<MensagemDate />}</section>
           </section>
-          <section className="msg-bottom">{<Calendar />}</section>
         </div>
       )}
+      {isDates && (
+        <section className={selectedDate ? "" : "msg-bottom"}>
+          {<Calendar />}
+        </section>
+      )}
+      {selectedDate && (
+        <div className="hours">
+          <section className={isAgendamentos ? "" : "msg-bottom"}>
+            {
+              <AppointmentTimes
+                selectedDate={selectedDate}
+                selectedServices={servicesSelected}
+              />
+            }
+          </section>
+        </div>
+      )}
+      {isAgendamentos && (
+        <div className="section-mensagem-usuario">
+          <section
+            className={
+              isPhone
+                ? "section-name section-agendamento"
+                : "section-name msg-bottom section-agendamento"
+            }
+          >
+            {agendamentos}
+          </section>
+        </div>
+      )}
+      {isPhone && (
+        <div className={phone ? "" : "msg-bottom"}>
+          <section className="section-mensagem">{<MensagemPhone />}</section>
+        </div>
+      )}
+      {phone && (
+        <div className={phoneBottom ? "" : "msg-bottom"}>
+          <section className="section-mensagem-usuario">
+            <section className="section-name">
+              <p>{phone}</p>
+            </section>
+          </section>
+        </div>
+      )}
+      {phone && (
+        <div className={phone && "msg-bottom"}>{<MensageConclusão />}</div>
+      )}
+
       <form className="rodape">
         <label htmlFor="input-usuario">
           <input
@@ -141,15 +249,19 @@ function Agendamentos() {
             onChange={({ target }) => {
               randonOnchange(target);
             }}
-            type="text"
+            type={isPhone ? "number" : "text"}
+            disabled={disableInput}
           />
         </label>
         <button
           type="button"
           className="button-usuario"
-          onClick={() => {
-            renderName();
-            setIsServices(false);
+          onClick={(e) => {
+            e.preventDefault();
+            handleButtonClick();
+            if (phone && values.phone) {
+              setDisableButton(false);
+            }
           }}
           disabled={disableButton}
         >

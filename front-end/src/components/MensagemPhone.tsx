@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
-import messagensInicials from "../utils/mensagens";
 import AgendamentosContext from "../context/AgendamentosContext";
+import messagensInicials from "../utils/mensagens";
 
-function MensagemDate() {
+function MensagemPhone() {
   const [text, setText] = useState("");
-  const { setIsDates } = useContext(AgendamentosContext);
+  const { setDisableInput } = useContext(AgendamentosContext);
 
   useEffect(() => {
-    const textoArray1 = messagensInicials.mensagem05.split("");
+    const textoArray1 = messagensInicials.mensagem06.split("");
     let currentText1 = "";
 
     const typingInterval = setInterval(() => {
@@ -15,8 +15,8 @@ function MensagemDate() {
         currentText1 += textoArray1.shift();
         setText(currentText1);
       } else {
+        setDisableInput(false);
         clearInterval(typingInterval);
-        setIsDates(true);
       }
     }, 40);
 
@@ -25,4 +25,5 @@ function MensagemDate() {
 
   return <div>{<p>{text}</p>}</div>;
 }
-export default MensagemDate;
+
+export default MensagemPhone;

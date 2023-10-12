@@ -1,0 +1,40 @@
+.hours-contain {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hours {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 280px;
+}
+
+.button-time {
+  align-items: center;
+  background: #483d56;
+  border-radius: 12px;
+  display: flex;
+  font-size: 18px;
+  height: 30px;
+  justify-content: center;
+  margin: 5px;
+  padding: 9px 15px;
+  width: 80px;
+}
+
+.hours-selected {
+  align-items: center;
+  background: #c07239;
+  border-radius: 12px;
+  display: flex;
+  font-size: 18px;
+  height: 30px;
+  justify-content: center;
+  margin: 5px;
+  padding: 9px 15px;
+  width: 80px;
+}
