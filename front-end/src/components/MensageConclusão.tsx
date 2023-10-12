@@ -9,7 +9,7 @@ function MensageConclusão() {
   const [istext, setIsText] = useState(false);
   const [isAgradecimento, setIsAgradecimento] = useState(false);
   const [sevices, setServices] = useState("");
-  const { values, agendamentos, setPhoneBottom } =
+  const { values, agendamentos, setPhoneBottom, setIsMyAgendamentos } =
     useContext(AgendamentosContext);
 
   const mensagem = messagensInicials.mensagem08(
@@ -39,6 +39,7 @@ function MensageConclusão() {
         setText3(currentText3);
       } else {
         clearInterval(typingInterval);
+        setIsMyAgendamentos(true);
       }
     }, 40);
     return () => clearInterval(typingInterval);

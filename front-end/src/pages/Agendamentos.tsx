@@ -34,6 +34,7 @@ function Agendamentos() {
     selectedDate,
     phoneBottom,
     isPhone,
+    isMyAgendamentos,
     setIsPhone,
     isDates,
     agendamentos,
@@ -240,34 +241,42 @@ function Agendamentos() {
       {phone && (
         <div className={phone && "msg-bottom"}>{<MensageConclusão />}</div>
       )}
-
-      <form className="rodape">
-        <label htmlFor="input-usuario">
-          <input
-            className="input-usuario"
-            value={inputValue}
-            onChange={({ target }) => {
-              randonOnchange(target);
+      {!isMyAgendamentos && (
+        <form className="rodape">
+          <label htmlFor="input-usuario">
+            <input
+              className="input-usuario"
+              value={inputValue}
+              onChange={({ target }) => {
+                randonOnchange(target);
+              }}
+              type={isPhone ? "number" : "text"}
+              disabled={disableInput}
+            />
+          </label>
+          <button
+            type="button"
+            className="button-usuario"
+            onClick={(e) => {
+              e.preventDefault();
+              handleButtonClick();
+              if (phone && values.phone) {
+                setDisableButton(false);
+              }
             }}
-            type={isPhone ? "number" : "text"}
-            disabled={disableInput}
-          />
-        </label>
-        <button
-          type="button"
-          className="button-usuario"
-          onClick={(e) => {
-            e.preventDefault();
-            handleButtonClick();
-            if (phone && values.phone) {
-              setDisableButton(false);
-            }
-          }}
-          disabled={disableButton}
-        >
-          Enviar
-        </button>
-      </form>
+            disabled={disableButton}
+          >
+            Enviar
+          </button>
+        </form>
+      )}
+
+      {isMyAgendamentos && (
+        <div>
+          <button>Meus agendamentos</button>
+          <button onClick={() => location.reload()}>Novo agendamento</button>
+        </div>
+      )}
     </div>
   );
 }
