@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import Agendamentos from "./pages/Agendamentos";
 import AgendamentosProvider from "./context/AgendamentosProvider";
 import { useEffect } from "react";
+import MensageConclusão from "./components/MensageConclusão";
 
 function App() {
   useEffect(() => {

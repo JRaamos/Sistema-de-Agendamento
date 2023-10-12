@@ -12,6 +12,9 @@ function AgendamentosProvider({ children }: UseProviderProps) {
   const [selectedDate, setSelectedDate] = useState(null);
   const [isDates, setIsDates] = useState(false);
   const [isPhone, setIsPhone] = useState(false);
+  const [agendamentos, setAgendamentos] = useState("");
+  const [phoneBottom, setPhoneBottom] = useState(false);
+
   const [disableInput, setDisableInput] = useState(true);
   const [values, setValues] = useState({
     name: "",
@@ -41,6 +44,10 @@ function AgendamentosProvider({ children }: UseProviderProps) {
         isDates,
         setIsDates,
         isPhone,
+        agendamentos,
+        setAgendamentos,
+        phoneBottom,
+        setPhoneBottom,
         setIsPhone,
       }}
     >
