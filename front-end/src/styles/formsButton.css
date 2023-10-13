@@ -1,0 +1,23 @@
+.form-button {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 50px;
+  width: 90%;
+}
+
+.button-meus-agendamentos {
+  background-color: #847d87;
+  border-radius: 10px;
+  color: #f0efef;
+  cursor: pointer;
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  height: 50px;
+  margin: 8px;
+  text-align: center;
+}
+
+.button-meus-agendamentos:hover {
+  background-color: #5b5d74;
+}

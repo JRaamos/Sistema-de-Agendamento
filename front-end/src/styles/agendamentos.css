@@ -16,8 +16,8 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin: 15px;
-  padding: 8px;
+  margin: 15px 0;
+  padding: 3px;
   width: 310px;
 }
 

@@ -13,6 +13,7 @@ import ptBR from "date-fns/locale/pt-BR";
 import MensagemPhone from "../components/MensagemPhone";
 import MensageConclusão from "../components/MensageConclusão";
 import { useNavigate } from "react-router-dom";
+import FormsButton from "../components/FormsButton";
 
 function Agendamentos() {
   const [inputValue, setInputValue] = useState("");
@@ -243,7 +244,9 @@ function Agendamentos() {
         </div>
       )}
       {phone && (
-        <div className={phone && "msg-bottom"}>{<MensageConclusão />}</div>
+        <div className={isMyAgendamentos ? "" : "msg-bottom"}>
+          {<MensageConclusão />}
+        </div>
       )}
       {!isMyAgendamentos && (
         <form className="rodape">
@@ -271,18 +274,7 @@ function Agendamentos() {
         </form>
       )}
 
-      {isMyAgendamentos && (
-        <form>
-          <button
-            onClick={() => {
-              navigate("/meus-agendamentos");
-            }}
-          >
-            Meus agendamentos
-          </button>
-          <button onClick={() => location.reload()}>Novo agendamento</button>
-        </form>
-      )}
+      {isMyAgendamentos && <FormsButton />}
     </div>
   );
 }
