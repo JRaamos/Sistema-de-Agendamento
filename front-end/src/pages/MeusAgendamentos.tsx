@@ -26,10 +26,11 @@ function MeusAgendamentos() {
     setValues,
     setDisableButton,
     setIsServices,
+    setServicesSelected,
   } = useContext(AgendamentosContext);
   const navigate = useNavigate();
   const [agendamentos, setAgendamentos] = useState([]);
-  const [servicesSelected, setServicesSelected] = useState([]);
+  const [serviceSelected, setServiceSelected] = useState([]);
   const [price, setPrice] = useState(0);
   const [cancelar, setCancelar] = useState(false);
   const [hour, setHour] = useState(0);
@@ -44,7 +45,7 @@ function MeusAgendamentos() {
           locale: ptBR,
         });
         agendamento.date = `${formattedDate} as ${agendamento.hour}`;
-        setServicesSelected(agendamento.services);
+        setServiceSelected(agendamento.services);
         return agendamento;
       });
       setAgendamentos(agendamentos);
@@ -54,14 +55,14 @@ function MeusAgendamentos() {
   useEffect(() => {
     const priceComparacion = () => {
       const services = servicesJson.filter((service) =>
-        servicesSelected.includes(service.services)
+        serviceSelected.includes(service.services)
       );
       const price = services.map((service) => service.price);
       const priceTotal = price.reduce((acc, current) => acc + current, 0);
       setPrice(priceTotal);
     };
     priceComparacion();
-  }, [servicesSelected]);
+  }, [serviceSelected]);
 
   const formatDate = (date: string) => {
     const inputDate = new Date(date);
@@ -116,6 +117,7 @@ function MeusAgendamentos() {
       services: "",
     });
     setDisableButton(true);
+    setServicesSelected([]);
   };
 
   return (
@@ -153,8 +155,8 @@ function MeusAgendamentos() {
                     <div>
                       <h3>{agendamento.name}</h3>
                       <div>
-                        {servicesSelected &&
-                          servicesSelected.map((service: any) => (
+                        {serviceSelected &&
+                          serviceSelected.map((service: any) => (
                             <p key={service}>{service}</p>
                           ))}
                       </div>

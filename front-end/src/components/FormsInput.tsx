@@ -1,7 +1,8 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import AgendamentosContext from "../context/AgendamentosContext";
 import { format } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
+import "../styles/formsInput.css";
 
 function FormsInput() {
   const {
@@ -20,11 +21,12 @@ function FormsInput() {
     agendamentos,
     setAgendamentos,
     disableInput,
+    isServices,
     inputValue,
     setInputValue,
     setDisableInput,
   }: any = useContext(AgendamentosContext);
-
+  const [name, setName] = useState("");
   const rendleAgendamentos = () => {
     const inputDate = new Date(values.date);
     const formattedDate = format(inputDate, "EEE, dd 'de' MMMM 'de' yyyy", {
@@ -32,7 +34,18 @@ function FormsInput() {
     });
     setAgendamentos(`${formattedDate} as ${values.hour}`);
   };
-
+  useEffect(() => {
+    const result = localStorage.getItem("name");
+    if (result) {
+      const name = JSON.parse(result);
+      if (name) {
+        setIsName(true);
+        setValues({ ...values, name: name });
+        setDisableButton(true);
+        setDisableInput(true);
+      }
+    }
+  }, []);
   const handleValues = () => {
     if (!values.name) {
       setIsName(true);
@@ -40,8 +53,8 @@ function FormsInput() {
       setInputValue("");
       setDisableButton(true);
       setDisableInput(true);
-      localStorage.setItem("name", JSON.stringify(inputValue));
     }
+
     if (values.name && !values.services) {
       setValues({ ...values, services: servicesSelected });
       setInputValue("");
@@ -54,6 +67,7 @@ function FormsInput() {
       setInputValue("");
       setDisableButton(true);
       setDisableInput(true);
+      localStorage.setItem("name", JSON.stringify(values.name));
     }
   };
 
@@ -61,20 +75,6 @@ function FormsInput() {
     setInputValue(target.value);
     if (!values.name) {
       if (target.value.length > 3) {
-        setDisableButton(false);
-      } else {
-        setDisableButton(true);
-      }
-    }
-    if (values.name && !values.services) {
-      if (target.value.length > 3) {
-        setDisableButton(false);
-      } else {
-        setDisableButton(true);
-      }
-    }
-    if (values.services && values.date && values.hour && !values.phone) {
-      if (target.value.length > 9) {
         setDisableButton(false);
       } else {
         setDisableButton(true);
@@ -97,19 +97,23 @@ function FormsInput() {
 
   return (
     <form className="rodape">
-      <label htmlFor="input-usuario">
-        <input
-          className="input-usuario"
-          value={inputValue}
-          onChange={({ target }) => {
-            randonOnchange(target);
-          }}
-          type={isPhone ? "number" : "text"}
-          disabled={disableInput}
-        />
-      </label>
+      {!disableInput && (
+        <label htmlFor="input-usuario">
+          <input
+            className="input-usuario"
+            value={inputValue}
+            onChange={({ target }) => {
+              randonOnchange(target);
+            }}
+            type={isPhone ? "number" : "text"}
+            disabled={disableInput}
+          />
+        </label>
+      )}
       <button
-        className="button-usuario"
+        className={
+          isServices ? "button-usuario button-fixed" : "button-usuario"
+        }
         onClick={(e) => {
           e.preventDefault();
           handleButtonClick();

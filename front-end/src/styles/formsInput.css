@@ -1,0 +1,39 @@
+.rodape {
+  align-items: center;
+  bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  left: 0;
+  right: 0;
+  width: 100%;
+}
+
+.input-usuario {
+  background: #161347;
+  border: none;
+  border-radius: 15px;
+  flex-grow: 1;
+  font-size: 20px;
+  height: 35px;
+  margin-right: 10px;
+  padding: 5px 15px;
+  width: 85%;
+}
+
+.button-usuario {
+  background: #5b5d74;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 18px;
+  height: 45px;
+  margin: 10px;
+  padding: 5px;
+  width: 286px;
+}
+
+.button-fixed {
+  bottom: 8px;
+  position: fixed;
+}

@@ -12,8 +12,10 @@ import MensageConclusão from "../components/MensageConclusão";
 import FormsButton from "../components/FormsButton";
 import Introduction from "../components/Introduction";
 import FormsInput from "../components/FormsInput";
+import { set } from "date-fns";
 
 function Agendamentos() {
+  const [name, setName] = useState("");
   const {
     isServices,
     isDate,
@@ -26,13 +28,23 @@ function Agendamentos() {
     phoneBottom,
     isPhone,
     isMyAgendamentos,
+    setIsName,
     isDates,
     agendamentos,
   }: any = useContext(AgendamentosContext);
-
+  useEffect(() => {
+    const usuario = localStorage.getItem("name");
+    if (usuario) {
+      const result = JSON.parse(usuario);
+      setName(result);
+      if (result) {
+        setIsName(true);
+      }
+    }
+  }, []);
   return (
     <div className="container-agendamentos">
-      <div>{<Introduction />}</div>
+      {!name && <div>{<Introduction />}</div>}
 
       <div>
         {isName && <div>{<Welcome />}</div>}

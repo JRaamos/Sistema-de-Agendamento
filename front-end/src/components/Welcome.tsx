@@ -8,9 +8,13 @@ function Welcome() {
   const [istext, setIsText] = useState(false);
   const { values, setIsServices }: any = useContext(AgendamentosContext);
   const mensagem = messagensInicials.mensagem03(values.name);
+  const name = localStorage.getItem("name");
+  const mensagem2 = messagensInicials.mensagem10(JSON.parse(name));
 
   useEffect(() => {
-    const textoArray1 = mensagem.split("");
+    const textoArray1 = JSON.parse(name)
+      ? mensagem2.split("")
+      : mensagem.split("");
     const textoArray2 = messagensInicials.mensagem04.split("");
     let currentText1 = "";
     let currentText2 = "";
