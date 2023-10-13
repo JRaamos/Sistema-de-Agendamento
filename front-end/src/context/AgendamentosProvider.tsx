@@ -23,6 +23,16 @@ function AgendamentosProvider({ children }: UseProviderProps) {
     hour: "",
     services: "",
   });
+  const handleLocalStorange = () => {
+    const storage = localStorage.getItem("agendamentos");
+    if (storage) {
+      const agendamentos = JSON.parse(storage);
+      const newAgendamentos = [...agendamentos, values];
+      localStorage.setItem("agendamentos", JSON.stringify(newAgendamentos));
+      return;
+    }
+    localStorage.setItem("agendamentos", JSON.stringify([values]));
+  };
 
   return (
     <AgendamentosContext.Provider
@@ -50,6 +60,7 @@ function AgendamentosProvider({ children }: UseProviderProps) {
         setAgendamentos,
         phoneBottom,
         setPhoneBottom,
+        handleLocalStorange,
         setIsPhone,
       }}
     >

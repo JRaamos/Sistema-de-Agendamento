@@ -134,9 +134,7 @@ function Agendamentos() {
       setIsPhone(true);
     }
   };
-  const handleLocalStorange = () => {
-    localStorage.setItem("agendamentos", JSON.stringify(values));
-  };
+
   return (
     <div className="container-agendamentos">
       <div>
@@ -265,7 +263,6 @@ function Agendamentos() {
             onClick={(e) => {
               e.preventDefault();
               handleButtonClick();
-              handleLocalStorange();
             }}
             disabled={disableButton}
           >
@@ -278,7 +275,6 @@ function Agendamentos() {
         <form>
           <button
             onClick={() => {
-              handleLocalStorange();
               navigate("/meus-agendamentos");
             }}
           >
