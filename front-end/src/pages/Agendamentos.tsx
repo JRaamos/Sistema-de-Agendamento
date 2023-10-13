@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import messagensInicials from "../utils/mensagens";
 import "../styles/agendamentos.css";
 import Services from "../components/Services";
 import Welcome from "../components/Welcome";
@@ -7,156 +6,34 @@ import AgendamentosContext from "../context/AgendamentosContext";
 import MensagemDate from "../components/MensagemDate";
 import Calendar from "../components/Calendar";
 import AppointmentTimes from "../components/AppointmentTimes";
-import { format } from "date-fns";
 
-import ptBR from "date-fns/locale/pt-BR";
 import MensagemPhone from "../components/MensagemPhone";
 import MensageConclusão from "../components/MensageConclusão";
-import { useNavigate } from "react-router-dom";
 import FormsButton from "../components/FormsButton";
+import Introduction from "../components/Introduction";
+import FormsInput from "../components/FormsInput";
 
 function Agendamentos() {
-  const [inputValue, setInputValue] = useState("");
-  const [isName, setIsName] = useState(false);
-  const [text, setText] = useState("");
-  const [text2, setText2] = useState("");
-  const navigate = useNavigate();
-  const [istext, setIsText] = useState(false);
-  const [isDate, setIsDate] = useState(false);
-  const [phone, setPhone] = useState("");
-  const [isAgendamentos, setIsAgendamentos] = useState(false);
   const {
-    values,
-    setValues,
     isServices,
-    setIsServices,
+    isDate,
+    phone,
     servicesSelected,
-    disableButton,
+    isAgendamentos,
+    isName,
     isServicesSelected,
-    setDisableButton,
     selectedDate,
     phoneBottom,
     isPhone,
     isMyAgendamentos,
-    setIsPhone,
     isDates,
     agendamentos,
-    setAgendamentos,
-    disableInput,
-    setDisableInput,
   }: any = useContext(AgendamentosContext);
-
-  useEffect(() => {
-    const textoArray1 = messagensInicials.mensagem01.split("");
-    const textoArray2 = messagensInicials.mensagem02.split("");
-    let currentText1 = "";
-    let currentText2 = "";
-
-    const typingInterval = setInterval(() => {
-      if (textoArray1.length > 0) {
-        currentText1 += textoArray1.shift();
-        setText(currentText1);
-      } else if (textoArray2.length > 0) {
-        setIsText(true);
-        currentText2 += textoArray2.shift();
-        setText2(currentText2);
-      } else {
-        clearInterval(typingInterval);
-        setDisableInput(false);
-      }
-    }, 30);
-    return () => clearInterval(typingInterval);
-  }, []);
-
-  const rendleAgendamentos = () => {
-    const inputDate = new Date(values.date);
-    const formattedDate = format(inputDate, "EEE, dd 'de' MMMM 'de' yyyy", {
-      locale: ptBR,
-    });
-    setAgendamentos(`${formattedDate} as ${values.hour}`);
-  };
-
-  const handleValues = () => {
-    if (!values.name) {
-      setIsName(true);
-      setValues({ ...values, name: inputValue });
-      setInputValue("");
-      setDisableButton(true);
-      setDisableInput(true);
-    }
-    if (values.name && !values.services) {
-      setValues({ ...values, services: servicesSelected });
-      setInputValue("");
-      setDisableButton(true);
-      setIsDate(true);
-    }
-    if (values.services && values.date && values.hour && !values.phone) {
-      setValues({ ...values, phone: inputValue });
-      setPhone(inputValue);
-      setInputValue("");
-      setDisableButton(true);
-      setDisableInput(true);
-    }
-  };
-
-  const randonOnchange = (target: EventTarget & HTMLInputElement) => {
-    setInputValue(target.value);
-    if (!values.name) {
-      if (target.value.length > 3) {
-        setDisableButton(false);
-      } else {
-        setDisableButton(true);
-      }
-    }
-    if (values.name && !values.services) {
-      if (target.value.length > 3) {
-        setDisableButton(false);
-      } else {
-        setDisableButton(true);
-      }
-    }
-    if (values.services && values.date && values.hour && !values.phone) {
-      if (target.value.length > 9) {
-        setDisableButton(false);
-      } else {
-        setDisableButton(true);
-      }
-    }
-  };
-  const handleButtonClick = () => {
-    handleValues();
-    setIsServices(false);
-
-    if (values.date) {
-      rendleAgendamentos();
-      setDisableButton(false);
-      setIsAgendamentos(true);
-      setValues({ ...values, agendamentos: agendamentos });
-      setIsPhone(true);
-    }
-  };
 
   return (
     <div className="container-agendamentos">
-      <div>
-        <section className="section-mensagem">
-          <div>
-            <p className="digitando">{text}</p>
-          </div>
-        </section>
-        {istext && (
-          <section className="section-mensagem">
-            <p>{text2}</p>
-          </section>
-        )}
-      </div>
-      {isName && (
-        <section className="section-mensagem-usuario">
-          <section className="section-name">
-            <p>{values.name}</p>
-          </section>
-        </section>
-      )}
+      <div>{<Introduction />}</div>
+
       <div>
         {isName && <div>{<Welcome />}</div>}
         {isServices && (
@@ -248,32 +125,7 @@ function Agendamentos() {
           {<MensageConclusão />}
         </div>
       )}
-      {!isMyAgendamentos && (
-        <form className="rodape">
-          <label htmlFor="input-usuario">
-            <input
-              className="input-usuario"
-              value={inputValue}
-              onChange={({ target }) => {
-                randonOnchange(target);
-              }}
-              type={isPhone ? "number" : "text"}
-              disabled={disableInput}
-            />
-          </label>
-          <button
-            className="button-usuario"
-            onClick={(e) => {
-              e.preventDefault();
-              handleButtonClick();
-            }}
-            disabled={disableButton}
-          >
-            Enviar
-          </button>
-        </form>
-      )}
-
+      {!isMyAgendamentos && <FormsInput />}
       {isMyAgendamentos && <FormsButton />}
     </div>
   );

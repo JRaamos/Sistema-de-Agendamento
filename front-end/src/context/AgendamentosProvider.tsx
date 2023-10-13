@@ -16,6 +16,14 @@ function AgendamentosProvider({ children }: UseProviderProps) {
   const [phoneBottom, setPhoneBottom] = useState(false);
   const [disableInput, setDisableInput] = useState(true);
   const [isMyAgendamentos, setIsMyAgendamentos] = useState(false);
+  const [inputValue, setInputValue] = useState("");
+  const [isName, setIsName] = useState(false);
+  const [text, setText] = useState("");
+  const [text2, setText2] = useState("");
+  const [istext, setIsText] = useState(false);
+  const [isDate, setIsDate] = useState(false);
+  const [phone, setPhone] = useState("");
+  const [isAgendamentos, setIsAgendamentos] = useState(false);
   const [values, setValues] = useState({
     name: "",
     phone: "",
@@ -38,8 +46,18 @@ function AgendamentosProvider({ children }: UseProviderProps) {
     <AgendamentosContext.Provider
       value={{
         values,
+        phone,
+        setPhone,
+        isDate,
+        setIsDate,
+        isAgendamentos,
+        setIsAgendamentos,
+        text2,
+        setText2,
         setValues,
         isServices,
+        istext,
+        setIsText,
         setIsServices,
         disableButton,
         setDisableButton,
@@ -48,10 +66,14 @@ function AgendamentosProvider({ children }: UseProviderProps) {
         setServicesSelected,
         isMyAgendamentos,
         setIsMyAgendamentos,
+        text,
+        setText,
         setIsServicesSelected,
         selectedDate,
         setSelectedDate,
         disableInput,
+        inputValue,
+        setInputValue,
         setDisableInput,
         isDates,
         setIsDates,
@@ -62,6 +84,8 @@ function AgendamentosProvider({ children }: UseProviderProps) {
         setPhoneBottom,
         handleLocalStorange,
         setIsPhone,
+        isName,
+        setIsName,
       }}
     >
       {children}

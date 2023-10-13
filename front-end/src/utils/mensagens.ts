@@ -10,5 +10,6 @@ const mensagensInicial = {
   mensagem07: 'Perfeito ... Tudo certo',
   mensagem08: (service, date) => `Agendamento realizado com sucesso! Um(a) ${service}, com o barbeiro CHUCA no(a), ${date}`,
   mensagem09: 'Muito obrigado, até mais!',
+  mensagem10: (name: string) => `Olá ${name}, Seja Bem vindo de volta`,
 };
 export default mensagensInicial;

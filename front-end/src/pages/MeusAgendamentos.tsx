@@ -1,13 +1,32 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import arrow from "../images/arrow-1.svg";
 import "../styles/meusAgendamentos.css";
 import { useNavigate } from "react-router-dom";
 import servicesJson from "../utils/services.json";
 import { parse, format } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
-import { da } from "date-fns/locale";
+import AgendamentosContext from "../context/AgendamentosContext";
 
 function MeusAgendamentos() {
+  const {
+    setInputValue,
+    setIsName,
+    setText,
+    setText2,
+    setIsText,
+    setIsDate,
+    setPhone,
+    setIsAgendamentos,
+    setDisableInput,
+    setIsServicesSelected,
+    setIsDates,
+    setSelectedDate,
+    setIsPhone,
+    setIsMyAgendamentos,
+    setValues,
+    setDisableButton,
+    setIsServices,
+  } = useContext(AgendamentosContext);
   const navigate = useNavigate();
   const [agendamentos, setAgendamentos] = useState([]);
   const [servicesSelected, setServicesSelected] = useState([]);
@@ -51,6 +70,7 @@ function MeusAgendamentos() {
     });
     return `${formattedDate} as ${hour}`;
   };
+
   const removeStorage = () => {
     const storage = localStorage.getItem("agendamentos");
     const dataBr = date.split(" ");
@@ -71,10 +91,40 @@ function MeusAgendamentos() {
       setAgendamentos(newAgendamentos);
     }
   };
+
+  const resetStates = () => {
+    setInputValue("");
+    setIsName(false);
+    setText("");
+    setText2("");
+    setIsText(false);
+    setIsDate(false);
+    setIsPhone(false);
+    setIsServices(false);
+    setPhone("");
+    setIsAgendamentos(false);
+    setDisableInput(true);
+    setIsServicesSelected(false);
+    setIsDates(false);
+    setSelectedDate(null);
+    setIsMyAgendamentos(false);
+    setValues({
+      name: "",
+      phone: "",
+      date: "",
+      hour: "",
+      services: "",
+    });
+    setDisableButton(true);
+  };
+
   return (
     <div>
       <button
-        onClick={() => navigate("/agendamentos")}
+        onClick={() => {
+          resetStates();
+          navigate("/agendamentos");
+        }}
         className="custom-button"
       >
         <img src={arrow} alt="arrow" className="button-image" />
