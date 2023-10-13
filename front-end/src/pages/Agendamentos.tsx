@@ -12,12 +12,14 @@ import { format } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
 import MensagemPhone from "../components/MensagemPhone";
 import MensageConclusão from "../components/MensageConclusão";
+import { useNavigate } from "react-router-dom";
 
 function Agendamentos() {
   const [inputValue, setInputValue] = useState("");
   const [isName, setIsName] = useState(false);
   const [text, setText] = useState("");
   const [text2, setText2] = useState("");
+  const navigate = useNavigate();
   const [istext, setIsText] = useState(false);
   const [isDate, setIsDate] = useState(false);
   const [phone, setPhone] = useState("");
@@ -128,8 +130,12 @@ function Agendamentos() {
       rendleAgendamentos();
       setDisableButton(false);
       setIsAgendamentos(true);
+      setValues({ ...values, agendamentos: agendamentos });
       setIsPhone(true);
     }
+  };
+  const handleLocalStorange = () => {
+    localStorage.setItem("agendamentos", JSON.stringify(values));
   };
   return (
     <div className="container-agendamentos">
@@ -255,14 +261,11 @@ function Agendamentos() {
             />
           </label>
           <button
-            type="button"
             className="button-usuario"
             onClick={(e) => {
               e.preventDefault();
               handleButtonClick();
-              if (phone && values.phone) {
-                setDisableButton(false);
-              }
+              handleLocalStorange();
             }}
             disabled={disableButton}
           >
@@ -272,10 +275,17 @@ function Agendamentos() {
       )}
 
       {isMyAgendamentos && (
-        <div>
-          <button>Meus agendamentos</button>
+        <form>
+          <button
+            onClick={() => {
+              handleLocalStorange();
+              navigate("/meus-agendamentos");
+            }}
+          >
+            Meus agendamentos
+          </button>
           <button onClick={() => location.reload()}>Novo agendamento</button>
-        </div>
+        </form>
       )}
     </div>
   );

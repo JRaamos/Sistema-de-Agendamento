@@ -1,0 +1,9 @@
+.custom-button {
+  background-color: transparent;
+  border: none;
+}
+
+.button-image {
+  height: auto;
+  width: 100%;
+}

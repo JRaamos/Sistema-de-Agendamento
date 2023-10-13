@@ -10,7 +10,6 @@ function Services() {
     setDisableButton,
     setIsServicesSelected,
   }: any = useContext(AgendamentosContext);
-
   const renderServices = (target: any) => {
     if (target.checked) {
       setServicesSelected([...servicesSelected, target.value]);
