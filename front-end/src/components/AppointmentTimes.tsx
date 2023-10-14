@@ -45,10 +45,12 @@ const AppointmentTimes: FC<AppointmentTimesProps> = ({
     if (dayOfWeek === "Saturday") {
       endTime = moment(selectedDate).set({ hour: 19, minute: 0 });
     }
-
+    if (dayOfWeek === "Sunday") {
+      endTime = moment(selectedDate).set({ hour: 11, minute: 0 });
+    }
     const times: string[] = [];
 
-    if (dayOfWeek === "Tuesday" || dayOfWeek === "Sunday") {
+    if (dayOfWeek === "Tuesday") {
       setAvailableTimes(["Sem horários disponíveis"]);
       return;
     }
@@ -94,21 +96,27 @@ const AppointmentTimes: FC<AppointmentTimesProps> = ({
     <div className="hours-contain">
       <p className="section-mensagem">Horários disponíveis:</p>
       <div className="hours">
-        {availableTimes.map((time) => (
-          <div key={time}>
-            <button
-              onClick={() => {
-                handleTimeClick(time);
-                setDisableButton(false);
-              }}
-              className={
-                !selectedTimes.includes(time) ? "button-time" : "hours-selected"
-              }
-            >
-              {time}
-            </button>
-          </div>
-        ))}
+        {availableTimes[0] === "Sem horários disponíveis" ? (
+          <p className="no-hours">Sem horários disponíveis</p>
+        ) : (
+          availableTimes.map((time) => (
+            <div key={time}>
+              <button
+                onClick={() => {
+                  handleTimeClick(time);
+                  setDisableButton(false);
+                }}
+                className={
+                  !selectedTimes.includes(time)
+                    ? "button-time"
+                    : "hours-selected"
+                }
+              >
+                {time}
+              </button>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );
