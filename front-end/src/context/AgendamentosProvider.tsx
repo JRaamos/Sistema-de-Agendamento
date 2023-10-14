@@ -14,32 +14,78 @@ function AgendamentosProvider({ children }: UseProviderProps) {
   const [isPhone, setIsPhone] = useState(false);
   const [agendamentos, setAgendamentos] = useState("");
   const [phoneBottom, setPhoneBottom] = useState(false);
-
   const [disableInput, setDisableInput] = useState(true);
+  const [isMyAgendamentos, setIsMyAgendamentos] = useState(false);
+  const [inputValue, setInputValue] = useState("");
+  const [isName, setIsName] = useState(false);
+  const [text, setText] = useState("");
+  const [text2, setText2] = useState("");
+  const [istext, setIsText] = useState(false);
+  const [isDate, setIsDate] = useState(false);
+  const [phone, setPhone] = useState("");
+  const [isAgendamentos, setIsAgendamentos] = useState(false);
+  const [buttonEnviar, setButtonEnviar] = useState(false);
+  const [inputPhone, setInputPhone] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState(null);
+  const [buttonWelcome, setButtonWelcome] = useState(false);
   const [values, setValues] = useState({
     name: "",
-    phone: "",
+    phone: null,
     date: "",
     hour: "",
     services: "",
   });
+  const handleLocalStorange = () => {
+    const storage = localStorage.getItem("agendamentos");
+    if (storage) {
+      const agendamentos = JSON.parse(storage);
+      const newAgendamentos = [...agendamentos, values];
+      localStorage.setItem("agendamentos", JSON.stringify(newAgendamentos));
+      return;
+    }
+    localStorage.setItem("agendamentos", JSON.stringify([values]));
+  };
 
   return (
     <AgendamentosContext.Provider
       value={{
         values,
+        phone,
+        setPhone,
+        phoneNumber,
+        setPhoneNumber,
+        isDate,
+        setIsDate,
+        isAgendamentos,
+        setIsAgendamentos,
+        text2,
+        setText2,
         setValues,
         isServices,
+        buttonWelcome,
+        setButtonWelcome,
+        inputPhone,
+        setInputPhone,
+        buttonEnviar,
+        setButtonEnviar,
+        istext,
+        setIsText,
         setIsServices,
         disableButton,
         setDisableButton,
         servicesSelected,
         isServicesSelected,
         setServicesSelected,
+        isMyAgendamentos,
+        setIsMyAgendamentos,
+        text,
+        setText,
         setIsServicesSelected,
         selectedDate,
         setSelectedDate,
         disableInput,
+        inputValue,
+        setInputValue,
         setDisableInput,
         isDates,
         setIsDates,
@@ -48,7 +94,10 @@ function AgendamentosProvider({ children }: UseProviderProps) {
         setAgendamentos,
         phoneBottom,
         setPhoneBottom,
+        handleLocalStorange,
         setIsPhone,
+        isName,
+        setIsName,
       }}
     >
       {children}

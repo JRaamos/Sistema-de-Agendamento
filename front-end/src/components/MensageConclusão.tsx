@@ -9,8 +9,13 @@ function MensageConclusão() {
   const [istext, setIsText] = useState(false);
   const [isAgradecimento, setIsAgradecimento] = useState(false);
   const [sevices, setServices] = useState("");
-  const { values, agendamentos, setPhoneBottom } =
-    useContext(AgendamentosContext);
+  const {
+    values,
+    agendamentos,
+    setPhoneBottom,
+    setIsMyAgendamentos,
+    handleLocalStorange,
+  } = useContext(AgendamentosContext);
 
   const mensagem = messagensInicials.mensagem08(
     values.services.map((service: any) => service).join(", "),
@@ -24,6 +29,7 @@ function MensageConclusão() {
     let currentText2 = "";
     let currentText3 = "";
 
+    handleLocalStorange();
     const typingInterval = setInterval(() => {
       if (textoArray1.length > 0) {
         currentText1 += textoArray1.shift();
@@ -39,6 +45,7 @@ function MensageConclusão() {
         setText3(currentText3);
       } else {
         clearInterval(typingInterval);
+        setIsMyAgendamentos(true);
       }
     }, 40);
     return () => clearInterval(typingInterval);

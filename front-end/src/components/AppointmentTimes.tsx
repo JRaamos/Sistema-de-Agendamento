@@ -1,13 +1,21 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { FC, useContext, useEffect, useState } from "react";
 import moment from "moment";
 import dayjs from "dayjs";
 import services from "../utils/services.json";
 import "../styles/appointmentTimes.css";
 import AgendamentosContext from "../context/AgendamentosContext";
-const AppointmentTimes = ({ selectedDate, selectedServices }) => {
-  const [availableTimes, setAvailableTimes] = useState([]);
-  const [bookedTimes, setBookedTimes] = useState([]);
-  const [selectedTimes, setSelectedTimes] = useState([]);
+
+type AppointmentTimesProps = {
+  selectedDate: Date | null;
+  selectedServices: string[];
+};
+const AppointmentTimes: FC<AppointmentTimesProps> = ({
+  selectedDate,
+  selectedServices,
+}) => {
+  const [availableTimes, setAvailableTimes] = useState<string[]>([]);
+  const [bookedTimes, setBookedTimes] = useState<string[]>([]);
+  const [selectedTimes, setSelectedTimes] = useState<string[]>([]);
   const { values, setValues, setDisableButton } =
     useContext(AgendamentosContext);
 
@@ -37,28 +45,38 @@ const AppointmentTimes = ({ selectedDate, selectedServices }) => {
     if (dayOfWeek === "Saturday") {
       endTime = moment(selectedDate).set({ hour: 19, minute: 0 });
     }
+    if (dayOfWeek === "Sunday") {
+      endTime = moment(selectedDate).set({ hour: 11, minute: 0 });
+    }
+    const times: string[] = [];
 
-    const times = [];
+    if (dayOfWeek === "Tuesday") {
+      setAvailableTimes(["Sem horários disponíveis"]);
+      return;
+    }
 
-    if (dayOfWeek !== "Tuesday") {
-      while (startTime.isBefore(endTime)) {
-        const currentTime = startTime.format("HH:mm");
+    while (startTime.isBefore(endTime)) {
+      const currentTime = startTime.format("HH:mm");
+      if (
+        startTime.isSameOrAfter(
+          moment(selectedDate).set({ hour: 12, minute: 0 })
+        ) &&
+        startTime.isBefore(moment(selectedDate).set({ hour: 14, minute: 0 }))
+      ) {
+      } else {
         times.push(currentTime);
-        startTime.add(totalDuration, "minutes");
-        if (startTime.isSameOrAfter(endTime)) {
-          break;
-        }
+      }
+      startTime.add(totalDuration, "minutes");
+      if (startTime.isSameOrAfter(endTime)) {
+        break;
       }
     }
 
     setAvailableTimes(times);
-    if (dayOfWeek === "Tuesday" || dayOfWeek === "Sunday") {
-      setAvailableTimes(["Sem horarios disponiveis"]);
-    }
   };
 
   // Função para lidar com a seleção de horários
-  const handleTimeClick = (time) => {
+  const handleTimeClick = (time: string) => {
     if (selectedTimes.includes(time)) {
       setSelectedTimes(
         selectedTimes.filter((selectedTime) => selectedTime !== time)
@@ -78,21 +96,27 @@ const AppointmentTimes = ({ selectedDate, selectedServices }) => {
     <div className="hours-contain">
       <p className="section-mensagem">Horários disponíveis:</p>
       <div className="hours">
-        {availableTimes.map((time) => (
-          <div key={time}>
-            <button
-              onClick={() => {
-                handleTimeClick(time);
-                setDisableButton(false);
-              }}
-              className={
-                !selectedTimes.includes(time) ? "button-time" : "hours-selected"
-              }
-            >
-              {time}
-            </button>
-          </div>
-        ))}
+        {availableTimes[0] === "Sem horários disponíveis" ? (
+          <p className="no-hours">Sem horários disponíveis</p>
+        ) : (
+          availableTimes.map((time) => (
+            <div key={time}>
+              <button
+                onClick={() => {
+                  handleTimeClick(time);
+                  setDisableButton(false);
+                }}
+                className={
+                  !selectedTimes.includes(time)
+                    ? "button-time"
+                    : "hours-selected"
+                }
+              >
+                {time}
+              </button>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );
