@@ -48,21 +48,29 @@ const AppointmentTimes: FC<AppointmentTimesProps> = ({
 
     const times: string[] = [];
 
-    if (dayOfWeek !== "Tuesday") {
-      while (startTime.isBefore(endTime)) {
-        const currentTime = startTime.format("HH:mm");
+    if (dayOfWeek === "Tuesday" || dayOfWeek === "Sunday") {
+      setAvailableTimes(["Sem horários disponíveis"]);
+      return;
+    }
+
+    while (startTime.isBefore(endTime)) {
+      const currentTime = startTime.format("HH:mm");
+      if (
+        startTime.isSameOrAfter(
+          moment(selectedDate).set({ hour: 12, minute: 0 })
+        ) &&
+        startTime.isBefore(moment(selectedDate).set({ hour: 14, minute: 0 }))
+      ) {
+      } else {
         times.push(currentTime);
-        startTime.add(totalDuration, "minutes");
-        if (startTime.isSameOrAfter(endTime)) {
-          break;
-        }
+      }
+      startTime.add(totalDuration, "minutes");
+      if (startTime.isSameOrAfter(endTime)) {
+        break;
       }
     }
 
     setAvailableTimes(times);
-    if (dayOfWeek === "Tuesday" || dayOfWeek === "Sunday") {
-      setAvailableTimes(["Sem horarios disponiveis"]);
-    }
   };
 
   // Função para lidar com a seleção de horários

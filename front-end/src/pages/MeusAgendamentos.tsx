@@ -27,6 +27,8 @@ function MeusAgendamentos() {
     setDisableButton,
     setIsServices,
     setServicesSelected,
+    setPhoneNumber,
+    setInputPhone,
   } = useContext(AgendamentosContext);
   const navigate = useNavigate();
   const [agendamentos, setAgendamentos] = useState([]);
@@ -118,6 +120,8 @@ function MeusAgendamentos() {
     });
     setDisableButton(true);
     setServicesSelected([]);
+    setPhoneNumber(null);
+    setInputPhone(false);
   };
 
   return (
