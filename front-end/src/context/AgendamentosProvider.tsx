@@ -24,9 +24,13 @@ function AgendamentosProvider({ children }: UseProviderProps) {
   const [isDate, setIsDate] = useState(false);
   const [phone, setPhone] = useState("");
   const [isAgendamentos, setIsAgendamentos] = useState(false);
+  const [buttonEnviar, setButtonEnviar] = useState(false);
+  const [inputPhone, setInputPhone] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState(null);
+  const [buttonWelcome, setButtonWelcome] = useState(false);
   const [values, setValues] = useState({
     name: "",
-    phone: "",
+    phone: null,
     date: "",
     hour: "",
     services: "",
@@ -48,6 +52,8 @@ function AgendamentosProvider({ children }: UseProviderProps) {
         values,
         phone,
         setPhone,
+        phoneNumber,
+        setPhoneNumber,
         isDate,
         setIsDate,
         isAgendamentos,
@@ -56,6 +62,12 @@ function AgendamentosProvider({ children }: UseProviderProps) {
         setText2,
         setValues,
         isServices,
+        buttonWelcome,
+        setButtonWelcome,
+        inputPhone,
+        setInputPhone,
+        buttonEnviar,
+        setButtonEnviar,
         istext,
         setIsText,
         setIsServices,

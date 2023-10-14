@@ -3,6 +3,7 @@ import AgendamentosContext from "../context/AgendamentosContext";
 import { format } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
 import "../styles/formsInput.css";
+import PhoneNumberInput from "./PhoneNumberInput";
 
 function FormsInput() {
   const {
@@ -17,14 +18,20 @@ function FormsInput() {
     disableButton,
     setDisableButton,
     isPhone,
+    buttonWelcome,
     setIsPhone,
     agendamentos,
     setAgendamentos,
     disableInput,
+    buttonEnviar,
+    setButtonEnviar,
     isServices,
     inputValue,
     setInputValue,
     setDisableInput,
+    phoneNumber,
+    inputPhone,
+    setInputPhone,
   }: any = useContext(AgendamentosContext);
   const [name, setName] = useState("");
   const rendleAgendamentos = () => {
@@ -62,11 +69,11 @@ function FormsInput() {
       setIsDate(true);
     }
     if (values.services && values.date && values.hour && !values.phone) {
-      setValues({ ...values, phone: inputValue });
-      setPhone(inputValue);
+      setValues({ ...values, phone: phoneNumber });
+      setPhone(phoneNumber);
       setInputValue("");
       setDisableButton(true);
-      setDisableInput(true);
+      setInputPhone(false);
       localStorage.setItem("name", JSON.stringify(values.name));
     }
   };
@@ -105,23 +112,26 @@ function FormsInput() {
             onChange={({ target }) => {
               randonOnchange(target);
             }}
-            type={isPhone ? "number" : "text"}
+            type="text"
             disabled={disableInput}
           />
         </label>
       )}
-      <button
-        className={
-          isServices ? "button-usuario button-fixed" : "button-usuario"
-        }
-        onClick={(e) => {
-          e.preventDefault();
-          handleButtonClick();
-        }}
-        disabled={disableButton}
-      >
-        Enviar
-      </button>
+      {inputPhone && <PhoneNumberInput />}
+      {buttonEnviar && (
+        <button
+          className={
+            buttonWelcome ? "button-usuario button-fixed" : "button-usuario"
+          }
+          onClick={(e) => {
+            e.preventDefault();
+            handleButtonClick();
+          }}
+          disabled={disableButton}
+        >
+          Enviar
+        </button>
+      )}
     </form>
   );
 }

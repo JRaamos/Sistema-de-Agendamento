@@ -178,7 +178,7 @@ function MeusAgendamentos() {
       </div>
       {cancelar && (
         <div>
-          <div className="cancelar-card rodape">
+          <div className="cancelar-card">
             <h3>Deseja cancelar este horário?</h3>
             <p>
               Ao confirmar, este horário poderá ser preenchido por outro

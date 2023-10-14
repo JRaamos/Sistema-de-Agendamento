@@ -13,6 +13,8 @@ function Introduction() {
     setText,
     isName,
     setDisableInput,
+    setButtonEnviar,
+    setButtonWelcome,
   }: any = useContext(AgendamentosContext);
 
   useEffect(() => {
@@ -32,6 +34,8 @@ function Introduction() {
       } else {
         clearInterval(typingInterval);
         setDisableInput(false);
+        setButtonEnviar(true);
+        setButtonWelcome(false);
       }
     }, 30);
     return () => clearInterval(typingInterval);

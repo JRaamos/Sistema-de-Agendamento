@@ -12,7 +12,6 @@ import MensageConclusão from "../components/MensageConclusão";
 import FormsButton from "../components/FormsButton";
 import Introduction from "../components/Introduction";
 import FormsInput from "../components/FormsInput";
-import { set } from "date-fns";
 
 function Agendamentos() {
   const [name, setName] = useState("");
@@ -30,6 +29,7 @@ function Agendamentos() {
     isMyAgendamentos,
     setIsName,
     isDates,
+    inputPhone,
     agendamentos,
   }: any = useContext(AgendamentosContext);
   useEffect(() => {
@@ -88,21 +88,25 @@ function Agendamentos() {
           </section>
         </div>
       )}
-      {isDates && (
-        <section className={selectedDate ? "" : "msg-bottom"}>
-          {<Calendar />}
-        </section>
-      )}
-      {selectedDate && (
-        <div className="hours">
-          <section className={isAgendamentos ? "" : "msg-bottom"}>
-            {
-              <AppointmentTimes
-                selectedDate={selectedDate}
-                selectedServices={servicesSelected}
-              />
-            }
-          </section>
+      {!isAgendamentos && (
+        <div>
+          {isDates && (
+            <section className={selectedDate ? "" : "msg-bottom"}>
+              {<Calendar />}
+            </section>
+          )}
+          {selectedDate && (
+            <div className="hours">
+              <section className={isAgendamentos ? "" : "msg-bottom"}>
+                {
+                  <AppointmentTimes
+                    selectedDate={selectedDate}
+                    selectedServices={servicesSelected}
+                  />
+                }
+              </section>
+            </div>
+          )}
         </div>
       )}
       {isAgendamentos && (
@@ -119,8 +123,14 @@ function Agendamentos() {
         </div>
       )}
       {isPhone && (
-        <div className={phone ? "" : "msg-bottom"}>
-          <section className="section-mensagem">{<MensagemPhone />}</section>
+        <div>
+          <section
+            className={
+              phoneBottom ? "section-mensagem" : "section-mensagem msg-bottom"
+            }
+          >
+            {<MensagemPhone />}
+          </section>
         </div>
       )}
       {phone && (

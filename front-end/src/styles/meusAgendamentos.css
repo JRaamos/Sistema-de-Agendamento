@@ -68,11 +68,16 @@
   align-items: center;
   background-color: #cad1d4;
   border-radius: 10px;
+  bottom: 10px;
   color: #000;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-bottom: -10px;
+  left: 0;
+  margin: 0 auto;
+  max-width: 500px;
+  position: fixed;
+  right: 0;
   text-align: center;
 }
 
