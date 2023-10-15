@@ -19,13 +19,13 @@
   background-color: #161347;
   border: 1px solid transparent;
   border-radius: 8px;
+  color: white;
   cursor: pointer;
   font-family: inherit;
   font-size: 1em;
   font-weight: 500;
   padding: 0.6em 1.2em;
   transition: border-color 0.25s;
-
 }
 
 .barbeiro:hover {

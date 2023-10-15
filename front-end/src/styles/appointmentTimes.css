@@ -17,6 +17,7 @@
   align-items: center;
   background: #483d56;
   border-radius: 12px;
+  color: white;
   display: flex;
   font-size: 18px;
   height: 30px;
@@ -30,6 +31,7 @@
   align-items: center;
   background: #c07239;
   border-radius: 12px;
+  color: white;
   display: flex;
   font-size: 18px;
   height: 30px;
