@@ -15,6 +15,7 @@ function MensageConclusão() {
     setPhoneBottom,
     setIsMyAgendamentos,
     handleLocalStorange,
+    setCanRender,
   } = useContext(AgendamentosContext);
 
   const mensagem = messagensInicials.mensagem08(
@@ -45,6 +46,7 @@ function MensageConclusão() {
         currentText3 += textoArray3.shift();
         setText3(currentText3);
       } else {
+        setCanRender(true);
         clearInterval(typingInterval);
       }
     }, 40);

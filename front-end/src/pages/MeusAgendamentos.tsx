@@ -30,6 +30,7 @@ function MeusAgendamentos() {
     setIsServices,
     setServicesSelected,
     setPhoneNumber,
+    setCanRender,
     setInputPhone,
   } = useContext(AgendamentosContext);
   const resetStates = () => {
@@ -59,6 +60,7 @@ function MeusAgendamentos() {
     setServicesSelected([]);
     setPhoneNumber(null);
     setInputPhone(false);
+    setCanRender(false);
   };
 
   useEffect(() => {

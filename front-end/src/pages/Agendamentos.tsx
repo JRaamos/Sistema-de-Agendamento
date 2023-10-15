@@ -29,9 +29,9 @@ function Agendamentos() {
     phoneBottom,
     isPhone,
     isMyAgendamentos,
+    canRender,
     setIsName,
     isDates,
-    inputPhone,
     agendamentos,
   }: any = useContext(AgendamentosContext);
   const [buttomMeusAgendamentos, setButtomMeusAgendamentos] = useState(false);
@@ -162,7 +162,7 @@ function Agendamentos() {
         </div>
       )}
       {!isMyAgendamentos && <FormsInput />}
-      {isMyAgendamentos && <FormsButton />}
+      {canRender && <FormsButton />}
     </div>
   );
 }

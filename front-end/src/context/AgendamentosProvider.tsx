@@ -29,6 +29,7 @@ function AgendamentosProvider({ children }: UseProviderProps) {
   const [inputPhone, setInputPhone] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState(null);
   const [buttonWelcome, setButtonWelcome] = useState(false);
+  const [canRender, setCanRender] = useState(false);
   const [values, setValues] = useState({
     name: "",
     phone: null,
@@ -66,6 +67,8 @@ function AgendamentosProvider({ children }: UseProviderProps) {
         buttonWelcome,
         setButtonWelcome,
         inputPhone,
+        canRender,
+        setCanRender,
         setInputPhone,
         buttonEnviar,
         setButtonEnviar,
