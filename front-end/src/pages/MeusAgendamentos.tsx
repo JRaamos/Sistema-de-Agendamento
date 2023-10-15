@@ -118,8 +118,6 @@ function MeusAgendamentos() {
       const agendamentos = JSON.parse(storage);
 
       const newAgendamentos = agendamentos.filter((agendamento) => {
-        console.log(agendamento.agendamentos);
-
         return agendamento.agendamentos !== formatDate(dataUS);
       });
 
@@ -165,8 +163,8 @@ function MeusAgendamentos() {
                       <h3>{agendamento.name}</h3>
                       <div>
                         {serviceSelected &&
-                          serviceSelected.map((service: any) => (
-                            <p key={service}>{service}</p>
+                          serviceSelected.map((service: any, index) => (
+                            <p key={index}>{service}</p>
                           ))}
                       </div>
                     </div>
