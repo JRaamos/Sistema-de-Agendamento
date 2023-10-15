@@ -24,8 +24,6 @@ function FormsInput() {
     setAgendamentos,
     disableInput,
     buttonEnviar,
-    setButtonEnviar,
-    isServices,
     inputValue,
     setInputValue,
     setDisableInput,

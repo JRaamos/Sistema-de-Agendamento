@@ -21,6 +21,10 @@
   width: 310px;
 }
 
+.msg-top {
+  margin-top: 60px;
+}
+
 .section-name {
   background: #161347;
   border-radius: 23px;
@@ -59,6 +63,25 @@
 
 .msg-bottom {
   margin-bottom: 70px;
+}
+
+.button-meus-agendamentos-contain {
+  align-items: end;
+  display: flex;
+  justify-content: end;
+  margin: 5px 0;
+  position: fixed;
+  width: 85%;
+}
+
+.button-meus-agendamentos-header {
+  align-items: center;
+  background-color: #f5f5f6;
+  border-radius: 8px;
+  color: #000;
+  display: flex;
+  height: 30px;
+  justify-content: center;
 }
 
 input {

@@ -40,7 +40,11 @@ function Welcome() {
 
   return (
     <div>
-      <section className="section-mensagem">
+      <section
+        className={
+          JSON.parse(name) ? "section-mensagem msg-top" : "section-mensagem"
+        }
+      >
         <p>{text}</p>
       </section>
       {istext && (
