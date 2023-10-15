@@ -87,4 +87,4 @@ Este projeto está sob a licença MIT. Consulte o arquivo [LICENSE](LICENSE) par
 
 ## Contato
 
-Para dúvidas ou informações adicionais, entre em contato com a equipe de desenvolvimento em [jhonyramos46@gmail.com].
+Para dúvidas ou informações adicionais, entre em contato com a equipe de desenvolvimento em jhonyramos46@gmail.com.
