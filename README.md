@@ -41,11 +41,35 @@ O projeto segue uma arquitetura cliente-servidor, onde o front-end interage com 
 
 ## Funcionalidades Principais
 
-- Cadastro de clientes e barbeiros.
 - Agendamento de serviços por data e horário.
 - Visualização dos horários disponíveis para agendamento.
 - Cancelamento de agendamentos.
 - Gerenciamento de serviços oferecidos.
+
+## Front-End
+
+### Estrutura de Diretórios do Frontend
+
+- `components/`: Contém os componentes reutilizáveis utilizados no frontend.
+- `styles/`: Armazena os estilos e folhas de estilo do frontend.
+- `pages/`: Páginas principais do aplicativo.
+- `context/`: Gerencia estado global da aplicação.
+- `tests/`: Armazena os testes do front end.
+
+### Tecnologias Específicas do Frontend
+
+O projeto utiliza TypeScript e Vite para criar a interface do usuário e interações dinâmicas.
+
+### Estilos e Design
+
+EM CONSTRUÇÂO
+### Funcionalidades do Frontend
+
+EM CONSTRUÇÂO
+
+### Navegação e Rotas
+
+EM CONSTRUÇÂO
 
 ## Contribuição
 
@@ -64,4 +88,3 @@ Este projeto está sob a licença MIT. Consulte o arquivo [LICENSE](LICENSE) par
 ## Contato
 
 Para dúvidas ou informações adicionais, entre em contato com a equipe de desenvolvimento em [jhonyramos46@gmail.com].
-
