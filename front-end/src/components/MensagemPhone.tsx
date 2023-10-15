@@ -4,11 +4,12 @@ import messagensInicials from "../utils/mensagens";
 
 function MensagemPhone() {
   const [text, setText] = useState("");
-  const { setInputPhone } = useContext(AgendamentosContext);
+  const { setInputPhone, setDisableButton } = useContext(AgendamentosContext);
 
   useEffect(() => {
     const textoArray1 = messagensInicials.mensagem06.split("");
     let currentText1 = "";
+    setDisableButton(true);
 
     const typingInterval = setInterval(() => {
       if (textoArray1.length > 0) {
@@ -16,6 +17,7 @@ function MensagemPhone() {
         setText(currentText1);
       } else {
         setInputPhone(true);
+
         clearInterval(typingInterval);
       }
     }, 40);
