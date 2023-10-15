@@ -162,8 +162,8 @@ function MeusAgendamentos() {
                     <div>
                       <h3>{agendamento.name}</h3>
                       <div>
-                        {serviceSelected &&
-                          serviceSelected.map((service: any, index) => (
+                        {agendamento.services &&
+                          agendamento.services.map((service, index) => (
                             <p key={index}>{service}</p>
                           ))}
                       </div>

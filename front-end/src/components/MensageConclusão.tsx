@@ -30,6 +30,7 @@ function MensageConclusão() {
     let currentText3 = "";
 
     handleLocalStorange();
+    setIsMyAgendamentos(true);
     const typingInterval = setInterval(() => {
       if (textoArray1.length > 0) {
         currentText1 += textoArray1.shift();
@@ -45,7 +46,6 @@ function MensageConclusão() {
         setText3(currentText3);
       } else {
         clearInterval(typingInterval);
-        setIsMyAgendamentos(true);
       }
     }, 40);
     return () => clearInterval(typingInterval);
