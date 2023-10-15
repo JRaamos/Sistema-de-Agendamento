@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AgendamentosContext from "./AgendamentosContext";
+import { useLocation } from "react-router-dom";
 type UseProviderProps = {
   children: React.ReactNode;
 };

@@ -1,13 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import arrow from "../images/arrow-1.svg";
 import "../styles/meusAgendamentos.css";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import servicesJson from "../utils/services.json";
 import { parse, format } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
 import AgendamentosContext from "../context/AgendamentosContext";
 
 function MeusAgendamentos() {
+  const location = useLocation();
+
   const {
     setInputValue,
     setIsName,
@@ -30,6 +32,38 @@ function MeusAgendamentos() {
     setPhoneNumber,
     setInputPhone,
   } = useContext(AgendamentosContext);
+  const resetStates = () => {
+    setInputValue("");
+    setIsName(false);
+    setText("");
+    setText2("");
+    setIsText(false);
+    setIsDate(false);
+    setIsPhone(false);
+    setIsServices(false);
+    setPhone("");
+    setIsAgendamentos(false);
+    setDisableInput(true);
+    setIsServicesSelected(false);
+    setIsDates(false);
+    setSelectedDate(null);
+    setIsMyAgendamentos(false);
+    setValues({
+      name: "",
+      phone: "",
+      date: "",
+      hour: "",
+      services: "",
+    });
+    setDisableButton(true);
+    setServicesSelected([]);
+    setPhoneNumber(null);
+    setInputPhone(false);
+  };
+
+  useEffect(() => {
+    resetStates();
+  }, [location]);
   const navigate = useNavigate();
   const [agendamentos, setAgendamentos] = useState([]);
   const [serviceSelected, setServiceSelected] = useState([]);
@@ -93,35 +127,6 @@ function MeusAgendamentos() {
       setCancelar(false);
       setAgendamentos(newAgendamentos);
     }
-  };
-
-  const resetStates = () => {
-    setInputValue("");
-    setIsName(false);
-    setText("");
-    setText2("");
-    setIsText(false);
-    setIsDate(false);
-    setIsPhone(false);
-    setIsServices(false);
-    setPhone("");
-    setIsAgendamentos(false);
-    setDisableInput(true);
-    setIsServicesSelected(false);
-    setIsDates(false);
-    setSelectedDate(null);
-    setIsMyAgendamentos(false);
-    setValues({
-      name: "",
-      phone: "",
-      date: "",
-      hour: "",
-      services: "",
-    });
-    setDisableButton(true);
-    setServicesSelected([]);
-    setPhoneNumber(null);
-    setInputPhone(false);
   };
 
   return (

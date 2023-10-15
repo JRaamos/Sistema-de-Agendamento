@@ -12,8 +12,10 @@ import MensageConclusão from "../components/MensageConclusão";
 import FormsButton from "../components/FormsButton";
 import Introduction from "../components/Introduction";
 import FormsInput from "../components/FormsInput";
+import { useNavigate } from "react-router-dom";
 
 function Agendamentos() {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const {
     isServices,
@@ -32,6 +34,7 @@ function Agendamentos() {
     inputPhone,
     agendamentos,
   }: any = useContext(AgendamentosContext);
+  const [buttomMeusAgendamentos, setButtomMeusAgendamentos] = useState(false);
   useEffect(() => {
     const usuario = localStorage.getItem("name");
     if (usuario) {
@@ -39,11 +42,22 @@ function Agendamentos() {
       setName(result);
       if (result) {
         setIsName(true);
+        setButtomMeusAgendamentos(true);
       }
     }
   }, []);
   return (
     <div className="container-agendamentos">
+      {buttomMeusAgendamentos && (
+        <div className="button-meus-agendamentos-contain">
+          <button
+            className="button-meus-agendamentos-header"
+            onClick={() => navigate("/meus-agendamentos")}
+          >
+            Meus agendamento
+          </button>
+        </div>
+      )}
       {!name && <div>{<Introduction />}</div>}
 
       <div>
