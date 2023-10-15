@@ -104,7 +104,11 @@ const AppointmentTimes: FC<AppointmentTimesProps> = ({
               <button
                 onClick={() => {
                   handleTimeClick(time);
-                  setDisableButton(false);
+                  if (selectedTimes.includes(time)) {
+                    setDisableButton(true);
+                  } else {
+                    setDisableButton(false);
+                  }
                 }}
                 className={
                   !selectedTimes.includes(time)

@@ -27,6 +27,8 @@ function PhoneNumberInput() {
     setPhoneNumber(e.target.value);
     if (e.target.value.length > 14) {
       setDisableButton(false);
+    } else {
+      setDisableButton(true);
     }
   };
 
