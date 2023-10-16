@@ -11,24 +11,22 @@
 
 .input-usuario {
   background: #161347;
-  border: none;
+  border: solid 2px #161347;
   border-radius: 15px;
   flex-grow: 1;
   font-size: 20px;
   height: 35px;
-  margin-right: 10px;
-  padding: 5px 15px;
-  width: 85%;
+  padding: 5px 0;
+  width: 286px;
 }
 
 .button-usuario {
   background: #5b5d74;
-  border: none;
   border-radius: 15px;
   cursor: pointer;
   font-size: 18px;
   height: 45px;
-  margin: 10px;
+  margin: 12px;
   padding: 5px;
   width: 286px;
 }
@@ -36,4 +34,9 @@
 .button-fixed {
   bottom: 8px;
   position: fixed;
+}
+
+.input-usuario:focus {
+  border: #7ea8df solid 2px;
+  outline: none;
 }

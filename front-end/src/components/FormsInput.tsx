@@ -115,7 +115,7 @@ function FormsInput() {
           />
         </label>
       )}
-      {inputPhone && <PhoneNumberInput />}
+      <div>{inputPhone && <PhoneNumberInput />}</div>
       {buttonEnviar && (
         <button
           className={

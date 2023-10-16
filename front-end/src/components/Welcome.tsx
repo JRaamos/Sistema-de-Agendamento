@@ -19,6 +19,7 @@ function Welcome() {
     const textoArray2 = messagensInicials.mensagem04.split("");
     let currentText1 = "";
     let currentText2 = "";
+    setButtonEnviar(false);
 
     const typingInterval = setInterval(() => {
       if (textoArray1.length > 0) {
