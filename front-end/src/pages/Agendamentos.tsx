@@ -6,7 +6,6 @@ import AgendamentosContext from "../context/AgendamentosContext";
 import MensagemDate from "../components/MensagemDate";
 import Calendar from "../components/Calendar";
 import AppointmentTimes from "../components/AppointmentTimes";
-
 import MensagemPhone from "../components/MensagemPhone";
 import MensageConclusão from "../components/MensageConclusão";
 import FormsButton from "../components/FormsButton";
@@ -35,6 +34,7 @@ function Agendamentos() {
     agendamentos,
   }: any = useContext(AgendamentosContext);
   const [buttomMeusAgendamentos, setButtomMeusAgendamentos] = useState(false);
+
   useEffect(() => {
     const usuario = localStorage.getItem("name");
     if (usuario) {
