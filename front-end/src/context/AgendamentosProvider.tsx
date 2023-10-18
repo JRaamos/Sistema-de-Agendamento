@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import AgendamentosContext from "./AgendamentosContext";
-import { useLocation } from "react-router-dom";
-type UseProviderProps = {
-  children: React.ReactNode;
-};
+import {
+  AgendamentosProviderProps,
+  Values,
+} from "../types/AgendamentosProvider";
 
-function AgendamentosProvider({ children }: UseProviderProps) {
-  const [servicesSelected, setServicesSelected] = useState([]);
+function AgendamentosProvider({ children }: AgendamentosProviderProps) {
+  const [servicesSelected, setServicesSelected] = useState<string[]>([]);
   const [isServices, setIsServices] = useState(false);
   const [disableButton, setDisableButton] = useState(true);
   const [isServicesSelected, setIsServicesSelected] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [isDates, setIsDates] = useState(false);
   const [isPhone, setIsPhone] = useState(false);
   const [agendamentos, setAgendamentos] = useState("");
@@ -23,19 +23,20 @@ function AgendamentosProvider({ children }: UseProviderProps) {
   const [text2, setText2] = useState("");
   const [istext, setIsText] = useState(false);
   const [isDate, setIsDate] = useState(false);
-  const [phone, setPhone] = useState("");
+  const [phone, setPhone] = useState<string | number | null| undefined >("");
   const [isAgendamentos, setIsAgendamentos] = useState(false);
   const [buttonEnviar, setButtonEnviar] = useState(false);
   const [inputPhone, setInputPhone] = useState(false);
-  const [phoneNumber, setPhoneNumber] = useState(null);
+  const [phoneNumber, setPhoneNumber] = useState<string | undefined>(undefined);
   const [buttonWelcome, setButtonWelcome] = useState(false);
   const [canRender, setCanRender] = useState(false);
-  const [values, setValues] = useState({
+  const [values, setValues] = useState<Values>({
     name: "",
-    phone: null,
+    phone: undefined,
     date: "",
     hour: "",
-    services: "",
+    services: [],
+    agendamentos: "",
   });
   const handleLocalStorange = () => {
     const storage = localStorage.getItem("agendamentos");
@@ -46,6 +47,36 @@ function AgendamentosProvider({ children }: UseProviderProps) {
       return;
     }
     localStorage.setItem("agendamentos", JSON.stringify([values]));
+  };
+  const resetStates = () => {
+    setInputValue("");
+    setIsName(false);
+    setText("");
+    setText2("");
+    setIsText(false);
+    setIsDate(false);
+    setIsPhone(false);
+    setIsServices(false);
+    setPhone("");
+    setIsAgendamentos(false);
+    setDisableInput(true);
+    setIsServicesSelected(false);
+    setIsDates(false);
+    setSelectedDate(null);
+    setIsMyAgendamentos(false);
+    setValues({
+      name: "",
+      phone: undefined,
+      date: "",
+      hour: "",
+      services: [],
+      agendamentos: "",
+    });
+    setDisableButton(true);
+    setServicesSelected([]);
+    setPhoneNumber(undefined);
+    setInputPhone(false);
+    setCanRender(false);
   };
 
   return (
@@ -62,6 +93,7 @@ function AgendamentosProvider({ children }: UseProviderProps) {
         setIsAgendamentos,
         text2,
         setText2,
+        resetStates,
         setValues,
         isServices,
         buttonWelcome,

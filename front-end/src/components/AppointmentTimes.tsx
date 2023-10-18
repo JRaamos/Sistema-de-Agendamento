@@ -15,7 +15,7 @@ const AppointmentTimes: FC<AppointmentTimesProps> = ({
 }) => {
   const [availableTimes, setAvailableTimes] = useState<string[]>([]);
   const [bookedTimes, setBookedTimes] = useState<string[]>([]);
-  const [selectedTimes, setSelectedTimes] = useState<string[]>([]);
+  const [selectedTimes, setSelectedTimes] = useState<any[]>([]);
   const { values, setValues, setDisableButton } =
     useContext(AgendamentosContext);
 

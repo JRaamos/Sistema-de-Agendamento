@@ -1,9 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import logo from "../images/logo-1.png";
 import "../styles/home.css";
+import { useContext } from "react";
+import AgendamentosContext from "../context/AgendamentosContext";
 
 function Home() {
   const navigate = useNavigate();
+  const { resetStates } = useContext(AgendamentosContext);
 
   return (
     <div className="container-home">
@@ -15,7 +18,10 @@ function Home() {
           <p className="p-text">Escolha seu Barbeiro</p>
           <button
             className="barbeiro"
-            onClick={() => navigate("/agendamentos")}
+            onClick={() => {
+              resetStates();
+              navigate("/agendamentos");
+            }}
           >
             Barbeiro Cleberson Silva (CHUCA)
           </button>

@@ -3,12 +3,13 @@ import { format, addDays } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
 import "../styles/calendar.css";
 import AgendamentosContext from "../context/AgendamentosContext";
+import { DateList } from "../types/Calendar";
 
 const Calendar = () => {
   const { selectedDate, setSelectedDate, values, setValues } =
     useContext(AgendamentosContext);
   const currentDate = new Date();
-  const [dates, setDates] = useState([]);
+  const [dates, setDates] = useState<DateList[]>([]);
   const [isSelected, setIsSelected] = useState(false);
 
   useEffect(() => {
@@ -29,7 +30,7 @@ const Calendar = () => {
     setDates(dateList);
   }, []);
 
-  const handleButtonClick = (dayInfo) => {
+  const handleButtonClick = (dayInfo: string) => {
     setSelectedDate(dayInfo);
     setIsSelected(true);
     setValues({ ...values, date: dayInfo });

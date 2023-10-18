@@ -6,6 +6,7 @@
   height: 98vh;
   margin: 0 auto;
   overflow-y: scroll;
+  scroll-behavior: smooth;
   text-align: center;
 }
 

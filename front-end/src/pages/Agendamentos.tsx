@@ -31,15 +31,23 @@ function Agendamentos() {
     canRender,
     setIsName,
     isDates,
+    resetStates,
     agendamentos,
+    setValues,
+    values,
   }: any = useContext(AgendamentosContext);
   const [buttomMeusAgendamentos, setButtomMeusAgendamentos] = useState(false);
+
+  useEffect(() => {
+    resetStates();
+  }, [location]);
 
   useEffect(() => {
     const usuario = localStorage.getItem("name");
     if (usuario) {
       const result = JSON.parse(usuario);
       setName(result);
+      setValues({ ...values, name: result });
       if (result) {
         setIsName(true);
         setButtomMeusAgendamentos(true);
