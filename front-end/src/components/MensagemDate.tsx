@@ -6,7 +6,6 @@ function MensagemDate() {
   const [text, setText] = useState("");
   const { setIsDates, containerRef } = useContext(AgendamentosContext);
 
-  
   useEffect(() => {
     const textoArray1 = messagensInicials.mensagem05.split("");
     let currentText1 = "";
@@ -20,12 +19,14 @@ function MensagemDate() {
         setIsDates(true);
       }
     }, 40);
-    
+
     return () => clearInterval(typingInterval);
   }, []);
   useEffect(() => {
     if (containerRef.current) {
-      containerRef.current.scrollTop = 9999;
+      const container = containerRef.current;
+      const scrollHeight = container.scrollHeight;
+      container.scrollTop = scrollHeight;
     }
   }, [text]);
   return <div>{<p>{text}</p>}</div>;

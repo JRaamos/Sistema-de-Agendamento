@@ -48,8 +48,7 @@ function Agendamentos() {
     if (containerRef.current) {
       const container = containerRef.current;
       const scrollHeight = container.scrollHeight;
-      const offsetHeight = container.offsetHeight;
-      container.scrollTop = scrollHeight - offsetHeight + 70;
+      container.scrollTop = scrollHeight;
     }
   }, [
     isServices,

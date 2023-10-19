@@ -3,9 +3,10 @@
   display: flex;
   flex-direction: column;
   font-size: 18px;
-  height: 98vh;
+  height: 95vh;
   margin: 0 auto;
   overflow-y: scroll;
+  padding-top: env(safe-area-inset-top);
   scroll-behavior: smooth;
   text-align: center;
 }

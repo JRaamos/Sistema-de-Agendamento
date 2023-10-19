@@ -21,13 +21,15 @@ function MensagemPhone() {
         clearInterval(typingInterval);
       }
     }, 40);
-    
+
     return () => clearInterval(typingInterval);
   }, []);
-  
+
   useEffect(() => {
     if (containerRef.current) {
-      containerRef.current.scrollTop = 9999;
+      const container = containerRef.current;
+      const scrollHeight = container.scrollHeight;
+      container.scrollTop = scrollHeight;
     }
   }, [text]);
   return <div>{<p>{text}</p>}</div>;

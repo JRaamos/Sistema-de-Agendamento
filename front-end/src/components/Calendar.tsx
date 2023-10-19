@@ -6,7 +6,7 @@ import AgendamentosContext from "../context/AgendamentosContext";
 import { DateList } from "../types/Calendar";
 
 const Calendar = () => {
-  const { selectedDate, setSelectedDate, values, setValues } =
+  const { selectedDate, setSelectedDate, values, setValues, containerRef } =
     useContext(AgendamentosContext);
   const currentDate = new Date();
   const [dates, setDates] = useState<DateList[]>([]);
@@ -35,6 +35,13 @@ const Calendar = () => {
     setIsSelected(true);
     setValues({ ...values, date: dayInfo });
   };
+  useEffect(() => {
+    if (containerRef.current) {
+      const container = containerRef.current;
+      const scrollHeight = container.scrollHeight;
+      container.scrollTop = scrollHeight;
+    }
+  }, [dates ]);
 
   return (
     <div className="date-container">
