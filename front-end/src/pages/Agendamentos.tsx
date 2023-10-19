@@ -49,7 +49,7 @@ function Agendamentos() {
       const container = containerRef.current;
       const scrollHeight = container.scrollHeight;
       const offsetHeight = container.offsetHeight;
-      container.scrollTop = scrollHeight - offsetHeight + 20;
+      container.scrollTop = scrollHeight - offsetHeight + 70;
     }
   }, [
     isServices,
@@ -174,7 +174,7 @@ function Agendamentos() {
       {phone && (
         <div className={phoneBottom ? "" : "msg-bottom"}>
           <section className="section-mensagem-usuario">
-            <section className="section-name">
+            <section className="section-name" style={{ padding: 0}}>
               <p>{phone}</p>
             </section>
           </section>
