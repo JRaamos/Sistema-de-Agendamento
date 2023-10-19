@@ -24,6 +24,7 @@ function FormsInput() {
     agendamentos,
     setAgendamentos,
     disableInput,
+    setButtonEnviar,
     buttonEnviar,
     inputValue,
     setInputValue,
@@ -67,6 +68,7 @@ function FormsInput() {
       setDisableButton(true);
       setIsDate(true);
       setMsgServices(true);
+      setButtonEnviar(false);
     }
     if (
       values.services.length !== 0 &&

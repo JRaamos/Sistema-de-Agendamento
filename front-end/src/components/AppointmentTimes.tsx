@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import services from "../utils/services.json";
 import "../styles/appointmentTimes.css";
 import AgendamentosContext from "../context/AgendamentosContext";
+import { tr } from "date-fns/locale";
 
 type AppointmentTimesProps = {
   selectedDate: Date | null;
@@ -20,6 +21,8 @@ const AppointmentTimes: FC<AppointmentTimesProps> = ({
     values,
     setValues,
     setDisableButton,
+          setButtonEnviar,
+
     availableTimes,
     setAvailableTimes,
   } = useContext(AgendamentosContext);
@@ -87,9 +90,12 @@ const AppointmentTimes: FC<AppointmentTimesProps> = ({
         selectedTimes.filter((selectedTime) => selectedTime !== time)
       );
       setValues({ ...values, hour: "" });
+              setButtonEnviar(false);
+
     } else {
       setSelectedTimes([selectedTimes, time]);
       setValues({ ...values, hour: time });
+      setButtonEnviar(true);
     }
   };
 
