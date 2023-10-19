@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import messagensInicials from "../utils/mensagens";
 import AgendamentosContext from "../context/AgendamentosContext";
 
@@ -43,9 +43,8 @@ function Welcome() {
     }, 35);
     return () => clearInterval(typingInterval);
   }, []);
-  useEffect(() => {
-    document.querySelector(".container-agendamentos").scrollTop = 9999;
-  }, [isServices]);
+
+
 
   return (
     <div>

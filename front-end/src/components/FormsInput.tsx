@@ -11,6 +11,7 @@ function FormsInput() {
     values,
     setValues,
     setIsServices,
+    setMsgServices,
     setIsDate,
     setPhone,
     servicesSelected,
@@ -30,6 +31,7 @@ function FormsInput() {
     phoneNumber,
     inputPhone,
     setInputPhone,
+    containerRef,
   } = useContext<AgendamentosContextType>(AgendamentosContext);
   const rendleAgendamentos = () => {
     const inputDate = new Date(values.date);
@@ -64,6 +66,7 @@ function FormsInput() {
       setInputValue("");
       setDisableButton(true);
       setIsDate(true);
+      setMsgServices(true);
     }
     if (
       values.services.length !== 0 &&
@@ -103,6 +106,11 @@ function FormsInput() {
       setIsPhone(true);
     }
   };
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.scrollTop = 9999;
+    }
+  }, [inputPhone]);
 
   return (
     <form className="rodape">

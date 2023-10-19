@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "../styles/agendamentos.css";
 import Services from "../components/Services";
 import Welcome from "../components/Welcome";
@@ -24,6 +24,8 @@ function Agendamentos() {
     isAgendamentos,
     isName,
     isServicesSelected,
+    containerRef,
+    msgServices,
     selectedDate,
     phoneBottom,
     isPhone,
@@ -35,12 +37,30 @@ function Agendamentos() {
     agendamentos,
     setValues,
     values,
+    availableTimes,
+    
   }: any = useContext(AgendamentosContext);
   const [buttomMeusAgendamentos, setButtomMeusAgendamentos] = useState(false);
 
   useEffect(() => {
     resetStates();
   }, [location]);
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.scrollTop = 9999;
+    }
+  }, [
+    isServices,
+    selectedDate,
+    availableTimes,
+    isAgendamentos,
+    isPhone,
+    phone,
+    canRender,
+    msgServices,
+    servicesSelected,
+    isDates,
+  ]);
 
   useEffect(() => {
     const usuario = localStorage.getItem("name");
@@ -55,7 +75,7 @@ function Agendamentos() {
     }
   }, []);
   return (
-    <div className="container-agendamentos">
+    <div className="container-agendamentos" ref={containerRef}>
       {buttomMeusAgendamentos && (
         <div className="button-meus-agendamentos-contain">
           <button
@@ -73,16 +93,14 @@ function Agendamentos() {
         {isServices && (
           <section
             className={
-              isServicesSelected
-                ? "section-mensagem"
-                : "section-mensagem msg-bottom"
+              msgServices ? "section-mensagem " : "section-mensagem msg-bottom"
             }
           >
             <section>{<Services />}</section>
           </section>
         )}
       </div>
-      {isServicesSelected && (
+      {isServicesSelected && msgServices && (
         <div>
           {servicesSelected && (
             <div className="section-mensagem-usuario">
@@ -136,8 +154,8 @@ function Agendamentos() {
           <section
             className={
               isPhone
-                ? "section-name section-agendamento"
-                : "section-name msg-bottom section-agendamento"
+                ? "section-name"
+                : "section-name msg-bottom "
             }
           >
             {agendamentos}

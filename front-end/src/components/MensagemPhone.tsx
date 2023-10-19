@@ -4,8 +4,8 @@ import messagensInicials from "../utils/mensagens";
 
 function MensagemPhone() {
   const [text, setText] = useState("");
-  const { setInputPhone, setDisableButton } = useContext(AgendamentosContext);
-
+  const { setInputPhone, setDisableButton, containerRef } =
+    useContext(AgendamentosContext);
   useEffect(() => {
     const textoArray1 = messagensInicials.mensagem06.split("");
     let currentText1 = "";
@@ -21,10 +21,15 @@ function MensagemPhone() {
         clearInterval(typingInterval);
       }
     }, 40);
-
+    
     return () => clearInterval(typingInterval);
   }, []);
-
+  
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.scrollTop = 9999;
+    }
+  }, [text]);
   return <div>{<p>{text}</p>}</div>;
 }
 

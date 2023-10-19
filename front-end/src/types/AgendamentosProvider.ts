@@ -14,7 +14,7 @@ export type AgendamentosContextType = {
   phone: string | undefined | number | null;
   setPhone: Dispatch<SetStateAction<string | number | undefined | null>>;
   phoneNumber: string | undefined;
-  setPhoneNumber: Dispatch<SetStateAction<string | undefined>>;
+  setPhoneNumber: Dispatch<SetStateAction<string | undefined >>;
   isDate: boolean;
   setIsDate: Dispatch<SetStateAction<boolean>>;
   isAgendamentos: boolean;
@@ -44,8 +44,8 @@ export type AgendamentosContextType = {
   text: string;
   setText: Dispatch<SetStateAction<string>>;
   setIsServicesSelected: Dispatch<SetStateAction<boolean>>;
-  selectedDate: string | null;
-  setSelectedDate: Dispatch<SetStateAction<String | null>>;
+  selectedDate: string | null ;
+  setSelectedDate: Dispatch<SetStateAction<String | null >>;
   disableInput: boolean;
   inputValue: string;
   setInputValue: Dispatch<SetStateAction<string>>;
@@ -62,6 +62,11 @@ export type AgendamentosContextType = {
   isName: boolean;
   setIsName: Dispatch<SetStateAction<boolean>>;
   resetStates: () => void;
+  msgServices: boolean;
+  setMsgServices: Dispatch<SetStateAction<boolean>>;
+  availableTimes: string[];
+  setAvailableTimes: Dispatch<SetStateAction<string[]>>;
+  containerRef: any;
 };
 
 export type AgendamentosProviderProps = {
