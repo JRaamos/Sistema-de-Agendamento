@@ -38,7 +38,6 @@ function Agendamentos() {
     setValues,
     values,
     availableTimes,
-    
   }: any = useContext(AgendamentosContext);
   const [buttomMeusAgendamentos, setButtomMeusAgendamentos] = useState(false);
 
@@ -47,7 +46,10 @@ function Agendamentos() {
   }, [location]);
   useEffect(() => {
     if (containerRef.current) {
-      containerRef.current.scrollTop = 9999;
+      const container = containerRef.current;
+      const scrollHeight = container.scrollHeight;
+      const offsetHeight = container.offsetHeight;
+      container.scrollTop = scrollHeight - offsetHeight + 20;
     }
   }, [
     isServices,
@@ -152,11 +154,7 @@ function Agendamentos() {
       {isAgendamentos && (
         <div className="section-mensagem-usuario">
           <section
-            className={
-              isPhone
-                ? "section-name"
-                : "section-name msg-bottom "
-            }
+            className={isPhone ? "section-name" : "section-name msg-bottom "}
           >
             {agendamentos}
           </section>
