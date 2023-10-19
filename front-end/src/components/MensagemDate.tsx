@@ -4,8 +4,9 @@ import AgendamentosContext from "../context/AgendamentosContext";
 
 function MensagemDate() {
   const [text, setText] = useState("");
-  const { setIsDates } = useContext(AgendamentosContext);
+  const { setIsDates, containerRef } = useContext(AgendamentosContext);
 
+  
   useEffect(() => {
     const textoArray1 = messagensInicials.mensagem05.split("");
     let currentText1 = "";
@@ -19,10 +20,14 @@ function MensagemDate() {
         setIsDates(true);
       }
     }, 40);
-
+    
     return () => clearInterval(typingInterval);
   }, []);
-
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.scrollTop = 9999;
+    }
+  }, [text]);
   return <div>{<p>{text}</p>}</div>;
 }
 export default MensagemDate;

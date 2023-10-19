@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import messagensInicials from "../utils/mensagens";
 import AgendamentosContext from "../context/AgendamentosContext";
 
@@ -6,10 +6,15 @@ function Welcome() {
   const [text, setText] = useState("");
   const [text2, setText2] = useState("");
   const [istext, setIsText] = useState(false);
-  const { values, setIsServices, setButtonEnviar, setButtonWelcome }: any =
-    useContext(AgendamentosContext);
+  const {
+    values,
+    setIsServices,
+    setButtonEnviar,
+    setButtonWelcome,
+    isServices,
+  } = useContext(AgendamentosContext);
   const mensagem = messagensInicials.mensagem03(values.name);
-  const name = localStorage.getItem("name");
+  const name: any = localStorage.getItem("name");
   const mensagem2 = messagensInicials.mensagem10(JSON.parse(name));
 
   useEffect(() => {
@@ -38,6 +43,8 @@ function Welcome() {
     }, 35);
     return () => clearInterval(typingInterval);
   }, []);
+
+
 
   return (
     <div>

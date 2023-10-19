@@ -8,7 +8,6 @@ function MensageConclusão() {
   const [text3, setText3] = useState("");
   const [istext, setIsText] = useState(false);
   const [isAgradecimento, setIsAgradecimento] = useState(false);
-  const [sevices, setServices] = useState("");
   const {
     values,
     agendamentos,
@@ -16,6 +15,7 @@ function MensageConclusão() {
     setIsMyAgendamentos,
     handleLocalStorange,
     setCanRender,
+    containerRef,
   } = useContext(AgendamentosContext);
 
   const mensagem = messagensInicials.mensagem08(
@@ -52,6 +52,11 @@ function MensageConclusão() {
     }, 40);
     return () => clearInterval(typingInterval);
   }, [values.phone]);
+   useEffect(() => {
+     if (containerRef.current) {
+       containerRef.current.scrollTop = 9999;
+     }
+   }, [text, text2, text3]);
   return (
     <div>
       <section className="section-mensagem">

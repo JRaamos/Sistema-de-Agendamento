@@ -6,72 +6,23 @@ import servicesJson from "../utils/services.json";
 import { parse, format } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
 import AgendamentosContext from "../context/AgendamentosContext";
+import { Agendamentos } from "../types/MeusAgendamentos";
 
 function MeusAgendamentos() {
   const location = useLocation();
 
-  const {
-    setInputValue,
-    setIsName,
-    setText,
-    setText2,
-    setIsText,
-    setIsDate,
-    setPhone,
-    setIsAgendamentos,
-    setDisableInput,
-    setIsServicesSelected,
-    setIsDates,
-    setSelectedDate,
-    setIsPhone,
-    setIsMyAgendamentos,
-    setValues,
-    setDisableButton,
-    setIsServices,
-    setServicesSelected,
-    setPhoneNumber,
-    setCanRender,
-    setInputPhone,
-  } = useContext(AgendamentosContext);
-  const resetStates = () => {
-    setInputValue("");
-    setIsName(false);
-    setText("");
-    setText2("");
-    setIsText(false);
-    setIsDate(false);
-    setIsPhone(false);
-    setIsServices(false);
-    setPhone("");
-    setIsAgendamentos(false);
-    setDisableInput(true);
-    setIsServicesSelected(false);
-    setIsDates(false);
-    setSelectedDate(null);
-    setIsMyAgendamentos(false);
-    setValues({
-      name: "",
-      phone: "",
-      date: "",
-      hour: "",
-      services: "",
-    });
-    setDisableButton(true);
-    setServicesSelected([]);
-    setPhoneNumber(null);
-    setInputPhone(false);
-    setCanRender(false);
-  };
+  const { resetStates } = useContext(AgendamentosContext);
 
   useEffect(() => {
     resetStates();
   }, [location]);
+
   const navigate = useNavigate();
-  const [agendamentos, setAgendamentos] = useState([]);
+  const [agendamentos, setAgendamentos] = useState<Agendamentos[]> ([]);
   const [serviceSelected, setServiceSelected] = useState([]);
   const [price, setPrice] = useState(0);
   const [cancelar, setCancelar] = useState(false);
-  const [hour, setHour] = useState(0);
+  const [hour, setHour] = useState<string | number>(0);
   const [date, setDate] = useState("");
   useEffect(() => {
     const values = localStorage.getItem("agendamentos");
@@ -119,7 +70,7 @@ function MeusAgendamentos() {
     if (storage) {
       const agendamentos = JSON.parse(storage);
 
-      const newAgendamentos = agendamentos.filter((agendamento) => {
+      const newAgendamentos = agendamentos.filter((agendamento: Agendamentos): boolean => {
         return agendamento.agendamentos !== formatDate(dataUS);
       });
 
@@ -145,7 +96,7 @@ function MeusAgendamentos() {
           <h2>Meus agendamentos</h2>
           <div>
             {agendamentos &&
-              agendamentos.map((agendamento, index) => (
+              agendamentos.map((agendamento: Agendamentos, index) => (
                 <div key={index} className="agendamento-card">
                   <div className="header-card">
                     <p>{agendamento.date}</p>

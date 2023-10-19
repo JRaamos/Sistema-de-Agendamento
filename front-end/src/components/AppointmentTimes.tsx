@@ -13,11 +13,16 @@ const AppointmentTimes: FC<AppointmentTimesProps> = ({
   selectedDate,
   selectedServices,
 }) => {
-  const [availableTimes, setAvailableTimes] = useState<string[]>([]);
+
   const [bookedTimes, setBookedTimes] = useState<string[]>([]);
-  const [selectedTimes, setSelectedTimes] = useState<string[]>([]);
-  const { values, setValues, setDisableButton } =
-    useContext(AgendamentosContext);
+  const [selectedTimes, setSelectedTimes] = useState<any[]>([]);
+  const {
+    values,
+    setValues,
+    setDisableButton,
+    availableTimes,
+    setAvailableTimes,
+  } = useContext(AgendamentosContext);
 
   // Função para calcular os horários disponíveis com base nos serviços selecionados e na data
   const calculateAvailableTimes = () => {

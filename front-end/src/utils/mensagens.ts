@@ -8,7 +8,7 @@ const mensagensInicial = {
   mensagem05: 'Blz, e qual o melhor dia e horário para você ser atendido?',
   mensagem06: `Me informe seu numero de telefone, por favor com o DDD.`,
   mensagem07: 'Perfeito ... Tudo certo',
-  mensagem08: (service, date) => `Agendamento realizado com sucesso! Um(a) ${service}, com o barbeiro CHUCA no(a), ${date}`,
+  mensagem08: (service: string, date: string) => `Agendamento realizado com sucesso! Um(a) ${service}, com o barbeiro CHUCA no(a), ${date}`,
   mensagem09: 'Muito obrigado, até mais!',
   mensagem10: (name: string) => `Olá ${name}, Seja Bem vindo de volta!`,
 };

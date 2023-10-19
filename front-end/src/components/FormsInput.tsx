@@ -4,12 +4,14 @@ import { format } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
 import "../styles/formsInput.css";
 import PhoneNumberInput from "./PhoneNumberInput";
+import { AgendamentosContextType } from "../types/AgendamentosProvider";
 
 function FormsInput() {
   const {
     values,
     setValues,
     setIsServices,
+    setMsgServices,
     setIsDate,
     setPhone,
     servicesSelected,
@@ -17,7 +19,6 @@ function FormsInput() {
     setIsName,
     disableButton,
     setDisableButton,
-    isPhone,
     buttonWelcome,
     setIsPhone,
     agendamentos,
@@ -30,8 +31,8 @@ function FormsInput() {
     phoneNumber,
     inputPhone,
     setInputPhone,
-  }: any = useContext(AgendamentosContext);
-  const [name, setName] = useState("");
+    containerRef,
+  } = useContext<AgendamentosContextType>(AgendamentosContext);
   const rendleAgendamentos = () => {
     const inputDate = new Date(values.date);
     const formattedDate = format(inputDate, "EEE, dd 'de' MMMM 'de' yyyy", {
@@ -60,13 +61,19 @@ function FormsInput() {
       setDisableInput(true);
     }
 
-    if (values.name && !values.services) {
+    if (values.name && values.services.length === 0) {
       setValues({ ...values, services: servicesSelected });
       setInputValue("");
       setDisableButton(true);
       setIsDate(true);
+      setMsgServices(true);
     }
-    if (values.services && values.date && values.hour && !values.phone) {
+    if (
+      values.services.length !== 0 &&
+      values.date &&
+      values.hour &&
+      !values.phone
+    ) {
       setValues({ ...values, phone: phoneNumber });
       setPhone(phoneNumber);
       setInputValue("");
@@ -99,6 +106,11 @@ function FormsInput() {
       setIsPhone(true);
     }
   };
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.scrollTop = 9999;
+    }
+  }, [inputPhone]);
 
   return (
     <form className="rodape">

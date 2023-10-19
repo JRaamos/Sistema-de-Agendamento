@@ -51,10 +51,10 @@ function Services() {
               ) : (
                 <p>{`R$ ${service.price},00`}</p>
               )}
-              {service.duration !== null ? (
-                <p>{`${service.duration}min`}</p>
-              ) : (
+              {service.services === "Pigmentação" ? (
                 ""
+              ) : (
+                <p>{`${service.duration}min`}</p>
               )}
             </div>
           </div>
