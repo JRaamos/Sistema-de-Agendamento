@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   font-size: 18px;
-  height: 95vh;
+  height: 98vh;
   margin: 0 auto;
   overflow-y: scroll;
   padding-top: env(safe-area-inset-top);
@@ -91,4 +91,11 @@ input::-webkit-outer-spin-button , input::-webkit-inner-spin-button {
 .button-meus-agendamentos-header:hover {
   background-color: #bdb0c9;
   cursor: pointer;
+}
+
+@media screen and ( max-width : 600px ) {
+
+  .container-agendamentos {
+    height: 90vh;
+  }
 }
