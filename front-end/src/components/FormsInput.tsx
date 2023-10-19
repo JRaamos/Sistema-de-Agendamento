@@ -108,7 +108,9 @@ function FormsInput() {
   };
   useEffect(() => {
     if (containerRef.current) {
-      containerRef.current.scrollTop = 9999;
+      const container = containerRef.current;
+      const scrollHeight = container.scrollHeight;
+      container.scrollTop = scrollHeight;
     }
   }, [inputPhone]);
 

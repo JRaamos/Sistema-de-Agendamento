@@ -52,11 +52,13 @@ function MensageConclusão() {
     }, 40);
     return () => clearInterval(typingInterval);
   }, [values.phone]);
-   useEffect(() => {
-     if (containerRef.current) {
-       containerRef.current.scrollTop = 9999;
-     }
-   }, [text, text2, text3]);
+  useEffect(() => {
+    if (containerRef.current) {
+      const container = containerRef.current;
+      const scrollHeight = container.scrollHeight;
+      container.scrollTop = scrollHeight;
+    }
+  }, [text, text2, text3]);
   return (
     <div>
       <section className="section-mensagem">
