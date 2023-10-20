@@ -3,7 +3,7 @@ import { Schedule } from '../../types/schedules'
 
 export default {
   up(queryInterface: QueryInterface) {
-    return queryInterface.createTable<Model<Schedule>>('schedule', {
+    return queryInterface.createTable<Model<Schedule>>('schedules', {
       scheduleId: {
         type: DataTypes.INTEGER.UNSIGNED,
         primaryKey: true,
@@ -37,6 +37,6 @@ export default {
     });
   },
   down(queryInterface: QueryInterface) {
-    return queryInterface.dropTable('users');
+    return queryInterface.dropTable('schedules');
   }
 };
