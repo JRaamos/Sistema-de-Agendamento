@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  backend:
+    tty: true
+    stdin_open: true
+    image: node:18.18.2
+    container_name: backend
+    build:
+      context: ./backend
+    volumes:
+      - ./:/app
+    ports:
+      - "3001:3001"
+    depends_on:
+      - database
+    environment:
+      NODE_ENV: production
+      MYSQLUSER: ${MYSQLUSER}
+      MYSQLPASSWORD: ${MYSQLPASSWORD}
+      MYSQLDATABASE: ${MYSQLDATABASE}
+
+  database:
+    image: mysql:5.7
+    container_name: database
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQLPASSWORD}

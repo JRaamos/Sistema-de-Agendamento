@@ -1,0 +1,6 @@
+
+/**/fixtures/projects/back-end/.eslintrc.json
+src/database/migrations
+src/database/seeders
+build/
+tests
