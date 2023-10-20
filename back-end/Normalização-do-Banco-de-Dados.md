@@ -9,12 +9,12 @@
 ## Tabela de Serviços
 
 - service_id (Chave Primária)
-- name (Nome do serviço)
+- service (Nome do serviço)
 - price (Preço do serviço)
 
 ## Tabela de Agendamentos
 
-- appointment_id (Chave Primária)
+- Schedule_id (Chave Primária)
 - user_id (Chave Estrangeira referenciando a tabela de Usuários)
 - date (Data do agendamento)
 - hour (Hora do agendamento)

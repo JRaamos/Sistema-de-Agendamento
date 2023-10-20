@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  backend:
+    container_name: backend_production
+   # tty: true
+   # stdin_open: true
+    build: back-end
+    #command: bash -c "npm install && npm run dev"
+    #volumes:
+     # - ./src:/app/src
+    ports:
+      - "3001:3001"
+    depends_on:
+      - database
+    environment:
+      DB_USER: ${MYSQLUSER}
+      DB_HOST: ${MYSQLHOST}
+      DB_PASSWORD: ${MYSQLPASSWORD}
+      DB_NAME: ${MYSQLDATABASE}
+      DB_PORT:  ${MYSQLPORT}
+
+  database:
+    image: mysql:5.7
+    container_name: database
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQLPASSWORD}
