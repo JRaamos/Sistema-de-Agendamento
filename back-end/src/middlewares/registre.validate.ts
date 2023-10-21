@@ -1,22 +1,20 @@
 import { Request, Response, NextFunction } from 'express';
 
-const message = 'Invalid entries. Try again.';
-
 const validateUser = (req: Request, res: Response, next: NextFunction) => {
   const { name, phone } = req.body;
 
   if (!name || !phone) {
-    return res.status(400).json({ message });
+    return res.status(300).json({ message: 'Invalid name or phone. Try again.' });
   }
 
   next();
 };
 
 const validateService = (req: Request, res: Response, next: NextFunction) => {
-  const { services, price } = req.body;
+  const { services } = req.body;
 
-  if (!services || !price) {
-    return res.status(400).json({ message });
+  if (!services) {
+    return res.status(300).json({ message: 'Invalid services. Try again.' });
   }
 
   next();
@@ -26,7 +24,7 @@ const validadeSchedule = (req: Request, res: Response, next: NextFunction) => {
   const { date, hour } = req.body;
 
   if (!date || !hour) {
-    return res.status(400).json({ message });
+    return res.status(300).json({ message: 'Invalid date or hour. Try again.' });
   }
 
   next();
