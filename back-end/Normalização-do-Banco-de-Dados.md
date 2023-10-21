@@ -11,6 +11,7 @@
 - service_id (Chave Primária)
 - service (Nome do serviço)
 - price (Preço do serviço)
+- user_id (Chave Estangeira referenciando a tabela de Usuarios)
 
 ## Tabela de Agendamentos
 

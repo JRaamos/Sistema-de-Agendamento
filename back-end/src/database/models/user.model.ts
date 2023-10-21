@@ -11,6 +11,7 @@ const UserModel: UserSequelizeModelCreator = db.define('User', {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
+    field: 'user_id',
   },
   name: {
     type: DataTypes.STRING(128),

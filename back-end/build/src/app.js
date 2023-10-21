@@ -4,9 +4,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const registres_routers_1 = __importDefault(require("./routers/registres.routers"));
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
+app.use(registres_routers_1.default);
 exports.default = app;

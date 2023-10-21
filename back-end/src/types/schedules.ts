@@ -1,7 +1,7 @@
 export type Schedule = {
-  scheduleId?: number;
+  scheduleId: number;
   date: string;
   hour: string;
   userId: number;
-  serviceId: number;
+  serviceId: number | number[];
 };

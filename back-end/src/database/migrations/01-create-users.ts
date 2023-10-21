@@ -9,6 +9,7 @@ export default {
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
+        field: 'user_id',
       },
       name: {
         type: DataTypes.STRING(255),

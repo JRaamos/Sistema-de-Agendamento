@@ -2,7 +2,7 @@ import { DataTypes, Model, ModelDefined, Optional } from 'sequelize';
 import db from './index';
 import { Service } from '../../types/Services';
 
-type ServiceInputtableTypes = Optional<Service, 'serviceId'>;
+export type ServiceInputtableTypes = Optional<Service, 'serviceId'>;
 type ServiceSequelizeModelCreator = ModelDefined<Service, ServiceInputtableTypes>;
 export type ServiceSequelizeModel = Model<Service, ServiceInputtableTypes>;
 
@@ -12,14 +12,19 @@ const ServiceModel: ServiceSequelizeModelCreator = db.define('Service', {
     autoIncrement: true,
     primaryKey: true,
   },
-  service: {
-    type: new DataTypes.STRING(128),
+  services: {
+    type: DataTypes.STRING(128),
     allowNull: false,
   },
   price: {
     type: DataTypes.STRING(128),
     allowNull: false,
   },
+  userId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  
 }, {
   tableName: 'services',
   timestamps: false,

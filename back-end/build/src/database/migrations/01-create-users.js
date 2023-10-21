@@ -9,6 +9,7 @@ exports.default = {
                 primaryKey: true,
                 autoIncrement: true,
                 allowNull: false,
+                field: 'user_id',
             },
             name: {
                 type: sequelize_1.DataTypes.STRING(255),

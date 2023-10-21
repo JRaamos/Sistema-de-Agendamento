@@ -1,5 +1,6 @@
 export type Service = {
-  serviceId?: number;
-  service: string;
+  serviceId: number;
+  services: string | string[];
   price: number;
+  userId: number;
 };

@@ -9,14 +9,24 @@ export default {
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
+        field: 'service_id',
       },
-      service: {
+      services: {
         type: DataTypes.STRING(255),
         allowNull: false,
       },
       price: {
         type: DataTypes.STRING(255),
         allowNull: false,
+      },
+      userId: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        allowNull: false,
+        field: 'user_id',
+        references: {
+          model: 'users',
+          key: 'user_id',
+        },
       },
     });
   },

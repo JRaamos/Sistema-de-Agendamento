@@ -2,7 +2,7 @@ import { DataTypes, Model, ModelDefined, Optional } from 'sequelize';
 import db from './index';
 import { Schedule } from '../../types/schedules';
 
-type ScheduleInputtableTypes = Optional<Schedule, 'scheduleId'>;
+export type ScheduleInputtableTypes = Optional<Schedule, 'scheduleId'>;
 type ScheduleSequelizeModelCreator = ModelDefined<Schedule, ScheduleInputtableTypes>;
 export type ScheduleSequelizeModel = Model<Schedule, ScheduleInputtableTypes>;
 
@@ -11,6 +11,7 @@ const ScheduleModel: ScheduleSequelizeModelCreator = db.define('Schedule', {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
+    field: 'schedule_id',
   },
   date: {
     type: DataTypes.DATE,

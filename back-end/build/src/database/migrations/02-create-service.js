@@ -9,18 +9,28 @@ exports.default = {
                 primaryKey: true,
                 autoIncrement: true,
                 allowNull: false,
+                field: 'service_id',
             },
-            service: {
+            services: {
                 type: sequelize_1.DataTypes.STRING(255),
                 allowNull: false,
             },
             price: {
+                type: sequelize_1.DataTypes.STRING(255),
+                allowNull: false,
+            },
+            userId: {
                 type: sequelize_1.DataTypes.INTEGER.UNSIGNED,
                 allowNull: false,
+                field: 'user_id',
+                references: {
+                    model: 'users',
+                    key: 'user_id',
+                },
             },
         });
     },
     down(queryInterface) {
-        return queryInterface.dropTable('users');
+        return queryInterface.dropTable('services');
     }
 };

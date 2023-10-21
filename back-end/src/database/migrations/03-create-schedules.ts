@@ -9,6 +9,7 @@ export default {
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
+        field: 'schedule_id',
       },
       date: {
         type: DataTypes.DATE,
@@ -21,17 +22,19 @@ export default {
       userId: {
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
+        field: 'user_id',
         references: {
           model: 'users',
-          key: 'userId',
+          key: 'user_id',
         },
       },
       serviceId: {
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
+        field: 'service_id',
         references: {
           model: 'services',
-          key: 'serviceId',
+          key: 'service_id',
         },
       },
     });
