@@ -5,6 +5,7 @@ import ptBR from "date-fns/locale/pt-BR";
 import "../styles/formsInput.css";
 import PhoneNumberInput from "./PhoneNumberInput";
 import { AgendamentosContextType } from "../types/AgendamentosProvider";
+import fetchAPi from "../utils/fetchApi";
 
 function FormsInput() {
   const {
@@ -71,17 +72,17 @@ function FormsInput() {
       setButtonEnviar(false);
     }
     if (
-      values.services.length !== 0 &&
       values.date &&
       values.hour &&
-      !values.phone
+      values.phone
     ) {
-      setValues({ ...values, phone: phoneNumber });
+
       setPhone(phoneNumber);
       setInputValue("");
       setDisableButton(true);
       setInputPhone(false);
       localStorage.setItem("name", JSON.stringify(values.name));
+      fetchAPi(values);
     }
   };
 

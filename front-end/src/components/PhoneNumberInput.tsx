@@ -3,7 +3,7 @@ import MaskedInput from "react-text-mask";
 import AgendamentosContext from "../context/AgendamentosContext";
 
 function PhoneNumberInput() {
-  const { phoneNumber, setPhoneNumber, setDisableButton } =
+  const { phoneNumber, setPhoneNumber, setDisableButton, values, setValues } =
     useContext(AgendamentosContext);
   const phoneMask = [
     "(",
@@ -24,6 +24,7 @@ function PhoneNumberInput() {
   ];
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setValues({ ...values, phone: e.target.value });
     setPhoneNumber(e.target.value);
     if (e.target.value.length > 14) {
       setDisableButton(false);
