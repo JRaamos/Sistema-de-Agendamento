@@ -9,4 +9,8 @@ const createSchedule = async (schedule) => {
     const scheduleResult = await schedules_model_1.default.create({ date, hour, userId, serviceId });
     return scheduleResult.dataValues;
 };
-exports.default = { createSchedule };
+const finaAllSchedulesDate = async (date) => {
+    const scheduleResult = await schedules_model_1.default.findAll({ where: { date } });
+    return scheduleResult.map((schedule) => schedule.dataValues);
+};
+exports.default = { createSchedule, finaAllSchedulesDate };

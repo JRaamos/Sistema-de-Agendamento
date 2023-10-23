@@ -13,7 +13,7 @@ const ScheduleModel = index_1.default.define('Schedule', {
         field: 'schedule_id',
     },
     date: {
-        type: sequelize_1.DataTypes.DATE,
+        type: sequelize_1.DataTypes.DATEONLY,
         allowNull: false,
     },
     hour: {

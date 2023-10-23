@@ -12,7 +12,7 @@ export default {
         field: 'schedule_id',
       },
       date: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: false,
       },
       hour: {

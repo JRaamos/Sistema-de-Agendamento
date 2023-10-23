@@ -7,9 +7,9 @@ const user_service_1 = __importDefault(require("../services/user.service"));
 const service_service_1 = __importDefault(require("../services/service.service"));
 const schedules_service_1 = __importDefault(require("../services/schedules.service"));
 const CreateRegister = async (req, res) => {
-    const { name, phone, date, hour, price, services } = req.body;
+    const { name, phone, date, hour, services } = req.body;
     const user = await user_service_1.default.createUserService({ name, phone });
-    const serviceIds = await service_service_1.default.createService({ services, price, userId: user });
+    const serviceIds = await service_service_1.default.createService({ services, userId: user });
     const scheduleData = {
         date,
         hour,

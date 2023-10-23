@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import routerRegistre from './routers/registres.routers';
+import routerSchedules from './routers/schedules.router';
 
 const app = express();
 
@@ -12,5 +13,6 @@ app.get('/', (req, res) => {
 
 app.use(cors());
 app.use(routerRegistre);
+app.use(routerSchedules);
 
 export default app;

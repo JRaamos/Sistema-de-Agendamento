@@ -12,7 +12,7 @@ exports.default = {
                 field: 'schedule_id',
             },
             date: {
-                type: sequelize_1.DataTypes.DATE,
+                type: sequelize_1.DataTypes.DATEONLY,
                 allowNull: false,
             },
             hour: {

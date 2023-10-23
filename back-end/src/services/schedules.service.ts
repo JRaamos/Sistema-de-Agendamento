@@ -9,4 +9,9 @@ Promise<Schedule> => {
   return scheduleResult.dataValues as Schedule;
 };
 
-export default { createSchedule };
+const finaAllSchedulesDate = async (date: string): Promise<Schedule[]> => {
+  const scheduleResult = await ScheduleModel.findAll({ where: { date } });
+  return scheduleResult.map((schedule) => schedule.dataValues) as Schedule[];
+};
+
+export default { createSchedule, finaAllSchedulesDate };
