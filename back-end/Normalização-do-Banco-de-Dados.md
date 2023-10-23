@@ -11,7 +11,7 @@
 - service_id (Chave Primária)
 - service (Nome do serviço)
 - price (Preço do serviço)
-- user_id (Chave Estangeira referenciando a tabela de Usuarios)
+- duration (duração do serviço)
 
 ## Tabela de Agendamentos
 
@@ -19,4 +19,8 @@
 - user_id (Chave Estrangeira referenciando a tabela de Usuários)
 - date (Data do agendamento)
 - hour (Hora do agendamento)
+
+## Tabela de Agendamentos_Serviços (Tabela de Junção)
+- id 
+- schedule_id (Chave Estrangeira referenciando a tabela de Agendamentos)
 - service_id (Chave Estrangeira referenciando a tabela de Serviços)

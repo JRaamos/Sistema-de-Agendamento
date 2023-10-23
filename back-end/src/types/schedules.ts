@@ -3,5 +3,4 @@ export type Schedule = {
   date: string;
   hour: string;
   userId: number;
-  serviceId: number | number[];
 };

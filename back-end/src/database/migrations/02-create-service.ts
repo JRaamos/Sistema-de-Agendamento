@@ -11,7 +11,7 @@ export default {
         allowNull: false,
         field: 'service_id',
       },
-      services: {
+      service: {
         type: DataTypes.STRING(255),
         allowNull: false,
       },
@@ -19,15 +19,10 @@ export default {
         type: DataTypes.STRING(255),
         allowNull: false,
       },
-      userId: {
-        type: DataTypes.INTEGER.UNSIGNED,
+      duration: {
+        type: DataTypes.STRING(255),
         allowNull: false,
-        field: 'user_id',
-        references: {
-          model: 'users',
-          key: 'user_id',
-        },
-      },
+      }
     });
   },
   down(queryInterface: QueryInterface) {

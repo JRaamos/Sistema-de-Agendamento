@@ -28,15 +28,6 @@ export default {
           key: 'user_id',
         },
       },
-      serviceId: {
-        type: DataTypes.INTEGER.UNSIGNED,
-        allowNull: false,
-        field: 'service_id',
-        references: {
-          model: 'services',
-          key: 'service_id',
-        },
-      },
     });
   },
   down(queryInterface: QueryInterface) {
