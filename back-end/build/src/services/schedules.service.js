@@ -4,13 +4,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const schedules_model_1 = __importDefault(require("../database/models/schedules.model"));
+const service_model_1 = __importDefault(require("../database/models/service.model"));
 const createSchedule = async (schedule) => {
     const { date, hour, userId } = schedule;
     const scheduleResult = await schedules_model_1.default.create({ date, hour, userId });
     return scheduleResult.dataValues;
 };
 const finaAllSchedulesDate = async (date) => {
-    const scheduleResult = await schedules_model_1.default.findAll({ where: { date } });
-    return scheduleResult.map((schedule) => schedule.dataValues);
+    const schedulesWithServices = await schedules_model_1.default.findAll({
+        where: { date },
+        include: {
+            model: service_model_1.default,
+            as: 'services',
+            attributes: ['service', 'price', 'duration'],
+            through: { attributes: [] },
+        },
+    });
+    return schedulesWithServices;
 };
 exports.default = { createSchedule, finaAllSchedulesDate };

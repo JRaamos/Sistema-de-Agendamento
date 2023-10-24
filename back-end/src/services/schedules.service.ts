@@ -1,6 +1,6 @@
 import ScheduleModel, { ScheduleInputtableTypes } from '../database/models/schedules.model';
+import ServiceModel from '../database/models/service.model';
 import { Schedule } from '../types/schedules';
-import ScheduleServiceModel from '../database/models/scheduleService.model';
 
 const createSchedule = async (schedule: ScheduleInputtableTypes):
 Promise<Schedule> => {
@@ -10,16 +10,18 @@ Promise<Schedule> => {
   return scheduleResult.dataValues as Schedule;
 };
 
-const finaAllSchedulesDate = async (date: string): Promise<Schedule[]> => {
-  const scheduleResult = await ScheduleModel.findAll({ where: { date } });
-  const scheduleIds = scheduleResult.map((schedule) => schedule.dataValues.scheduleId);
-
-  const scheduleServices = await ScheduleServiceModel.findAll({
-    where: { scheduleId: scheduleIds },
+const finaAllSchedulesDate = async (date: string) => {
+  const schedulesWithServices = await ScheduleModel.findAll({
+    where: { date },
+    include: {
+      model: ServiceModel, // Use o modelo ServiceModel
+      as: 'services', // A associação é chamada 'services'
+      attributes: ['service', 'price', 'duration'],
+      through: { attributes: [] },
+    },
   });
-  console.log(scheduleServices.map((schedule) => schedule.dataValues));
-  
-  return scheduleResult.map((schedule) => schedule.dataValues) as Schedule[];
+
+  return schedulesWithServices;
 };
 
 export default { createSchedule, finaAllSchedulesDate };

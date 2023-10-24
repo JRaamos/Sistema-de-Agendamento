@@ -18,7 +18,7 @@ const ScheduleServiceModel = index_1.default.define('ScheduleService', {
         allowNull: false,
         field: 'schedule_id',
         references: {
-            model: 'schedules',
+            model: schedules_model_1.default,
             key: 'schedule_id',
         },
     },
@@ -27,7 +27,7 @@ const ScheduleServiceModel = index_1.default.define('ScheduleService', {
         allowNull: false,
         field: 'service_id',
         references: {
-            model: 'services',
+            model: service_model_1.default,
             key: 'service_id',
         },
     },
@@ -40,5 +40,6 @@ schedules_model_1.default.belongsToMany(service_model_1.default, {
     through: ScheduleServiceModel,
     foreignKey: 'schedule_id',
     otherKey: 'service_id',
+    as: 'services',
 });
 exports.default = ScheduleServiceModel;

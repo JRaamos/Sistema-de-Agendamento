@@ -29,7 +29,7 @@ const ScheduleServiceModel: ScheduleServiceSequelizeModelCreator = db.define(
       allowNull: false,
       field: 'schedule_id',
       references: {
-        model: 'schedules',
+        model: ScheduleModel,
         key: 'schedule_id',
       },
     },
@@ -38,7 +38,7 @@ const ScheduleServiceModel: ScheduleServiceSequelizeModelCreator = db.define(
       allowNull: false,
       field: 'service_id',
       references: {
-        model: 'services',
+        model: ServiceModel,
         key: 'service_id',
       },
     },
@@ -53,6 +53,7 @@ ScheduleModel.belongsToMany(ServiceModel, {
   through: ScheduleServiceModel,
   foreignKey: 'schedule_id',
   otherKey: 'service_id',
+  as: 'services',
 });
 
 export default ScheduleServiceModel;

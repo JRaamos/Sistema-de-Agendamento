@@ -14,7 +14,7 @@ services:
       - database
     environment:
       MYSQLUSER: ${MYSQLUSER}
-      MYSQLHOST: ${MYSQLHOST}
+      MYSQLHOST: database
       MYSQLPASSWORD: ${MYSQLPASSWORD}
       MYSQLDATABASE: ${MYSQLDATABASE}
       MYSQLPORT:  ${MYSQLPORT}
