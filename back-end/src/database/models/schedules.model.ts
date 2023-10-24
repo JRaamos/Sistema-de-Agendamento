@@ -1,7 +1,6 @@
 import { DataTypes, Model, ModelDefined, Optional } from 'sequelize';
 import db from './index';
 import { Schedule } from '../../types/schedules';
-import  ServiceModel  from './service.model'
 
 export type ScheduleInputtableTypes = Optional<Schedule, 'scheduleId'>;
 type ScheduleSequelizeModelCreator = ModelDefined<Schedule, ScheduleInputtableTypes>;
@@ -30,12 +29,6 @@ const ScheduleModel: ScheduleSequelizeModelCreator = db.define('Schedule', {
   tableName: 'schedules',
   timestamps: false,
   underscored: true,
-});
-
-
-ScheduleModel.belongsToMany(ServiceModel, {
-  through: 'ScheduleServices', 
-  foreignKey: 'schedule_id',
 });
 
 export default ScheduleModel;

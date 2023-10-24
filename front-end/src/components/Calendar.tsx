@@ -4,10 +4,16 @@ import ptBR from "date-fns/locale/pt-BR";
 import "../styles/calendar.css";
 import AgendamentosContext from "../context/AgendamentosContext";
 import { DateList } from "../types/Calendar";
+import { fetchAPiGet } from "../utils/fetchApi";
 
 const Calendar = () => {
-  const { selectedDate, setSelectedDate, values, setValues, containerRef } =
-    useContext(AgendamentosContext);
+  const {
+    selectedDate,
+    setSelectedDate,
+    values,
+    setValues,
+    containerRef,
+  } = useContext(AgendamentosContext);
   const currentDate = new Date();
   const [dates, setDates] = useState<DateList[]>([]);
   const [isSelected, setIsSelected] = useState(false);
@@ -31,6 +37,7 @@ const Calendar = () => {
   }, []);
 
   const handleButtonClick = (dayInfo: string) => {
+    
     setSelectedDate(dayInfo);
     setIsSelected(true);
     setValues({ ...values, date: dayInfo });

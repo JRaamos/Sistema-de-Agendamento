@@ -31,6 +31,8 @@ function AgendamentosProvider({ children }: AgendamentosProviderProps) {
   const [buttonWelcome, setButtonWelcome] = useState(false);
   const [canRender, setCanRender] = useState(false);
   const [msgServices, setMsgServices] = useState(false);
+  const [bookedTimes, setBookedTimes] = useState<string[]>([]);
+
   const [values, setValues] = useState<Values>({
     name: "",
     phone: undefined,
@@ -118,6 +120,7 @@ function AgendamentosProvider({ children }: AgendamentosProviderProps) {
         setDisableButton,
         servicesSelected,
         msgServices, setMsgServices,
+        bookedTimes, setBookedTimes,
         isServicesSelected,
         setServicesSelected,
         isMyAgendamentos,

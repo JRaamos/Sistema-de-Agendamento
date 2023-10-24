@@ -1,7 +1,9 @@
 import { Values } from "../types/AgendamentosProvider";
+import services from "./services.json"
 
-const fetchAPi = async (values: Values) => {
+export const fetchAPi = async (values: Values) => {
   const { agendamentos, ...newValues } = values;
+
   const response = (await fetch('http://localhost:3001/registre', {
     method: 'post',
     headers: { 'Content-Type': 'application/json' },
@@ -13,4 +15,17 @@ const fetchAPi = async (values: Values) => {
   
   return data;
 }
-export default fetchAPi;
+
+export const fetchAPiGet = async (date: string | null) => {
+  const response = (await fetch('http://localhost:3001/schedules', {
+    method: 'post',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ date })
+  }
+  ));
+
+  const data = await response.json();
+  
+  return data;
+}
+

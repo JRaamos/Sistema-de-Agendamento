@@ -1,21 +1,25 @@
 import { Request, Response } from 'express';
 import userService from '../services/user.service';
 import schedule from '../services/schedules.service';
+import servicesAll from '../services/service.service';
+import scheduleService from '../services/scheduleService.service';
 
 const CreateRegister = async (req: Request, res: Response) => {
   const { name, phone, date, hour, services } = req.body;
 
   const user = await userService.createUserService({ name, phone });
-  // const serviceIds = await service.createService({ services, userId: user }); 
+  const servicesIds = await servicesAll.findAllService(services);
 
   const scheduleData = {
     date,
     hour,
     userId: user,
-    serviceId: services,
   };
 
   const scheduleResult = await schedule.createSchedule(scheduleData);
+  servicesIds.forEach(async (serviceId) => {
+    await scheduleService.createScheduleService(scheduleResult.scheduleId, serviceId);
+  });
 
   return res.status(200).json({ user, scheduleResult });
 };

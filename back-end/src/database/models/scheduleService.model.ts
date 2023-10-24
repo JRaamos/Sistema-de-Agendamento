@@ -1,23 +1,23 @@
-import { DataTypes, Model, ModelDefined, Optional } from "sequelize";
-import db from "./index";
-import { ScheduleService } from "../../types/ScheduleServices";
-import ScheduleModel from "./schedules.model";
-import ServiceModel from "./service.model";
+import { DataTypes, Model, ModelDefined, Optional } from 'sequelize';
+import db from './index';
+import { ScheduleService } from '../../types/ScheduleServices';
+import ScheduleModel from './schedules.model';
+import ServiceModel from './service.model';
 
-export type ScheduleServiceInputtableTypes = Optional<ScheduleService, "id">;
+export type ScheduleServiceInputtableTypes = Optional<ScheduleService, 'id'>;
 
 type ScheduleServiceSequelizeModelCreator = ModelDefined<
-  ScheduleService,
-  ScheduleServiceInputtableTypes
+ScheduleService,
+ScheduleServiceInputtableTypes
 >;
 
 export type ScheduleServiceSequelizeModel = Model<
-  ScheduleService,
-  ScheduleServiceInputtableTypes
+ScheduleService,
+ScheduleServiceInputtableTypes
 >;
 
 const ScheduleServiceModel: ScheduleServiceSequelizeModelCreator = db.define(
-  "ScheduleService",
+  'ScheduleService',
   {
     id: {
       type: DataTypes.INTEGER,
@@ -27,27 +27,27 @@ const ScheduleServiceModel: ScheduleServiceSequelizeModelCreator = db.define(
     scheduleId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      field: "schedule_id",
+      field: 'schedule_id',
       references: {
-        model: "schedules",
-        key: "schedule_id",
+        model: 'schedules',
+        key: 'schedule_id',
       },
     },
     serviceId: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      field: "service_id",
+      field: 'service_id',
       references: {
-        model: "services",
-        key: "service_id",
+        model: 'services',
+        key: 'service_id',
       },
     },
   },
   {
-    tableName: "schedule_services",
+    tableName: 'schedule_services',
     timestamps: false,
     underscored: true,
-  }
+  },
 );
 ScheduleModel.belongsToMany(ServiceModel, {
   through: ScheduleServiceModel,

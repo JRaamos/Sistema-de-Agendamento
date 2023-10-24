@@ -7,7 +7,7 @@ const sequelize_1 = require("sequelize");
 const index_1 = __importDefault(require("./index"));
 const schedules_model_1 = __importDefault(require("./schedules.model"));
 const service_model_1 = __importDefault(require("./service.model"));
-const ScheduleServiceModel = index_1.default.define("ScheduleService", {
+const ScheduleServiceModel = index_1.default.define('ScheduleService', {
     id: {
         type: sequelize_1.DataTypes.INTEGER,
         autoIncrement: true,
@@ -16,23 +16,23 @@ const ScheduleServiceModel = index_1.default.define("ScheduleService", {
     scheduleId: {
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: false,
-        field: "schedule_id",
+        field: 'schedule_id',
         references: {
-            model: "schedules",
-            key: "schedule_id",
+            model: 'schedules',
+            key: 'schedule_id',
         },
     },
     serviceId: {
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: false,
-        field: "service_id",
+        field: 'service_id',
         references: {
-            model: "services",
-            key: "service_id",
+            model: 'services',
+            key: 'service_id',
         },
     },
 }, {
-    tableName: "schedule_services",
+    tableName: 'schedule_services',
     timestamps: false,
     underscored: true,
 });

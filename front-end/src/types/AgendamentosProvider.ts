@@ -67,6 +67,8 @@ export type AgendamentosContextType = {
   availableTimes: string[];
   setAvailableTimes: Dispatch<SetStateAction<string[]>>;
   containerRef: any;
+  bookedTimes: string[];
+  setBookedTimes: Dispatch<SetStateAction<string[]>>;
 };
 
 export type AgendamentosProviderProps = {

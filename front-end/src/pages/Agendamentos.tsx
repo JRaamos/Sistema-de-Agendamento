@@ -140,10 +140,7 @@ function Agendamentos() {
             <div className="hours">
               <section className={isAgendamentos ? "" : "msg-bottom"}>
                 {
-                  <AppointmentTimes
-                    selectedDate={selectedDate}
-                    selectedServices={servicesSelected}
-                  />
+                  <AppointmentTimes/>
                 }
               </section>
             </div>

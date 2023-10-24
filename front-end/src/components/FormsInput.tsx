@@ -5,7 +5,7 @@ import ptBR from "date-fns/locale/pt-BR";
 import "../styles/formsInput.css";
 import PhoneNumberInput from "./PhoneNumberInput";
 import { AgendamentosContextType } from "../types/AgendamentosProvider";
-import fetchAPi from "../utils/fetchApi";
+import { fetchAPi } from "../utils/fetchApi";
 
 function FormsInput() {
   const {
@@ -42,6 +42,7 @@ function FormsInput() {
     });
     setAgendamentos(`${formattedDate} as ${values.hour}`);
   };
+  
   useEffect(() => {
     const result = localStorage.getItem("name");
     if (result) {

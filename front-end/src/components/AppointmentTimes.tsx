@@ -5,83 +5,108 @@ import services from "../utils/services.json";
 import "../styles/appointmentTimes.css";
 import AgendamentosContext from "../context/AgendamentosContext";
 import { tr } from "date-fns/locale";
+import { fetchAPiGet } from "../utils/fetchApi";
 
-type AppointmentTimesProps = {
-  selectedDate: Date | null;
-  selectedServices: string[];
-};
-const AppointmentTimes: FC<AppointmentTimesProps> = ({
-  selectedDate,
-  selectedServices,
-}) => {
 
-  const [bookedTimes, setBookedTimes] = useState<string[]>([]);
+const AppointmentTimes = () => {
   const [selectedTimes, setSelectedTimes] = useState<any[]>([]);
   const {
+    servicesSelected,
     values,
     setValues,
     setDisableButton,
-          setButtonEnviar,
-
+    setButtonEnviar,
+    selectedDate,
     availableTimes,
     setAvailableTimes,
+    bookedTimes,
+    setBookedTimes,
   } = useContext(AgendamentosContext);
 
+    // Função para buscar os horários já agendados
+    const getBookedTimes = async (date: string | null) => {
+      const response = await fetchAPiGet(date);
+      const bookedTimes = response.map((item: any) => item.hour);
+      return bookedTimes;
+    };
+
   // Função para calcular os horários disponíveis com base nos serviços selecionados e na data
-  const calculateAvailableTimes = () => {
-    if (selectedServices.length === 0 || !selectedDate) {
-      setAvailableTimes([]);
-      return;
+const calculateAvailableTimes = async () => {
+  if (servicesSelected.length === 0 || !selectedDate) {
+    setAvailableTimes([]);
+    return;
+  }
+
+  // Busca os horários já agendados
+  const bookedTimes = await getBookedTimes(selectedDate);
+
+  const dayOfWeek = dayjs(selectedDate).format("dddd");
+
+  const totalDuration = getTotalDuration(servicesSelected);
+
+  const times = generateTimes(dayOfWeek, totalDuration);
+
+  // Remove os horários já agendados da lista de horários disponíveis
+  const availableTimes = filterBookedTimes(times, bookedTimes);
+
+  setAvailableTimes(availableTimes);
+};
+
+const getTotalDuration = (selectedServices: string[]) => {
+  return selectedServices.reduce((acc, servicesSelected) => {
+    const serviceInfo = services.find(
+      (service) => service.services === servicesSelected
+    );
+    if (serviceInfo) {
+      const serviceDuration = serviceInfo.duration;
+      return acc + (serviceDuration || 0);
     }
+    return acc;
+  }, 0);
+};
 
-    const dayOfWeek = dayjs(selectedDate).format("dddd");
+const generateTimes = (dayOfWeek: string, totalDuration: number) => {
+  const startTime = moment(selectedDate).set({ hour: 7, minute: 0 });
 
-    const totalDuration = selectedServices.reduce((acc, selectedService) => {
-      const serviceInfo = services.find(
-        (service) => service.services === selectedService
-      );
-      if (serviceInfo) {
-        const serviceDuration = serviceInfo.duration;
-        return acc + (serviceDuration || 0);
-      }
-      return acc;
-    }, 0);
+  let endTime = moment(selectedDate).set({ hour: 20, minute: 0 });
 
-    const startTime = moment(selectedDate).set({ hour: 7, minute: 0 });
-    let endTime = moment(selectedDate).set({ hour: 20, minute: 0 });
+  if (dayOfWeek === "Saturday") {
+    endTime = moment(selectedDate).set({ hour: 19, minute: 0 });
+  }
+  if (dayOfWeek === "Sunday") {
+    endTime = moment(selectedDate).set({ hour: 11, minute: 0 });
+  }
 
-    if (dayOfWeek === "Saturday") {
-      endTime = moment(selectedDate).set({ hour: 19, minute: 0 });
+  const times = [];
+
+  if (dayOfWeek === "Tuesday") {
+    return ["Sem horários disponíveis"];
+  }
+
+  while (startTime.isBefore(endTime)) {
+    const currentTime = startTime.format("HH:mm");
+    if (
+      startTime.isSameOrAfter(
+        moment(selectedDate).set({ hour: 12, minute: 0 })
+      ) &&
+      startTime.isBefore(moment(selectedDate).set({ hour: 14, minute: 0 }))
+    ) {
+    } else {
+      times.push(currentTime);
     }
-    if (dayOfWeek === "Sunday") {
-      endTime = moment(selectedDate).set({ hour: 11, minute: 0 });
+    startTime.add(totalDuration, "minutes");
+    if (startTime.isSameOrAfter(endTime)) {
+      break;
     }
-    const times: string[] = [];
+  }
 
-    if (dayOfWeek === "Tuesday") {
-      setAvailableTimes(["Sem horários disponíveis"]);
-      return;
-    }
+  return times;
+};
 
-    while (startTime.isBefore(endTime)) {
-      const currentTime = startTime.format("HH:mm");
-      if (
-        startTime.isSameOrAfter(
-          moment(selectedDate).set({ hour: 12, minute: 0 })
-        ) &&
-        startTime.isBefore(moment(selectedDate).set({ hour: 14, minute: 0 }))
-      ) {
-      } else {
-        times.push(currentTime);
-      }
-      startTime.add(totalDuration, "minutes");
-      if (startTime.isSameOrAfter(endTime)) {
-        break;
-      }
-    }
+const filterBookedTimes = (times: string[], bookedTimes: string[]) => {
+  return times.filter((time) => !bookedTimes.includes(time));
+};
 
-    setAvailableTimes(times);
-  };
 
   // Função para lidar com a seleção de horários
   const handleTimeClick = (time: string) => {
@@ -90,8 +115,7 @@ const AppointmentTimes: FC<AppointmentTimesProps> = ({
         selectedTimes.filter((selectedTime) => selectedTime !== time)
       );
       setValues({ ...values, hour: "" });
-              setButtonEnviar(false);
-
+      setButtonEnviar(false);
     } else {
       setSelectedTimes([selectedTimes, time]);
       setValues({ ...values, hour: time });
@@ -101,7 +125,7 @@ const AppointmentTimes: FC<AppointmentTimesProps> = ({
 
   useEffect(() => {
     calculateAvailableTimes();
-  }, [selectedDate, selectedServices]);
+  }, [selectedDate, servicesSelected]);
 
   return (
     <div className="hours-contain">
