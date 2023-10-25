@@ -6,6 +6,7 @@ import "../styles/appointmentTimes.css";
 import AgendamentosContext from "../context/AgendamentosContext";
 import { fetchAPiGet } from "../utils/fetchApi";
 
+
 const AppointmentTimes = () => {
   const [selectedTimes, setSelectedTimes] = useState<any[]>([]);
   const {
