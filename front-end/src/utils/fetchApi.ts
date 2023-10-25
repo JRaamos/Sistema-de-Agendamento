@@ -1,5 +1,4 @@
 import { Values } from "../types/AgendamentosProvider";
-import services from "./services.json"
 
 export const fetchAPi = async (values: Values) => {
   const { agendamentos, ...newValues } = values;

@@ -31,12 +31,14 @@ const AppointmentTimes = () => {
         services: item.services,
         };
         return obj;
-      });
-      console.log(bookedTimes);
-      
+      });      
       return bookedTimes;
     };
+
 const filterBookedTimes = (times: string[], bookedTimes: string[]) => {
+  console.log(times);
+  console.log(bookedTimes);
+  
   return times.filter((time) => !bookedTimes.includes(time));
 };
   // Função para calcular os horários disponíveis com base nos serviços selecionados e na data
@@ -108,6 +110,8 @@ const generateTimes = (dayOfWeek: string, totalDuration: number) => {
       break;
     }
   }
+  console.log(times);
+  
 
   return times;
 };
