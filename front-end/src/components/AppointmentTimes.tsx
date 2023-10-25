@@ -22,6 +22,7 @@ const AppointmentTimes = () => {
     setBookedTimes,
   } = useContext(AgendamentosContext);
 
+<<<<<<< HEAD
   // Função para buscar os horários já agendados
  const getBookedTimes = async (date: string | null) => {
    const response = await fetchAPiGet(date);
@@ -44,6 +45,55 @@ const AppointmentTimes = () => {
     if (servicesSelected.length === 0 || !selectedDate) {
       setAvailableTimes([]);
       return;
+=======
+    // Função para buscar os horários já agendados
+    const getBookedTimes = async (date: string | null) => {
+      const response = await fetchAPiGet(date);
+      const bookedTimes = response.map((item: any) => {
+        const obj = {
+        hour: item.hour,
+        services: item.services,
+        };
+        return obj;
+      });
+      console.log(bookedTimes);
+      
+      return bookedTimes;
+    };
+const filterBookedTimes = (times: string[], bookedTimes: string[]) => {
+  return times.filter((time) => !bookedTimes.includes(time));
+};
+  // Função para calcular os horários disponíveis com base nos serviços selecionados e na data
+const calculateAvailableTimes = async () => {
+  if (servicesSelected.length === 0 || !selectedDate) {
+    setAvailableTimes([]);
+    return;
+  }
+
+  // Busca os horários já agendados
+  const bookedTimes = await getBookedTimes(selectedDate);
+
+  const dayOfWeek = dayjs(selectedDate).format("dddd");
+
+  const totalDuration = getTotalDuration(servicesSelected);
+
+  const times = generateTimes(dayOfWeek, totalDuration);
+
+  // Remove os horários já agendados da lista de horários disponíveis
+  const availableTimes = filterBookedTimes(times, bookedTimes.map((item: any) => item.hour));
+
+  setAvailableTimes(availableTimes);
+};
+
+const getTotalDuration = (selectedServices: string[]) => {
+  return selectedServices.reduce((acc, servicesSelected) => {
+    const serviceInfo = services.find(
+      (service) => service.services === servicesSelected
+    );
+    if (serviceInfo) {
+      const serviceDuration = serviceInfo.duration;
+      return acc + (serviceDuration || 0);
+>>>>>>> d5587d4 (feat: ajusta função de renderização de horario)
     }
 
     // Busca os horários já agendados
@@ -109,6 +159,13 @@ const AppointmentTimes = () => {
     if (dayOfWeek === "Sunday") {
       endTime = moment(selectedDate).set({ hour: 11, minute: 0 });
     }
+<<<<<<< HEAD
+=======
+  }
+
+  return times;
+};
+>>>>>>> d5587d4 (feat: ajusta função de renderização de horario)
 
     const times = [];
 
@@ -135,6 +192,7 @@ const AppointmentTimes = () => {
 
     return times;
   };
+
 
   // Função para lidar com a seleção de horários
   const handleTimeClick = (time: string) => {
