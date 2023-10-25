@@ -5,7 +5,7 @@ import services from "../utils/services.json";
 import "../styles/appointmentTimes.css";
 import AgendamentosContext from "../context/AgendamentosContext";
 import { fetchAPiGet } from "../utils/fetchApi";
- import { BookTime } from "../types/AppointmentTimes";
+
 
 const AppointmentTimes = () => {
   const [selectedTimes, setSelectedTimes] = useState<any[]>([]);
@@ -31,56 +31,14 @@ const AppointmentTimes = () => {
         services: item.services,
         };
         return obj;
-      });      
+      });
+      console.log(bookedTimes);
+      
       return bookedTimes;
     };
-const checkServiceConflict = (time, bookedTime) => {
-  const { hour, services } = bookedTime;
-  const hasServiceConflict = services.some((service) => {
-    const bookedServiceDuration = parseInt(service.duration);
-    const startTime = moment(time, "HH:mm");
-    const endTime = startTime.clone().add(bookedServiceDuration, "minutes");
-    const bookedStartTime = moment(hour, "HH:mm");
-    const bookedEndTime = bookedStartTime
-      .clone()
-      .add(bookedServiceDuration, "minutes");
-    return (
-      startTime.isBetween(bookedStartTime, bookedEndTime, null) ||
-      bookedStartTime.isBetween(startTime, endTime, null, "[]") ||
-      endTime.isBetween(bookedStartTime, bookedEndTime, null) ||
-      bookedEndTime.isBetween(startTime, endTime, null)
-    );
-  });
-  return hasServiceConflict;
+const filterBookedTimes = (times: string[], bookedTimes: string[]) => {
+  return times.filter((time) => !bookedTimes.includes(time));
 };
-
-const filterBookedTimes = (times, bookedTimes) => {
-  const conflictedTimes = times.filter((time) => {
-    const hasConflict = bookedTimes.some((bookedTime) => {
-      return checkServiceConflict(time, bookedTime);
-    });
-
-    if (hasConflict) {
-      return time;
-    } else {
-      return null;
-    }
-  });
-
-  const newTimes = conflictedTimes.filter((time) => time !== null);
-  console.log(newTimes);
-
-  return newTimes;
-};
-
-
-
-
-
-
-
-
-
   // Função para calcular os horários disponíveis com base nos serviços selecionados e na data
 const calculateAvailableTimes = async () => {
   if (servicesSelected.length === 0 || !selectedDate) {
@@ -89,17 +47,16 @@ const calculateAvailableTimes = async () => {
   }
 
   // Busca os horários já agendados
-  const bookedTimes = await getBookedTimes(selectedDate)
- 
+  const bookedTimes = await getBookedTimes(selectedDate);
 
   const dayOfWeek = dayjs(selectedDate).format("dddd");
 
   const totalDuration = getTotalDuration(servicesSelected);
 
   const times = generateTimes(dayOfWeek, totalDuration);
-  
-  const availableTimes = filterBookedTimes(times, bookedTimes);
+
   // Remove os horários já agendados da lista de horários disponíveis
+  const availableTimes = filterBookedTimes(times, bookedTimes.map((item: any) => item.hour));
 
   setAvailableTimes(availableTimes);
 };
@@ -151,9 +108,10 @@ const generateTimes = (dayOfWeek: string, totalDuration: number) => {
       break;
     }
   }
-  
+
   return times;
 };
+
 
 
 
