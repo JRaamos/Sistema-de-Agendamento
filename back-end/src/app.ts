@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import routerRegistre from './routers/registres.routers';
 import routerSchedules from './routers/schedules.router';
+import routerCancellation from './routers/cancellation.routers';
 
 const app = express();
 
@@ -14,5 +15,6 @@ app.get('/', (req, res) => {
 app.use(cors());
 app.use(routerRegistre);
 app.use(routerSchedules);
+app.use(routerCancellation);
 
 export default app;

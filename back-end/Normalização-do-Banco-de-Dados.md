@@ -26,7 +26,7 @@
 - service_id (Chave Estrangeira referenciando a tabela de Serviços)
 
 ## Tabela de Cancelamentos
-- cancel_id (Chave Primária)
+- cancellation_id (Chave Primária)
 - user_id (Chave Estrangeira referenciando a tabela de Usuários)
-- schedule_service_id (Chave Estrangeira referenciando a tabela de Agendamentos_Serviços)
-- cancel_date (Data/hora do cancelamento)
+- schedule_id(Chave Estrangeira referenciando a tabela de Agendamentos_Serviços)
+- dateSchedule (data que seria o agendamento)

@@ -25,11 +25,6 @@ export default {
         allowNull: false,
         field: 'date_schedule'
       },
-      hourSchedule: {
-        type: DataTypes.STRING(255),
-        allowNull: false,
-        field: 'hour_schedule'
-      },
       userId: {
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
