@@ -30,3 +30,9 @@
 - user_id (Chave Estrangeira referenciando a tabela de Usuários)
 - schedule_id(Chave Estrangeira referenciando a tabela de Agendamentos_Serviços)
 - dateSchedule (data que seria o agendamento)
+
+## Tabela de Barbeiro
+- barber_id (Chave Primária)
+- name (name do barbeiro)
+- email (email de login do barbeiro)
+- password (senha de login do barbeiro)

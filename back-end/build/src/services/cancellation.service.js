@@ -8,16 +8,16 @@ const cancellation_model_1 = __importDefault(require("../database/models/cancell
 const createCancellation = async (cancellation) => {
     await cancellation_model_1.default.create(cancellation);
 };
-const countCancellation = async (intervaloDias) => {
-    const dataInicio = new Date();
-    dataInicio.setDate(dataInicio.getDate() - intervaloDias);
-    const resultado = await cancellation_model_1.default.count({
+const countCancellation = async (rageDays) => {
+    const dateStart = new Date();
+    dateStart.setDate(dateStart.getDate() - rageDays);
+    const result = await cancellation_model_1.default.count({
         where: {
             dateSchedule: {
-                [sequelize_1.default.Op.gte]: dataInicio,
+                [sequelize_1.default.Op.gte]: dateStart,
             },
         },
     });
-    return resultado;
+    return result;
 };
 exports.default = { createCancellation, countCancellation };
