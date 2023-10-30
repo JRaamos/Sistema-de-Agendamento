@@ -11,13 +11,13 @@ export default {
         allowNull: false,
         field: 'cancellation_id'
       },
-      scheduleServiceId: {
+      scheduleId: {
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
-        field: 'schedule_service_id',
+        field: 'schedule_id',
         references: {
-          model: 'schedule_services',
-          key: 'id'
+          model: 'schedules',
+          key: 'schedule_id'
         }
       },
       dateSchedule: {
