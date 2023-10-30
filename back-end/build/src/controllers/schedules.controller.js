@@ -9,4 +9,9 @@ const finaAllSchedulesDate = async (req, res) => {
     const scheduleResult = await schedules_service_1.default.finaAllSchedulesDate(date);
     return res.status(200).json(scheduleResult);
 };
-exports.default = { finaAllSchedulesDate };
+const findByScheduleDateId = async (req, res) => {
+    const { date, hour } = req.body;
+    const scheduleResult = await schedules_service_1.default.findByScheduleDateId(date, hour);
+    return res.status(200).json(scheduleResult);
+};
+exports.default = { finaAllSchedulesDate, findByScheduleDateId };

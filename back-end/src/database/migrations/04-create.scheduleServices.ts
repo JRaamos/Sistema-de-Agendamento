@@ -18,6 +18,7 @@ export default {
           model: 'schedules',
           key: 'schedule_id',
         },
+        onDelete: 'CASCADE',
       },
       serviceId: {
         type: DataTypes.INTEGER.UNSIGNED,

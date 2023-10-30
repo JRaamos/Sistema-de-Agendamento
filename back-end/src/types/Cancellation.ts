@@ -1,6 +1,6 @@
 export type Cancellation = {
   cancellationId: number;
-  scheduleId: number;
   dateSchedule: string;
+  dateCancellation: Date;
   userId: number;
 };

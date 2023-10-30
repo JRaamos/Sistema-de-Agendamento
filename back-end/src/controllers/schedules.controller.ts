@@ -7,4 +7,16 @@ const finaAllSchedulesDate = async (req: Request, res: Response) => {
   return res.status(200).json(scheduleResult);
 };
 
-export default { finaAllSchedulesDate };
+const findByScheduleDateId = async (req: Request, res: Response) => {
+  const { date, hour } = req.body;
+  const scheduleResult = await schedulesService.findByScheduleDateId(date, hour);
+  return res.status(200).json(scheduleResult);
+};
+
+const countSchedules = async (req: Request, res: Response) => {
+  const { rageDays } = req.params;
+  const result = await schedulesService.countSchedules(Number(rageDays));
+  return res.status(200).json({ result });
+};
+
+export default { finaAllSchedulesDate, findByScheduleDateId, countSchedules };

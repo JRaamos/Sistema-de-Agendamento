@@ -18,6 +18,7 @@ exports.default = {
                     model: 'schedules',
                     key: 'schedule_id',
                 },
+                onDelete: 'CASCADE',
             },
             serviceId: {
                 type: sequelize_1.DataTypes.INTEGER.UNSIGNED,

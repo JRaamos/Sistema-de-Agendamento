@@ -1,3 +1,4 @@
+import sequelize from 'sequelize';
 import ScheduleModel, { ScheduleInputtableTypes } from '../database/models/schedules.model';
 import ServiceModel from '../database/models/service.model';
 import { Schedule } from '../types/schedules';
@@ -42,4 +43,23 @@ const deleteSchedule = async (scheduleId: number) => {
   await ScheduleModel.destroy({ where: { scheduleId } });
 };
 
-export default { createSchedule, finaAllSchedulesDate, findByScheduleDateId, deleteSchedule };
+const countSchedules = async (rageDays: number) => {
+  const dateStart = new Date();
+  dateStart.setDate(dateStart.getDate() - rageDays);
+  const result = await ScheduleModel.count({
+    where: {
+      date: {
+        [sequelize.Op.gte]: dateStart, 
+      },
+    },
+  });
+  return result;
+};
+
+export default { 
+  createSchedule,
+  finaAllSchedulesDate,
+  findByScheduleDateId,
+  deleteSchedule,
+  countSchedules,
+};

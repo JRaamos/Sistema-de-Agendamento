@@ -2,7 +2,6 @@ import { DataTypes, Model, ModelDefined, Optional } from 'sequelize';
 import db from './index';
 import { Cancellation } from '../../types/Cancellation';
 import UserModel from './user.model';
-import ScheduleModel from './schedules.model';
 
 export type CancellationInputtableTypes = Optional<Cancellation, 'cancellationId'>;
 type CancellationSequelizeModelCreator = ModelDefined<Cancellation, CancellationInputtableTypes>;
@@ -15,15 +14,10 @@ const CancellationModel: CancellationSequelizeModelCreator = db.define('Cancella
     primaryKey: true,
     field: 'cancellation_id',
   },
-  scheduleId: {
-    type: DataTypes.INTEGER,
+  dateCancellation: {
+    type: DataTypes.DATEONLY,
     allowNull: false,
-    field: 'schedule_id',
-    references: {
-      model: ScheduleModel,
-      key: 'schedule_id',
-    },
-
+    field: 'date_cancellation',
   },
   dateSchedule: {
     type: DataTypes.DATEONLY,

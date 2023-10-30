@@ -22,4 +22,19 @@ const finaAllSchedulesDate = async (date) => {
     });
     return schedulesWithServices;
 };
-exports.default = { createSchedule, finaAllSchedulesDate };
+const findByScheduleDateId = async (date, hour) => {
+    const schedulesWithServices = await schedules_model_1.default.findOne({
+        where: { date, hour },
+        include: {
+            model: service_model_1.default,
+            as: 'services',
+            attributes: ['service', 'price', 'duration'],
+            through: { attributes: [] },
+        },
+    });
+    return schedulesWithServices;
+};
+const deleteSchedule = async (scheduleId) => {
+    await schedules_model_1.default.destroy({ where: { scheduleId } });
+};
+exports.default = { createSchedule, finaAllSchedulesDate, findByScheduleDateId, deleteSchedule };
