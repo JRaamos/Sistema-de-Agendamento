@@ -10,7 +10,7 @@ routerCancellation.post(
 );
 
 routerCancellation.get(
-  '/cancellation/:intervaloDias', 
+  '/cancellation/:intervalDays',
   validateJWT,
   cancellationController.countCancellation,
 );

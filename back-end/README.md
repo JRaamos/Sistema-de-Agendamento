@@ -79,3 +79,44 @@ Neste projeto, essas foram as principais tecnologias e ferramentas utilizadas no
 </details>
 
 ## Rotas e métodos de acesso
+
+### Login
+
+- **Rota:** GET `/login` 
+
+Rota para autenticação de login e quando sucesso retorna um token JWT
+
+### Registre
+
+- **Rota:** POST `/registre`
+  
+Rota para registra/criar um agendamento, nessa rota é adicionar a tabela `users` o usuario que esta realizando o agendamento,
+ é adiciona a tabela `schedules` o agendamento realizado e adiciona a tablema intermediaria `schedule_services` o **id** do 
+ agendamento e faz a associação a todos os serviços que seram realizados nesse agendamento.
+
+### Schedules
+
+- **Rota:** GET `/schedules/:date`
+
+Rota para pegar **todos** os agendamentos realizados em uma **data especifica**, 
+nessa rota é incluido todos os serviços que foram/serão realizados nessa data especifica
+
+- **Rota:** GET `/schedules/:date/:hour`
+
+Rota para pegar **UM** agentamento em uma **data e hora especifica**, nessa rota é 
+incluido todos os serviços que foram/serão realizados nesse agendameto
+
+- **Rota:** GET `/schedules/:intervalDays`
+  
+Rota para contar quantos agendamentos foram realizados de acordo com o intervalo de dias que é passado 
+
+### Cancellations
+
+- **Rota** POST `/cancellation`
+
+Rota para adiciona a tabela `cancellations` um cancelamento, nessa rota é retirado o agendamento da tabela `schedules`, 
+e esse agendamento e colocado na tabela `cancellations`, junto com o horario atual que esta sendo realizado o cancelamento.
+
+- **Rota:** GET `/cancellation/:intervalDays`
+  
+Rota para contar quantos cancelamentos foram realizados de acordo com o intervalo de dias que é passado 

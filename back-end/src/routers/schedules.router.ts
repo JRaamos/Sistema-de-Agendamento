@@ -3,18 +3,18 @@ import scheduleController from '../controllers/schedules.controller';
 
 const routerSchedules = Router();
 
-routerSchedules.post(
-  '/schedules',
+routerSchedules.get(
+  '/schedules/:date',
   scheduleController.finaAllSchedulesDate,
 );
 
-routerSchedules.post(
-  '/schedules/:date/:hour', 
+routerSchedules.get(
+  '/schedules/:date/:hour',
   scheduleController.findByScheduleDateId,
 );
 
 routerSchedules.get(
-  '/schedules/:rageDays',
+  '/schedules/:intervalDays',
   scheduleController.countSchedules,
 );
 
