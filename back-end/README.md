@@ -94,6 +94,7 @@ Neste projeto, as principais tecnologias e ferramentas utilizadas no desenvolvim
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 - **Rota:** POST `/login` 
 =======
 <<<<<<< HEAD
@@ -136,6 +137,10 @@ Rota para autenticação de login e quando sucesso retorna um token JWT
 =======
 >>>>>>> dc29f94 (feat: adiciona rota para deletar um evento no Google calendar)
 >>>>>>> 44fc261 (feat: adiciona rota para deletar um evento no Google calendar)
+=======
+- **Rota:** POST `/login`
+
+>>>>>>> f351c7c (fix: ajus documentação do back-end para incluir mais detalhes as rotas que usam metodo posto e incluir o uso de uma API externa)
   Autentica o login do barbeiro e, em caso de sucesso, retorna um token JWT.
 
 #### Parâmetros do Corpo (Body Parameters)
@@ -149,6 +154,7 @@ Rota para autenticação de login e quando sucesso retorna um token JWT
 
   ```json
   {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     "token": "your-jwt-token"
@@ -174,6 +180,11 @@ Rota para autenticação de login e quando sucesso retorna um token JWT
 >>>>>>> bf2a463 (feat: adiciona rota para deletar um evento no Google calendar)
 >>>>>>> dc29f94 (feat: adiciona rota para deletar um evento no Google calendar)
 >>>>>>> 44fc261 (feat: adiciona rota para deletar um evento no Google calendar)
+=======
+    "token": "your-jwt-token",
+    // outras informações do usuário
+  }
+>>>>>>> f351c7c (fix: ajus documentação do back-end para incluir mais detalhes as rotas que usam metodo posto e incluir o uso de uma API externa)
 
 ### Registre
 
@@ -206,6 +217,7 @@ Rota para autenticação de login e quando sucesso retorna um token JWT
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   ```
 =======
 
@@ -227,6 +239,9 @@ Rota para autenticação de login e quando sucesso retorna um token JWT
   ```
 >>>>>>> dc29f94 (feat: adiciona rota para deletar um evento no Google calendar)
 >>>>>>> 44fc261 (feat: adiciona rota para deletar um evento no Google calendar)
+=======
+
+>>>>>>> f351c7c (fix: ajus documentação do back-end para incluir mais detalhes as rotas que usam metodo posto e incluir o uso de uma API externa)
 
 ### Schedules
 
@@ -262,6 +277,7 @@ Rota para contar quantos agendamentos foram realizados de acordo com o intervalo
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   
 >>>>>>> f351c7c (fix: ajus documentação do back-end para incluir mais detalhes as rotas que usam metodo posto e incluir o uso de uma API externa)
@@ -279,10 +295,14 @@ Rota para contar quantos agendamentos foram realizados de acordo com o intervalo
 =======
 >>>>>>> dc29f94 (feat: adiciona rota para deletar um evento no Google calendar)
 >>>>>>> 44fc261 (feat: adiciona rota para deletar um evento no Google calendar)
+=======
+  
+>>>>>>> f351c7c (fix: ajus documentação do back-end para incluir mais detalhes as rotas que usam metodo posto e incluir o uso de uma API externa)
 - `404 Not Found`: Retorna uma mensagem de erro se o agendamento não for encontrado.
 
   ```json
   "Schedule not found"
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -316,6 +336,11 @@ Rota para contar quantos agendamentos foram realizados de acordo com o intervalo
 ### Google Calendar
 >>>>>>> dc29f94 (feat: adiciona rota para deletar um evento no Google calendar)
 >>>>>>> 44fc261 (feat: adiciona rota para deletar um evento no Google calendar)
+=======
+
+
+### Google Calendar Agendamento
+>>>>>>> f351c7c (fix: ajus documentação do back-end para incluir mais detalhes as rotas que usam metodo posto e incluir o uso de uma API externa)
 
 - **Rota:** POST `/googleEvent`
 
@@ -340,6 +365,7 @@ Cria um novo evento de agendamento no Google Calendar utilizando os dados de age
       // detalhes do evento
     }
   }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -392,3 +418,5 @@ Deleta um evento existente no Google Calendar.
 =======
 >>>>>>> dc29f94 (feat: adiciona rota para deletar um evento no Google calendar)
 >>>>>>> 44fc261 (feat: adiciona rota para deletar um evento no Google calendar)
+=======
+>>>>>>> f351c7c (fix: ajus documentação do back-end para incluir mais detalhes as rotas que usam metodo posto e incluir o uso de uma API externa)
