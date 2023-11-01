@@ -6,7 +6,7 @@ exports.default = {
             {
                 name: 'Chuca',
                 email: 'clebersonsantos2013@hotmail.com',
-                password: '$2a$10$t0dvtlARWFqfG0PzSUt8vezI77ibzL17gbVjWm05aGlSPE55KTR4K'
+                password: '$2a$10$t0dvtlARWFqfG0PzSUt8vezI77ibzL17gbVjWm05aGlSPE55KTR4K',
             }
         ], {});
     },

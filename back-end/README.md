@@ -82,7 +82,7 @@ Neste projeto, essas foram as principais tecnologias e ferramentas utilizadas no
 
 ### Login
 
-- **Rota:** GET `/login` 
+- **Rota:** POST `/login` 
 
 Rota para autenticação de login e quando sucesso retorna um token JWT
 

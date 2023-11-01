@@ -7,6 +7,7 @@ import { parse, format } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
 import AgendamentosContext from "../context/AgendamentosContext";
 import { Agendamentos } from "../types/MeusAgendamentos";
+import { fetchAPiCancel } from "../utils/fetchApi";
 
 function MeusAgendamentos() {
   const location = useLocation();
@@ -61,22 +62,24 @@ function MeusAgendamentos() {
     return `${formattedDate} as ${hour}`;
   };
 
-  const removeStorage = () => {
+  const removeStorage =  () => {
     const storage = localStorage.getItem("agendamentos");
     const dataBr = date.split(" ");
     const dataObj = parse(dataBr[1], "dd/MM/yyyy", new Date());
     const dataUS = format(dataObj, "MM/dd/yyyy");
 
+    
     if (storage) {
       const agendamentos = JSON.parse(storage);
-
-      const newAgendamentos = agendamentos.filter((agendamento: Agendamentos): boolean => {
+      
+      const newAgendamentos = agendamentos.filter((agendamento: Agendamentos): boolean => { 
         return agendamento.agendamentos !== formatDate(dataUS);
       });
-
+      
       localStorage.setItem("agendamentos", JSON.stringify(newAgendamentos));
       setCancelar(false);
       setAgendamentos(newAgendamentos);
+       fetchAPiCancel(dataUS, hour);
     }
   };
 
@@ -101,6 +104,7 @@ function MeusAgendamentos() {
                   <div className="header-card">
                     <p>{agendamento.date}</p>
                     <button
+                    type="button"
                       onClick={() => {
                         setHour(agendamento.hour);
                         setDate(agendamento.date);
@@ -148,7 +152,7 @@ function MeusAgendamentos() {
               <button onClick={() => setCancelar(false)} className="button-nao">
                 NÃO
               </button>
-              <button onClick={removeStorage} className="button-sim">
+              <button type="button" onClick={removeStorage} className="button-sim">
                 SIM
               </button>
             </div>
