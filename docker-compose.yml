@@ -19,6 +19,7 @@ services:
       MYSQLDATABASE: ${MYSQLDATABASE}
       MYSQLPORT:  ${MYSQLPORT}
       JWT_SECRET: ${JWT_SECRET}
+      CALENDAR_ID: ${CALENDAR_ID}
   database:
     image: mysql:5.7
     container_name: database
