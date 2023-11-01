@@ -7,7 +7,7 @@ Aqui, você encontrará os detalhes de como todo o back-end do projeto Sistema d
 
 ## Tecnologias utilizadas
 
-Neste projeto, essas foram as principais tecnologias e ferramentas utilizadas no desenvolvimento e testes:
+Neste projeto, as principais tecnologias e ferramentas utilizadas no desenvolvimento e testes são:
 
 ### Linguagem de Programação
 - **TypeScript**
@@ -23,13 +23,17 @@ Neste projeto, essas foram as principais tecnologias e ferramentas utilizadas no
 - **Bcryptjs**
 - **Mocha**
 
+### APIs Externas
+
+- **Google Calendar API**
+
 ### Ambiente de execução
 - **Node.js**
 
 ## Normalização do Banco de Dados
 
 <details>
-  <summary><strong>Tabelas e suas associações</strong></summary>
+  <summary><strong>Tabelas e suas associações</strong></summary>summary>
   
 - **Tabela de Usuários**
 
@@ -80,7 +84,7 @@ Neste projeto, essas foram as principais tecnologias e ferramentas utilizadas no
 
 ## Rotas e métodos de acesso
 
-### Login
+### Login para Barbeiros
 
 - **Rota:** POST `/login` 
 
@@ -89,10 +93,31 @@ Rota para autenticação de login e quando sucesso retorna um token JWT
 ### Registre
 
 - **Rota:** POST `/registre`
-  
-Rota para registra/criar um agendamento, nessa rota é adicionar a tabela `users` o usuario que esta realizando o agendamento,
- é adiciona a tabela `schedules` o agendamento realizado e adiciona a tablema intermediaria `schedule_services` o **id** do 
- agendamento e faz a associação a todos os serviços que seram realizados nesse agendamento.
+
+  Cria um novo agendamento e adiciona os serviços solicitados para este agendamento. Também cria um novo usuário se o telefone fornecido não existir no banco de dados.
+
+#### Parâmetros do Corpo (Body Parameters)
+
+- `name` (string): Nome do cliente.
+- `phone` (string): Número de telefone do cliente.
+- `date` (string): Data do agendamento.
+- `hour` (string): Hora do agendamento.
+- `services` (array): Lista dos serviços solicitados.
+
+#### Respostas
+
+- `200 OK`: Retorna um objeto contendo informações sobre o usuário e o agendamento criado.
+
+  ```json
+  {
+    "user": {
+      // detalhes do usuário
+    },
+    "scheduleResult": {
+      // detalhes do agendamento
+    }
+  }
+
 
 ### Schedules
 
@@ -112,11 +137,47 @@ Rota para contar quantos agendamentos foram realizados de acordo com o intervalo
 
 ### Cancellations
 
-- **Rota** POST `/cancellation`
+- **Rota:** POST `/cancellation`
 
-Rota para adiciona a tabela `cancellations` um cancelamento, nessa rota é retirado o agendamento da tabela `schedules`, 
-e esse agendamento e colocado na tabela `cancellations`, junto com o horario atual que esta sendo realizado o cancelamento.
+  Cancela um agendamento existente e adiciona os detalhes do cancelamento no banco de dados.
 
-- **Rota:** GET `/cancellation/:intervalDays`
+#### Parâmetros do Corpo (Body Parameters)
+
+- `dateonly` (string): Data do agendamento que será cancelado.
+- `hour` (string): Hora do agendamento que será cancelado.
+
+#### Respostas
+
+- `200 OK`: A solicitação foi bem-sucedida e o agendamento foi cancelado.
   
-Rota para contar quantos cancelamentos foram realizados de acordo com o intervalo de dias que é passado 
+- `404 Not Found`: Retorna uma mensagem de erro se o agendamento não for encontrado.
+
+  ```json
+  "Schedule not found"
+
+
+### Google Calendar Agendamento
+
+- **Rota:** POST `/googleEvent`
+
+Cria um novo evento de agendamento no Google Calendar utilizando os dados de agendamento do sistema.
+
+#### Parâmetros do Corpo (Body Parameters)
+
+- `date` (string): Data do agendamento no formato MM/DD/YYYY.
+- `hour` (string): Hora do agendamento no formato HH:MM.
+- `name` (string): Nome do cliente.
+- `phone` (string): Número de telefone do cliente.
+- `services` (array): Lista dos serviços solicitados.
+
+#### Respostas
+
+- `200 OK`: Retorna um objeto contendo informações sobre o evento criado no Google Calendar.
+
+  ```json
+  {
+    "message": "Evento criado com sucesso!",
+    "event": {
+      // detalhes do evento
+    }
+  }
