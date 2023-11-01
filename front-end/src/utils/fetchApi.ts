@@ -16,10 +16,10 @@ export const fetchAPi = async (values: Values) => {
 }
 
 export const fetchAPiGet = async (date: string | null) => {
-  const response = (await fetch('http://localhost:3001/schedules', {
-    method: 'post',
+  const formattedDate = date?.replace(/\//g, '-');
+  const response = (await fetch(`http://localhost:3001/schedules/${formattedDate}`, {
+    method: 'get',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ date })
   }
   ));
 
