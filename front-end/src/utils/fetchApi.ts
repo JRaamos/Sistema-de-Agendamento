@@ -18,6 +18,9 @@ export const fetchAPi = async (values: Values) => {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 551d17e (feat: adiciona consultas as rotas disponiveis no front e adiciona codigo para cancelamento e liberação do horario no banco de dados)
 //faz o login do usuário e retorna o token
 export const fetchAPiLogin = async (email: string, password: string) => {
   const response = (await fetch(`${BASEURL}/login`, {
@@ -33,15 +36,18 @@ export const fetchAPiLogin = async (email: string, password: string) => {
 }
 
 //faz a busca dos agendamentos no banco de dados de acordo com a data
+<<<<<<< HEAD
 export const fetchAPiGet = async (date: string | null) => {
   const formattedDate = date?.replace(/\//g, '-');
   const response = (await fetch(`${BASEURL}/schedules/${formattedDate}`, {
     method: 'get',
     headers: { 'Content-Type': 'application/json' },
 =======
+=======
+>>>>>>> 551d17e (feat: adiciona consultas as rotas disponiveis no front e adiciona codigo para cancelamento e liberação do horario no banco de dados)
 export const fetchAPiGet = async (date: string | null) => {
   const formattedDate = date?.replace(/\//g, '-');
-  const response = (await fetch(`http://localhost:3001/schedules/${formattedDate}`, {
+  const response = (await fetch(`${BASEURL}/schedules/${formattedDate}`, {
     method: 'get',
     headers: { 'Content-Type': 'application/json' },
 >>>>>>> 464bdf3 (fix: ajusta maneira de renderizar horarios disponiveis para corrigir bug de conflito com horario)
