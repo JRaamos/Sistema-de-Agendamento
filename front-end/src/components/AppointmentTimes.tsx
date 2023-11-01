@@ -6,7 +6,6 @@ import "../styles/appointmentTimes.css";
 import AgendamentosContext from "../context/AgendamentosContext";
 import { fetchAPiGet } from "../utils/fetchApi";
 
-
 const AppointmentTimes = () => {
   const [selectedTimes, setSelectedTimes] = useState<any[]>([]);
   const {
@@ -23,6 +22,9 @@ const AppointmentTimes = () => {
   } = useContext(AgendamentosContext);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 464bdf3 (fix: ajusta maneira de renderizar horarios disponiveis para corrigir bug de conflito com horario)
   // Função para buscar os horários já agendados
  const getBookedTimes = async (date: string | null) => {
    const response = await fetchAPiGet(date);
@@ -39,6 +41,7 @@ const AppointmentTimes = () => {
    });
  };
 
+<<<<<<< HEAD
 
   // Função para calcular os horários disponíveis com base nos serviços selecionados e na data
   const calculateAvailableTimes = async () => {
@@ -58,14 +61,11 @@ const AppointmentTimes = () => {
       });      
       return bookedTimes;
     };
+=======
+>>>>>>> 464bdf3 (fix: ajusta maneira de renderizar horarios disponiveis para corrigir bug de conflito com horario)
 
-const filterBookedTimes = (times: string[], bookedTimes: string[]) => {
-  console.log(times);
-  console.log(bookedTimes);
-  
-  return times.filter((time) => !bookedTimes.includes(time));
-};
   // Função para calcular os horários disponíveis com base nos serviços selecionados e na data
+<<<<<<< HEAD
 const calculateAvailableTimes = async () => {
   if (servicesSelected.length === 0 || !selectedDate) {
     setAvailableTimes([]);
@@ -96,6 +96,12 @@ const getTotalDuration = (selectedServices: string[]) => {
       const serviceDuration = serviceInfo.duration;
       return acc + (serviceDuration || 0);
 >>>>>>> d5587d4 (feat: ajusta função de renderização de horario)
+=======
+  const calculateAvailableTimes = async () => {
+    if (servicesSelected.length === 0 || !selectedDate) {
+      setAvailableTimes([]);
+      return;
+>>>>>>> 464bdf3 (fix: ajusta maneira de renderizar horarios disponiveis para corrigir bug de conflito com horario)
     }
 
     // Busca os horários já agendados
@@ -162,6 +168,7 @@ const getTotalDuration = (selectedServices: string[]) => {
       endTime = moment(selectedDate).set({ hour: 11, minute: 0 });
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   }
   console.log(times);
@@ -177,6 +184,15 @@ const getTotalDuration = (selectedServices: string[]) => {
       return ["Sem horários disponíveis"];
     }
 
+=======
+
+    const times = [];
+
+    if (dayOfWeek === "Tuesday") {
+      return ["Sem horários disponíveis"];
+    }
+
+>>>>>>> 464bdf3 (fix: ajusta maneira de renderizar horarios disponiveis para corrigir bug de conflito com horario)
     while (startTime.isBefore(endTime)) {
       const currentTime = startTime.format("HH:mm");
       if (
@@ -193,10 +209,15 @@ const getTotalDuration = (selectedServices: string[]) => {
         break;
       }
     }
+<<<<<<< HEAD
 
     return times;
   };
+=======
+>>>>>>> 464bdf3 (fix: ajusta maneira de renderizar horarios disponiveis para corrigir bug de conflito com horario)
 
+    return times;
+  };
 
   // Função para lidar com a seleção de horários
   const handleTimeClick = (time: string) => {

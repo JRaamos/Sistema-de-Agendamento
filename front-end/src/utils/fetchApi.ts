@@ -17,6 +17,7 @@ export const fetchAPi = async (values: Values) => {
   return data;
 }
 
+<<<<<<< HEAD
 //faz o login do usuário e retorna o token
 export const fetchAPiLogin = async (email: string, password: string) => {
   const response = (await fetch(`${BASEURL}/login`, {
@@ -37,6 +38,13 @@ export const fetchAPiGet = async (date: string | null) => {
   const response = (await fetch(`${BASEURL}/schedules/${formattedDate}`, {
     method: 'get',
     headers: { 'Content-Type': 'application/json' },
+=======
+export const fetchAPiGet = async (date: string | null) => {
+  const formattedDate = date?.replace(/\//g, '-');
+  const response = (await fetch(`http://localhost:3001/schedules/${formattedDate}`, {
+    method: 'get',
+    headers: { 'Content-Type': 'application/json' },
+>>>>>>> 464bdf3 (fix: ajusta maneira de renderizar horarios disponiveis para corrigir bug de conflito com horario)
   }
   ));
 
