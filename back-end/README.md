@@ -91,6 +91,7 @@ Neste projeto, as principais tecnologias e ferramentas utilizadas no desenvolvim
 ### Login para Barbeiros
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 - **Rota:** POST `/login` 
 =======
 <<<<<<< HEAD
@@ -103,6 +104,10 @@ Neste projeto, as principais tecnologias e ferramentas utilizadas no desenvolvim
 <<<<<<< HEAD
 Rota para autenticação de login e quando sucesso retorna um token JWT
 =======
+=======
+- **Rota:** POST `/login`
+
+>>>>>>> f351c7c (fix: ajus documentação do back-end para incluir mais detalhes as rotas que usam metodo posto e incluir o uso de uma API externa)
   Autentica o login do barbeiro e, em caso de sucesso, retorna um token JWT.
 
 #### Parâmetros do Corpo (Body Parameters)
@@ -116,11 +121,17 @@ Rota para autenticação de login e quando sucesso retorna um token JWT
 
   ```json
   {
+<<<<<<< HEAD
     "token": "your-jwt-token"
     // outras informações do usuário
   }
   ```
 >>>>>>> bf2a463 (feat: adiciona rota para deletar um evento no Google calendar)
+=======
+    "token": "your-jwt-token",
+    // outras informações do usuário
+  }
+>>>>>>> f351c7c (fix: ajus documentação do back-end para incluir mais detalhes as rotas que usam metodo posto e incluir o uso de uma API externa)
 
 ### Registre
 
@@ -149,7 +160,11 @@ Rota para autenticação de login e quando sucesso retorna um token JWT
       // detalhes do agendamento
     }
   }
+<<<<<<< HEAD
   ```
+=======
+
+>>>>>>> f351c7c (fix: ajus documentação do back-end para incluir mais detalhes as rotas que usam metodo posto e incluir o uso de uma API externa)
 
 ### Schedules
 
@@ -181,13 +196,23 @@ Rota para contar quantos agendamentos foram realizados de acordo com o intervalo
 #### Respostas
 
 - `200 OK`: A solicitação foi bem-sucedida e o agendamento foi cancelado.
+<<<<<<< HEAD
+=======
+  
+>>>>>>> f351c7c (fix: ajus documentação do back-end para incluir mais detalhes as rotas que usam metodo posto e incluir o uso de uma API externa)
 - `404 Not Found`: Retorna uma mensagem de erro se o agendamento não for encontrado.
 
   ```json
   "Schedule not found"
+<<<<<<< HEAD
   ```
 
 ### Google Calendar
+=======
+
+
+### Google Calendar Agendamento
+>>>>>>> f351c7c (fix: ajus documentação do back-end para incluir mais detalhes as rotas que usam metodo posto e incluir o uso de uma API externa)
 
 - **Rota:** POST `/googleEvent`
 
@@ -212,6 +237,7 @@ Cria um novo evento de agendamento no Google Calendar utilizando os dados de age
       // detalhes do evento
     }
   }
+<<<<<<< HEAD
   ```
 
 
@@ -235,3 +261,5 @@ Deleta um evento existente no Google Calendar.
     }
   }
   ```
+=======
+>>>>>>> f351c7c (fix: ajus documentação do back-end para incluir mais detalhes as rotas que usam metodo posto e incluir o uso de uma API externa)
