@@ -98,6 +98,7 @@ Neste projeto, as principais tecnologias e ferramentas utilizadas no desenvolvim
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 - **Rota:** POST `/login` 
 =======
 <<<<<<< HEAD
@@ -132,6 +133,8 @@ Rota para autenticação de login e quando sucesso retorna um token JWT
 >>>>>>> 3904a3d (feat:)
 =======
 >>>>>>> d624a10 (fix: ajus documentação do back-end para incluir mais detalhes as rotas que usam metodo posto e incluir o uso de uma API externa)
+=======
+>>>>>>> b76fd15 (feat: adiciona consultas as rotas disponiveis no front e adiciona codigo para cancelamento e liberação do horario no banco de dados)
 - **Rota:** POST `/login`
 =======
 - **Rota:** POST `/login` 
@@ -139,6 +142,8 @@ Rota para autenticação de login e quando sucesso retorna um token JWT
 =======
 =======
 >>>>>>> 20dc246 (fix: ajus documentação do back-end para incluir mais detalhes as rotas que usam metodo posto e incluir o uso de uma API externa)
+=======
+>>>>>>> 93bc361 (feat: adiciona consultas as rotas disponiveis no front e adiciona codigo para cancelamento e liberação do horario no banco de dados)
 - **Rota:** POST `/login` 
 =======
 <<<<<<< HEAD
@@ -182,7 +187,12 @@ Rota para autenticação de login e quando sucesso retorna um token JWT
 =======
 =======
 =======
+=======
+>>>>>>> 1705a86 (feat: adiciona consultas as rotas disponiveis no front e adiciona codigo para cancelamento e liberação do horario no banco de dados)
 - **Rota:** POST `/login`
+=======
+- **Rota:** POST `/login` 
+>>>>>>> 551d17e (feat: adiciona consultas as rotas disponiveis no front e adiciona codigo para cancelamento e liberação do horario no banco de dados)
 
 >>>>>>> f351c7c (fix: ajus documentação do back-end para incluir mais detalhes as rotas que usam metodo posto e incluir o uso de uma API externa)
 >>>>>>> 20dc246 (fix: ajus documentação do back-end para incluir mais detalhes as rotas que usam metodo posto e incluir o uso de uma API externa)

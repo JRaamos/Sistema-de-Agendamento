@@ -21,12 +21,18 @@ export const fetchAPi = async (values: Values) => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> b76fd15 (feat: adiciona consultas as rotas disponiveis no front e adiciona codigo para cancelamento e liberação do horario no banco de dados)
 =======
 >>>>>>> 551d17e (feat: adiciona consultas as rotas disponiveis no front e adiciona codigo para cancelamento e liberação do horario no banco de dados)
 =======
 >>>>>>> 1705a86 (feat: adiciona consultas as rotas disponiveis no front e adiciona codigo para cancelamento e liberação do horario no banco de dados)
+<<<<<<< HEAD
 =======
 >>>>>>> 1c592a8 (feat: adiciona consultas as rotas disponiveis no front e adiciona codigo para cancelamento e liberação do horario no banco de dados)
+=======
+>>>>>>> b76fd15 (feat: adiciona consultas as rotas disponiveis no front e adiciona codigo para cancelamento e liberação do horario no banco de dados)
 //faz o login do usuário e retorna o token
 export const fetchAPiLogin = async (email: string, password: string) => {
   const response = (await fetch(`${BASEURL}/login`, {
@@ -45,10 +51,15 @@ export const fetchAPiLogin = async (email: string, password: string) => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 1705a86 (feat: adiciona consultas as rotas disponiveis no front e adiciona codigo para cancelamento e liberação do horario no banco de dados)
 =======
 >>>>>>> 1c592a8 (feat: adiciona consultas as rotas disponiveis no front e adiciona codigo para cancelamento e liberação do horario no banco de dados)
+=======
+=======
+>>>>>>> 1705a86 (feat: adiciona consultas as rotas disponiveis no front e adiciona codigo para cancelamento e liberação do horario no banco de dados)
+>>>>>>> b76fd15 (feat: adiciona consultas as rotas disponiveis no front e adiciona codigo para cancelamento e liberação do horario no banco de dados)
 export const fetchAPiGet = async (date: string | null) => {
   const formattedDate = date?.replace(/\//g, '-');
   const response = (await fetch(`${BASEURL}/schedules/${formattedDate}`, {
