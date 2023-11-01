@@ -92,6 +92,7 @@ Neste projeto, as principais tecnologias e ferramentas utilizadas no desenvolvim
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 - **Rota:** POST `/login` 
 =======
 <<<<<<< HEAD
@@ -105,7 +106,12 @@ Neste projeto, as principais tecnologias e ferramentas utilizadas no desenvolvim
 Rota para autenticação de login e quando sucesso retorna um token JWT
 =======
 =======
+=======
+>>>>>>> 1705a86 (feat: adiciona consultas as rotas disponiveis no front e adiciona codigo para cancelamento e liberação do horario no banco de dados)
 - **Rota:** POST `/login`
+=======
+- **Rota:** POST `/login` 
+>>>>>>> 551d17e (feat: adiciona consultas as rotas disponiveis no front e adiciona codigo para cancelamento e liberação do horario no banco de dados)
 
 >>>>>>> f351c7c (fix: ajus documentação do back-end para incluir mais detalhes as rotas que usam metodo posto e incluir o uso de uma API externa)
   Autentica o login do barbeiro e, em caso de sucesso, retorna um token JWT.
