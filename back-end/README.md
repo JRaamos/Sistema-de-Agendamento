@@ -90,7 +90,15 @@ Neste projeto, as principais tecnologias e ferramentas utilizadas no desenvolvim
 
 ### Login para Barbeiros
 
+<<<<<<< HEAD
 - **Rota:** POST `/login` 
+=======
+<<<<<<< HEAD
+- **Rota:** POST `/login`
+=======
+- **Rota:** POST `/login` 
+>>>>>>> 551d17e (feat: adiciona consultas as rotas disponiveis no front e adiciona codigo para cancelamento e liberação do horario no banco de dados)
+>>>>>>> f262c3f (feat:)
 
 <<<<<<< HEAD
 Rota para autenticação de login e quando sucesso retorna um token JWT
