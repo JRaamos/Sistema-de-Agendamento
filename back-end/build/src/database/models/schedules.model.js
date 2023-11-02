@@ -20,6 +20,11 @@ const ScheduleModel = index_1.default.define('Schedule', {
         type: sequelize_1.DataTypes.STRING(128),
         allowNull: false,
     },
+    eventId: {
+        type: sequelize_1.DataTypes.STRING(128),
+        allowNull: false,
+        field: 'event_id',
+    },
     userId: {
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: false,

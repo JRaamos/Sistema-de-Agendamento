@@ -5,9 +5,9 @@ import { Schedule } from '../types/schedules';
 
 const createSchedule = async (schedule: ScheduleInputtableTypes):
 Promise<Schedule> => {
-  const { date, hour, userId } = schedule;
+  const { date, hour, userId, eventId } = schedule;
 
-  const scheduleResult = await ScheduleModel.create({ date, hour, userId });
+  const scheduleResult = await ScheduleModel.create({ date, hour, userId, eventId });
   return scheduleResult.dataValues as Schedule;
 };
 

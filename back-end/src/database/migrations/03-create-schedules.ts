@@ -19,6 +19,11 @@ export default {
         type: DataTypes.STRING(255),
         allowNull: false,
       },
+      eventId: {
+        type: DataTypes.STRING(255),
+        allowNull: false,
+        field: 'event_id',
+      },
       userId: {
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false,

@@ -4,9 +4,8 @@ import schedule from '../services/schedules.service';
 import servicesAll from '../services/service.service';
 import scheduleService from '../services/scheduleService.service';
 
-// eslint-disable-next-line max-lines-per-function
 const CreateRegister = async (req: Request, res: Response) => {
-  const { name, phone, date, hour, services } = req.body;
+  const { name, phone, date, hour, services, eventId } = req.body;
 
   const user = await userService.createUserService({ name, phone });
   const servicesIds = await servicesAll.findAllService(services);
@@ -15,6 +14,7 @@ const CreateRegister = async (req: Request, res: Response) => {
     date,
     hour,
     userId: user,
+    eventId,
   };
 
   const scheduleResult = await schedule.createSchedule(scheduleData);

@@ -1,6 +1,7 @@
 # Bem-vindo ao Back-end do Projeto Sistema de Agendamento
 
 Aqui, você encontrará os detalhes de como todo o back-end do projeto Sistema de Agendamento está estruturado:
+
 - **Tecnologias utilizadas**
 - **Normalização do banco de dados**
 - **Rotas e métodos de acesso**
@@ -10,10 +11,12 @@ Aqui, você encontrará os detalhes de como todo o back-end do projeto Sistema d
 Neste projeto, as principais tecnologias e ferramentas utilizadas no desenvolvimento e testes são:
 
 ### Linguagem de Programação
+
 - **TypeScript**
-  
+
 ### Banco de Dados
-- **MySQL** 
+
+- **MySQL**
 
 ### Principais Bibliotecas
 
@@ -28,6 +31,7 @@ Neste projeto, as principais tecnologias e ferramentas utilizadas no desenvolvim
 - **Google Calendar API**
 
 ### Ambiente de execução
+
 - **Node.js**
 
 ## Normalização do Banco de Dados
@@ -37,10 +41,10 @@ Neste projeto, as principais tecnologias e ferramentas utilizadas no desenvolvim
   
 - **Tabela de Usuários**
 
-  - `Nome da Tabela`: **'users'**
-  - `user_id` (Chave Primária)
-  - `name` (Nome do usuário)
-  - `phone` (Número de telefone)
+- `Nome da Tabela`: **'users'**
+- `user_id` (Chave Primária)
+- `name` (Nome do usuário)
+- `phone` (Número de telefone)
 
 - **Tabela de Serviços**
 
@@ -80,7 +84,7 @@ Neste projeto, as principais tecnologias e ferramentas utilizadas no desenvolvim
   - `name` (Nome do barbeiro)
   - `email` (E-mail de login do barbeiro)
   - `password` (Senha de login do barbeiro)
-</details>
+  </details>
 
 ## Rotas e métodos de acesso
 
@@ -101,9 +105,10 @@ Neste projeto, as principais tecnologias e ferramentas utilizadas no desenvolvim
 
   ```json
   {
-    "token": "your-jwt-token",
+    "token": "your-jwt-token"
     // outras informações do usuário
   }
+  ```
 
 ### Registre
 
@@ -132,23 +137,23 @@ Neste projeto, as principais tecnologias e ferramentas utilizadas no desenvolvim
       // detalhes do agendamento
     }
   }
-
+  ```
 
 ### Schedules
 
 - **Rota:** GET `/schedules/:date`
 
-Rota para pegar **todos** os agendamentos realizados em uma **data especifica**, 
+Rota para pegar **todos** os agendamentos realizados em uma **data especifica**,
 nessa rota é incluido todos os serviços que foram/serão realizados nessa data especifica
 
 - **Rota:** GET `/schedules/:date/:hour`
 
-Rota para pegar **UM** agentamento em uma **data e hora especifica**, nessa rota é 
+Rota para pegar **UM** agentamento em uma **data e hora especifica**, nessa rota é
 incluido todos os serviços que foram/serão realizados nesse agendameto
 
 - **Rota:** GET `/schedules/:intervalDays`
-  
-Rota para contar quantos agendamentos foram realizados de acordo com o intervalo de dias que é passado 
+
+Rota para contar quantos agendamentos foram realizados de acordo com o intervalo de dias que é passado
 
 ### Cancellations
 
@@ -164,14 +169,13 @@ Rota para contar quantos agendamentos foram realizados de acordo com o intervalo
 #### Respostas
 
 - `200 OK`: A solicitação foi bem-sucedida e o agendamento foi cancelado.
-  
 - `404 Not Found`: Retorna uma mensagem de erro se o agendamento não for encontrado.
 
   ```json
   "Schedule not found"
+  ```
 
-
-### Google Calendar Agendamento
+### Google Calendar
 
 - **Rota:** POST `/googleEvent`
 
@@ -196,3 +200,26 @@ Cria um novo evento de agendamento no Google Calendar utilizando os dados de age
       // detalhes do evento
     }
   }
+  ```
+
+
+- **Rota:** DELETE `/googleEvent/:eventId`
+
+Deleta um evento existente no Google Calendar.
+
+#### Parâmetros de Rota (Route Parameters)
+
+- `eventId` (string): ID do evento no Google Calendar que será deletado.
+
+#### Respostas
+
+- `200 OK`: Retorna um objeto contendo uma mensagem de sucesso.
+
+  ```json
+  {
+    "message": "Evento deletado com sucesso!",
+    "event": {
+      // detalhes do evento deletado
+    }
+  }
+  ```
