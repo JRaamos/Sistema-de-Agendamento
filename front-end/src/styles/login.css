@@ -1,0 +1,126 @@
+.login-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 98vh;
+
+}
+
+.img-logo-login {
+  border-radius: 45%;
+  box-shadow: none;
+}
+
+.form-login {
+  align-items: center;
+  border-radius: 5px;
+  box-shadow: 0 0 15px 0 rgba(53, 188, 197, 0.4);
+  display: flex;
+  flex-direction: column;
+  height: 40vh;
+  justify-content: space-evenly;
+  margin-top: 20px;
+  max-width: 400px;
+  position: relative;
+  width: 95%;
+}
+
+
+.title-login {
+  color: white;
+  font-size: 1.8em;
+  font-weight: 700;
+  margin-top: -10px;
+}
+
+.input-group {
+  color: black;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.input-text {
+  background-color: #ccc;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  color: black;
+  font-size: 14px;
+  padding: 10px;
+  transition: border-color 0.3s;
+  width: 250px;
+}
+
+.input-text:focus {
+  border-color: #66afe9;
+  box-shadow: inset 0 1px 3px rgba(32, 105, 141, 0.767), 0 0 8px rgba(56, 164, 252, 0.6);
+  outline: none;
+}
+
+.button-toggle-password {
+  background: transparent;
+  border: none;
+  color: rgb(25, 25, 26);
+  cursor: pointer;
+  height: 30px;
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.button-login {
+  background: #5b5d74;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 10px;
+  transition: background-color 0.3s;
+  width: 275px;
+}
+
+
+.message-container {
+  display: flex;
+  height: auto;
+  justify-content: center;
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  right: 0;
+  top: 17%;
+  transition: all 0.3s ease-in-out;
+  visibility: hidden;
+}
+
+.mensagem-erro {
+  color: red;
+  font-size: 1.1rem;
+  opacity: 0;
+  overflow: hidden;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.mensagem-erro.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.input-group , .button-login {
+  margin-top: 2vh;
+}
+
+@media screen and ( max-height : 690px ) {
+
+  .login-container {
+    height: 100vh;
+  }
+
+  .img-logo-login {
+    margin: 0;
+    width: 290px;
+  }
+
+}

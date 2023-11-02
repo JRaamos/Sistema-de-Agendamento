@@ -7,6 +7,11 @@ import { parse, format } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
 import AgendamentosContext from "../context/AgendamentosContext";
 import { Agendamentos } from "../types/MeusAgendamentos";
+import {
+  fetchAPiCancel,
+  fetchAPiGetId,
+  fetchAPiGoogleEventDelete,
+} from "../utils/fetchApi";
 
 function MeusAgendamentos() {
   const location = useLocation();
@@ -18,40 +23,34 @@ function MeusAgendamentos() {
   }, [location]);
 
   const navigate = useNavigate();
-  const [agendamentos, setAgendamentos] = useState<Agendamentos[]> ([]);
-  const [serviceSelected, setServiceSelected] = useState([]);
-  const [price, setPrice] = useState(0);
+  const [agendamentos, setAgendamentos] = useState<Agendamentos[]>([]);
   const [cancelar, setCancelar] = useState(false);
   const [hour, setHour] = useState<string | number>(0);
   const [date, setDate] = useState("");
+
   useEffect(() => {
     const values = localStorage.getItem("agendamentos");
     if (values) {
       const result = JSON.parse(values);
-      const agendamentos = result.map((agendamento: any) => {
+      const updatedAgendamentos = result.map((agendamento: any) => {
         const inputDate = new Date(agendamento.date);
         const formattedDate = format(inputDate, "EEE, dd/MM/yyy", {
           locale: ptBR,
         });
         agendamento.date = `${formattedDate} as ${agendamento.hour}`;
-        setServiceSelected(agendamento.services);
+
+        const services = servicesJson.filter((service) =>
+          agendamento.services.includes(service.services)
+        );
+        const prices = services.map((service) => service.price);
+        const total = prices.reduce((acc, current) => acc + current, 0);
+        agendamento.price = total;
+
         return agendamento;
       });
-      setAgendamentos(agendamentos);
+      setAgendamentos(updatedAgendamentos);
     }
   }, [cancelar]);
-
-  useEffect(() => {
-    const priceComparacion = () => {
-      const services = servicesJson.filter((service) =>
-        serviceSelected.includes(service.services)
-      );
-      const price = services.map((service) => service.price);
-      const priceTotal = price.reduce((acc, current) => acc + current, 0);
-      setPrice(priceTotal);
-    };
-    priceComparacion();
-  }, [serviceSelected]);
 
   const formatDate = (date: string) => {
     const inputDate = new Date(date);
@@ -61,22 +60,26 @@ function MeusAgendamentos() {
     return `${formattedDate} as ${hour}`;
   };
 
-  const removeStorage = () => {
+  const removeStorage = async () => {
     const storage = localStorage.getItem("agendamentos");
     const dataBr = date.split(" ");
     const dataObj = parse(dataBr[1], "dd/MM/yyyy", new Date());
     const dataUS = format(dataObj, "MM/dd/yyyy");
 
     if (storage) {
-      const agendamentos = JSON.parse(storage);
-
-      const newAgendamentos = agendamentos.filter((agendamento: Agendamentos): boolean => {
-        return agendamento.agendamentos !== formatDate(dataUS);
-      });
+      const storageAgendamentos = JSON.parse(storage);
+      const newAgendamentos = storageAgendamentos.filter(
+        (agendamento: Agendamentos): boolean => {
+          return agendamento.agendamentos !== formatDate(dataUS);
+        }
+      );
 
       localStorage.setItem("agendamentos", JSON.stringify(newAgendamentos));
       setCancelar(false);
       setAgendamentos(newAgendamentos);
+      fetchAPiCancel(dataUS, hour);
+      const eventId = await fetchAPiGetId(dataUS, hour);
+      fetchAPiGoogleEventDelete(eventId);
     }
   };
 
@@ -92,43 +95,41 @@ function MeusAgendamentos() {
         <img src={arrow} alt="arrow" className="button-image" />
       </button>
       <div className="agendamentos-container">
-        <div className="agendamentos-container">
-          <h2>Meus agendamentos</h2>
-          <div>
-            {agendamentos &&
-              agendamentos.map((agendamento: Agendamentos, index) => (
-                <div key={index} className="agendamento-card">
-                  <div className="header-card">
-                    <p>{agendamento.date}</p>
-                    <button
-                      onClick={() => {
-                        setHour(agendamento.hour);
-                        setDate(agendamento.date);
-                        setCancelar(true);
-                      }}
-                      className="cancelar"
-                    >
-                      Cancelar
-                    </button>
-                  </div>
-                  <div className="footer-card">
-                    <div>
-                      <h3>{agendamento.name}</h3>
-                      <div>
-                        {agendamento.services &&
-                          agendamento.services.map((service, index) => (
-                            <p key={index}>{service}</p>
-                          ))}
-                      </div>
-                    </div>
-                    <div>
-                      <p className="money">R$ {`${price},00`}</p>
-                    </div>
+        <h2>Meus agendamentos</h2>
+        <div>
+          {agendamentos.map((agendamento: Agendamentos, index) => (
+            <div key={index} className="agendamento-card">
+              <div className="header-card">
+                <p>{agendamento.date}</p>
+                <button
+                  onClick={() => {
+                    setHour(agendamento.hour);
+                    setDate(agendamento.date);
+                    setCancelar(true);
+                  }}
+                  className="cancelar"
+                >
+                  Cancelar
+                </button>
+              </div>
+              <div className="footer-card">
+                <div>
+                  <h3>{agendamento.name}</h3>
+                  <div>
+                    {agendamento.services.map((service, index) => (
+                      <p key={index}>{service}</p>
+                    ))}
                   </div>
                 </div>
-              ))}
-          </div>
+                <div>
+                  <p className="money">R$ {`${agendamento.price},00`}</p>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
+      </div>
+      <div className="atencion-contain">
         <div className="atention">
           <p>
             <strong>Atenção!</strong> Este estabelecimento <br></br>permite
