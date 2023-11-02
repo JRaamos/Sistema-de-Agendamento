@@ -7,6 +7,11 @@
   text-align: center;
 }
 
+.img-logo {
+  border-radius: 47%;
+  box-shadow: 0 0 15px 0 rgba(96, 148, 207, 0.5);
+}
+
 .container-logo-button {
   align-items: center;
   display: flex;
