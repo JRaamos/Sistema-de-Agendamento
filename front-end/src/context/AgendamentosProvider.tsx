@@ -31,13 +31,17 @@ function AgendamentosProvider({ children }: AgendamentosProviderProps) {
   const [buttonWelcome, setButtonWelcome] = useState(false);
   const [canRender, setCanRender] = useState(false);
   const [msgServices, setMsgServices] = useState(false);
+  const [bookedTimes, setBookedTimes] = useState<string[]>([]);
+
   const [values, setValues] = useState<Values>({
     name: "",
     phone: undefined,
     date: "",
     hour: "",
     services: [],
+    eventId: "",
     agendamentos: "",
+
   });
     const [availableTimes, setAvailableTimes] = useState<string[]>([]);
   const handleLocalStorange = () => {
@@ -74,6 +78,7 @@ function AgendamentosProvider({ children }: AgendamentosProviderProps) {
       date: "",
       hour: "",
       services: [],
+      eventId: "",
       agendamentos: "",
     });
     setDisableButton(true);
@@ -118,6 +123,7 @@ function AgendamentosProvider({ children }: AgendamentosProviderProps) {
         setDisableButton,
         servicesSelected,
         msgServices, setMsgServices,
+        bookedTimes, setBookedTimes,
         isServicesSelected,
         setServicesSelected,
         isMyAgendamentos,

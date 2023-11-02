@@ -12,12 +12,17 @@ exports.default = {
                 field: 'schedule_id',
             },
             date: {
-                type: sequelize_1.DataTypes.DATE,
+                type: sequelize_1.DataTypes.DATEONLY,
                 allowNull: false,
             },
             hour: {
                 type: sequelize_1.DataTypes.STRING(255),
                 allowNull: false,
+            },
+            eventId: {
+                type: sequelize_1.DataTypes.STRING(255),
+                allowNull: false,
+                field: 'event_id',
             },
             userId: {
                 type: sequelize_1.DataTypes.INTEGER.UNSIGNED,
@@ -26,15 +31,6 @@ exports.default = {
                 references: {
                     model: 'users',
                     key: 'user_id',
-                },
-            },
-            serviceId: {
-                type: sequelize_1.DataTypes.INTEGER.UNSIGNED,
-                allowNull: false,
-                field: 'service_id',
-                references: {
-                    model: 'services',
-                    key: 'service_id',
                 },
             },
         });

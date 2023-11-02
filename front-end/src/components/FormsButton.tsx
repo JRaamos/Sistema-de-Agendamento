@@ -8,7 +8,8 @@ function FormsButton() {
     <form className="form-button">
       <button
         className="button-meus-agendamentos"
-        onClick={() => {
+        onClick={(e) => {
+          e.preventDefault();
           navigate("/meus-agendamentos");
         }}
       >

@@ -11,7 +11,7 @@ exports.default = {
                 allowNull: false,
                 field: 'service_id',
             },
-            services: {
+            service: {
                 type: sequelize_1.DataTypes.STRING(255),
                 allowNull: false,
             },
@@ -19,15 +19,10 @@ exports.default = {
                 type: sequelize_1.DataTypes.STRING(255),
                 allowNull: false,
             },
-            userId: {
-                type: sequelize_1.DataTypes.INTEGER.UNSIGNED,
+            duration: {
+                type: sequelize_1.DataTypes.STRING(255),
                 allowNull: false,
-                field: 'user_id',
-                references: {
-                    model: 'users',
-                    key: 'user_id',
-                },
-            },
+            }
         });
     },
     down(queryInterface) {

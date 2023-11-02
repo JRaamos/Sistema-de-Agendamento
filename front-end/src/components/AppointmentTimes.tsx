@@ -4,41 +4,86 @@ import dayjs from "dayjs";
 import services from "../utils/services.json";
 import "../styles/appointmentTimes.css";
 import AgendamentosContext from "../context/AgendamentosContext";
-import { tr } from "date-fns/locale";
+import { fetchAPiGet } from "../utils/fetchApi";
+import { Service } from "../types/Service";
+import { BookTime } from "../types/AppointmentTimes";
 
-type AppointmentTimesProps = {
-  selectedDate: Date | null;
-  selectedServices: string[];
-};
-const AppointmentTimes: FC<AppointmentTimesProps> = ({
-  selectedDate,
-  selectedServices,
-}) => {
-
-  const [bookedTimes, setBookedTimes] = useState<string[]>([]);
+const AppointmentTimes = () => {
   const [selectedTimes, setSelectedTimes] = useState<any[]>([]);
   const {
+    servicesSelected,
     values,
     setValues,
     setDisableButton,
-          setButtonEnviar,
-
+    setButtonEnviar,
+    selectedDate,
     availableTimes,
     setAvailableTimes,
   } = useContext(AgendamentosContext);
 
-  // Função para calcular os horários disponíveis com base nos serviços selecionados e na data
-  const calculateAvailableTimes = () => {
-    if (selectedServices.length === 0 || !selectedDate) {
+  // Função para buscar os horários já agendados
+  const getBookedTimes = async (date: string | null) => {
+    const response = await fetchAPiGet(date);
+    return response.map((item: any) => {
+      // Calcula a duração total de todos os serviços para este horário
+      const totalDuration = item.services.reduce((total: number, service: Service) => {
+        return total + service.duration;
+      }, 0);
+
+      return {
+        hour: item.hour,
+        totalDuration,
+      };
+    });
+  };
+
+  const calculateAvailableTimes = async () => {
+    if (servicesSelected.length === 0 || !selectedDate) {
       setAvailableTimes([]);
       return;
     }
 
+    const bookedTimes = await getBookedTimes(selectedDate);
     const dayOfWeek = dayjs(selectedDate).format("dddd");
+    const totalDuration = getTotalDuration(servicesSelected);
+    const times = generateTimes(dayOfWeek, totalDuration);
 
-    const totalDuration = selectedServices.reduce((acc, selectedService) => {
+    // Remove os horários já agendados da lista de horários disponíveis
+    const availableTimes = times.filter((time) => {
+      const proposedStartTime = moment(selectedDate + " " + time);
+      const proposedEndTime = proposedStartTime
+        .clone()
+        .add(totalDuration, "minutes");
+
+      // Verificar se o intervalo de tempo proposto não se sobrepõe com os horários já agendados
+      const isOverlapping = bookedTimes.some((bookedTime: BookTime) => {
+        const bookedStartTime = moment(selectedDate + " " + bookedTime.hour);
+        const bookedEndTime = bookedStartTime
+          .clone()
+          .add(bookedTime.totalDuration, "minutes");
+
+        // Verifica se há sobreposição
+        return (
+          proposedStartTime.isBetween(
+            bookedStartTime,
+            bookedEndTime,
+            null,
+            "[)"
+          ) ||
+          proposedEndTime.isBetween(bookedStartTime, bookedEndTime, null, "(]")
+        );
+      });
+
+      return !isOverlapping;
+    });
+
+    setAvailableTimes(availableTimes);
+  };
+
+  const getTotalDuration = (selectedServices: string[]) => {
+    return selectedServices.reduce((acc, servicesSelected) => {
       const serviceInfo = services.find(
-        (service) => service.services === selectedService
+        (service) => service.services === servicesSelected
       );
       if (serviceInfo) {
         const serviceDuration = serviceInfo.duration;
@@ -46,7 +91,9 @@ const AppointmentTimes: FC<AppointmentTimesProps> = ({
       }
       return acc;
     }, 0);
+  };
 
+  const generateTimes = (dayOfWeek: string, totalDuration: number) => {
     const startTime = moment(selectedDate).set({ hour: 7, minute: 0 });
     let endTime = moment(selectedDate).set({ hour: 20, minute: 0 });
 
@@ -56,11 +103,11 @@ const AppointmentTimes: FC<AppointmentTimesProps> = ({
     if (dayOfWeek === "Sunday") {
       endTime = moment(selectedDate).set({ hour: 11, minute: 0 });
     }
-    const times: string[] = [];
+
+    const times = [];
 
     if (dayOfWeek === "Tuesday") {
-      setAvailableTimes(["Sem horários disponíveis"]);
-      return;
+      return ["Sem horários disponíveis"];
     }
 
     while (startTime.isBefore(endTime)) {
@@ -75,23 +122,18 @@ const AppointmentTimes: FC<AppointmentTimesProps> = ({
         times.push(currentTime);
       }
       startTime.add(totalDuration, "minutes");
-      if (startTime.isSameOrAfter(endTime)) {
-        break;
-      }
     }
 
-    setAvailableTimes(times);
+    return times;
   };
 
-  // Função para lidar com a seleção de horários
   const handleTimeClick = (time: string) => {
     if (selectedTimes.includes(time)) {
       setSelectedTimes(
         selectedTimes.filter((selectedTime) => selectedTime !== time)
       );
       setValues({ ...values, hour: "" });
-              setButtonEnviar(false);
-
+      setButtonEnviar(false);
     } else {
       setSelectedTimes([selectedTimes, time]);
       setValues({ ...values, hour: time });
@@ -101,7 +143,7 @@ const AppointmentTimes: FC<AppointmentTimesProps> = ({
 
   useEffect(() => {
     calculateAvailableTimes();
-  }, [selectedDate, selectedServices]);
+  }, [selectedDate, servicesSelected]);
 
   return (
     <div className="hours-contain">

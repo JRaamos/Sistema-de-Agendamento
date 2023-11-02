@@ -4,18 +4,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const service_model_1 = __importDefault(require("../database/models/service.model"));
-const createService = async (serviceData) => {
-    const { services, price, userId } = serviceData;
-    if (typeof services === 'string') {
-        const serviceResult = await service_model_1.default.create({ services, price, userId });
-        const { serviceId } = serviceResult.dataValues;
-        return serviceId;
-    }
-    const serviceResult = services.map(async (service) => {
-        const result = await service_model_1.default.create({ services: service, price, userId });
-        return result;
+const findAllService = async (services) => {
+    const serviceResults = await service_model_1.default.findAll({
+        where: { service: services },
     });
-    const { serviceId } = (await serviceResult[0]).dataValues;
-    return serviceId;
+    const serviceIds = services.map((service) => {
+        const foundService = serviceResults.find((result) => result.dataValues.service === service);
+        return foundService ? foundService.dataValues.serviceId : null;
+    });
+    return serviceIds.filter((id) => id !== null);
 };
-exports.default = { createService };
+exports.default = { findAllService };

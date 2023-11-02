@@ -14,18 +14,19 @@ const ScheduleModel: ScheduleSequelizeModelCreator = db.define('Schedule', {
     field: 'schedule_id',
   },
   date: {
-    type: DataTypes.DATE,
+    type: DataTypes.DATEONLY,
     allowNull: false,
   },
   hour: {
     type: DataTypes.STRING(128),
     allowNull: false,
   },
-  userId: {
-    type: DataTypes.INTEGER,
+  eventId: {
+    type: DataTypes.STRING(128),
     allowNull: false,
+    field: 'event_id',
   },
-  serviceId: {
+  userId: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },

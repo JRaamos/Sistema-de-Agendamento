@@ -1,15 +1,34 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../images/logo-1.png";
 import "../styles/home.css";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import AgendamentosContext from "../context/AgendamentosContext";
 
 function Home() {
   const navigate = useNavigate();
   const { resetStates } = useContext(AgendamentosContext);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
   return (
-    <div className="container-home">
+    <div className="container-home" onClick={() => isMenuOpen && setIsMenuOpen(false)}>
+      <nav className={`menu ${isMenuOpen ? "active" : ""}`}>
+        <Link to='/login'>
+          Login
+        </Link>
+      </nav>
+
+      <div
+        className={`menu-hamburguer ${isMenuOpen ? "active" : ""}`}
+        onClick={toggleMenu}
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
       <div className="container-logo-button">
         <section className="section-logo">
           <img src={logo} alt="logo" className="img-logo" />

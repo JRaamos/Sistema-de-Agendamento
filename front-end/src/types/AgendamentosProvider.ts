@@ -6,6 +6,7 @@ export type Values = {
   date: string;
   hour: string;
   services: string[];
+  eventId: string;
   agendamentos: string;
 }
 
@@ -45,7 +46,7 @@ export type AgendamentosContextType = {
   setText: Dispatch<SetStateAction<string>>;
   setIsServicesSelected: Dispatch<SetStateAction<boolean>>;
   selectedDate: string | null ;
-  setSelectedDate: Dispatch<SetStateAction<String | null >>;
+  setSelectedDate: Dispatch<SetStateAction<string | null >>;
   disableInput: boolean;
   inputValue: string;
   setInputValue: Dispatch<SetStateAction<string>>;
@@ -67,6 +68,8 @@ export type AgendamentosContextType = {
   availableTimes: string[];
   setAvailableTimes: Dispatch<SetStateAction<string[]>>;
   containerRef: any;
+  bookedTimes: string[];
+  setBookedTimes: Dispatch<SetStateAction<string[]>>;
 };
 
 export type AgendamentosProviderProps = {

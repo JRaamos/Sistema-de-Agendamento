@@ -12,12 +12,17 @@ export default {
         field: 'schedule_id',
       },
       date: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: false,
       },
       hour: {
         type: DataTypes.STRING(255),
         allowNull: false,
+      },
+      eventId: {
+        type: DataTypes.STRING(255),
+        allowNull: false,
+        field: 'event_id',
       },
       userId: {
         type: DataTypes.INTEGER.UNSIGNED,
@@ -26,15 +31,6 @@ export default {
         references: {
           model: 'users',
           key: 'user_id',
-        },
-      },
-      serviceId: {
-        type: DataTypes.INTEGER.UNSIGNED,
-        allowNull: false,
-        field: 'service_id',
-        references: {
-          model: 'services',
-          key: 'service_id',
         },
       },
     });

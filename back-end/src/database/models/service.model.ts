@@ -1,3 +1,4 @@
+// ServiceModel.js
 import { DataTypes, Model, ModelDefined, Optional } from 'sequelize';
 import db from './index';
 import { Service } from '../../types/Services';
@@ -12,7 +13,7 @@ const ServiceModel: ServiceSequelizeModelCreator = db.define('Service', {
     autoIncrement: true,
     primaryKey: true,
   },
-  services: {
+  service: {
     type: DataTypes.STRING(128),
     allowNull: false,
   },
@@ -20,16 +21,15 @@ const ServiceModel: ServiceSequelizeModelCreator = db.define('Service', {
     type: DataTypes.STRING(128),
     allowNull: false,
   },
-  userId: {
-    type: DataTypes.INTEGER,
+  duration: {
+    type: DataTypes.STRING(128),
     allowNull: false,
   },
-  
+
 }, {
   tableName: 'services',
   timestamps: false,
   underscored: true,
-
 });
 
 export default ServiceModel;
