@@ -96,6 +96,20 @@ Neste projeto, as principais tecnologias e ferramentas utilizadas no desenvolvim
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+- **Rota:** POST `/login` 
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 169d80b (feat:)
+- **Rota:** POST `/login`
+=======
+- **Rota:** POST `/login` 
+>>>>>>> 551d17e (feat: adiciona consultas as rotas disponiveis no front e adiciona codigo para cancelamento e liberação do horario no banco de dados)
+<<<<<<< HEAD
+>>>>>>> f262c3f (feat:)
+=======
+=======
 - **Rota:** POST `/login` 
 =======
 <<<<<<< HEAD
@@ -104,6 +118,8 @@ Neste projeto, as principais tecnologias e ferramentas utilizadas no desenvolvim
 - **Rota:** POST `/login` 
 >>>>>>> 551d17e (feat: adiciona consultas as rotas disponiveis no front e adiciona codigo para cancelamento e liberação do horario no banco de dados)
 >>>>>>> f262c3f (feat:)
+>>>>>>> 68ec63f (feat:)
+>>>>>>> 169d80b (feat:)
 
 <<<<<<< HEAD
 Rota para autenticação de login e quando sucesso retorna um token JWT
