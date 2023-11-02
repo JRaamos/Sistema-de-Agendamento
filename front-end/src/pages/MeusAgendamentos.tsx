@@ -7,7 +7,7 @@ import { parse, format } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
 import AgendamentosContext from "../context/AgendamentosContext";
 import { Agendamentos } from "../types/MeusAgendamentos";
-import { fetchAPiCancel } from "../utils/fetchApi";
+import { fetchAPiCancel, fetchAPiGetId, fetchAPiGoogleEventDelete } from "../utils/fetchApi";
 
 function MeusAgendamentos() {
   const location = useLocation();
@@ -62,7 +62,7 @@ function MeusAgendamentos() {
     return `${formattedDate} as ${hour}`;
   };
 
-  const removeStorage =  () => {
+  const removeStorage = async  () => {
     const storage = localStorage.getItem("agendamentos");
     const dataBr = date.split(" ");
     const dataObj = parse(dataBr[1], "dd/MM/yyyy", new Date());
@@ -80,6 +80,8 @@ function MeusAgendamentos() {
       setCancelar(false);
       setAgendamentos(newAgendamentos);
        fetchAPiCancel(dataUS, hour);
+       const eventId = await fetchAPiGetId(dataUS, hour);
+       fetchAPiGoogleEventDelete(eventId);
     }
   };
 

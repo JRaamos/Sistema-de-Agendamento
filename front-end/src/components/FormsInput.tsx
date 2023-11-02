@@ -5,7 +5,7 @@ import ptBR from "date-fns/locale/pt-BR";
 import "../styles/formsInput.css";
 import PhoneNumberInput from "./PhoneNumberInput";
 import { AgendamentosContextType } from "../types/AgendamentosProvider";
-import { fetchAPi } from "../utils/fetchApi";
+import { fetchAPi, fetchAPiGoogleEvent } from "../utils/fetchApi";
 
 function FormsInput() {
   const {
@@ -55,7 +55,7 @@ function FormsInput() {
       }
     }
   }, []);
-  const handleValues = () => {
+  const handleValues = async () => {
     if (!values.name) {
       setIsName(true);
       setValues({ ...values, name: inputValue });

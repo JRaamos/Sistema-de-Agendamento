@@ -39,7 +39,9 @@ function AgendamentosProvider({ children }: AgendamentosProviderProps) {
     date: "",
     hour: "",
     services: [],
+    eventId: "",
     agendamentos: "",
+
   });
     const [availableTimes, setAvailableTimes] = useState<string[]>([]);
   const handleLocalStorange = () => {
@@ -76,6 +78,7 @@ function AgendamentosProvider({ children }: AgendamentosProviderProps) {
       date: "",
       hour: "",
       services: [],
+      eventId: "",
       agendamentos: "",
     });
     setDisableButton(true);

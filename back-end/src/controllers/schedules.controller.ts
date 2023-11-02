@@ -8,7 +8,7 @@ const finaAllSchedulesDate = async (req: Request, res: Response) => {
 };
 
 const findByScheduleDateId = async (req: Request, res: Response) => {
-  const { date, hour } = req.body;
+  const { date, hour } = req.params;
   const scheduleResult = await schedulesService.findByScheduleDateId(date, hour);
   return res.status(200).json(scheduleResult);
 };

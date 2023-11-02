@@ -3,6 +3,8 @@ const BASEURL = 'http://localhost:3001';
 
 //faz o registro/criação do agendamento no banco de dados
 export const fetchAPi = async (values: Values) => {
+  const eventId = await fetchAPiGoogleEvent(values)
+  values.eventId = eventId
   const { agendamentos, ...newValues } = values;
 
   const response = (await fetch(`${BASEURL}/registre`, {
@@ -42,7 +44,21 @@ export const fetchAPiGet = async (date: string | null) => {
 
   const data = await response.json();
   
-  return data;
+  return data
+}
+
+export const fetchAPiGetId = async (date: string | null, hour: string | number) => {
+  const formattedDate = date?.replace(/\//g, '-');
+
+  const response = (await fetch(`${BASEURL}/schedules/${formattedDate}/${hour}`, {
+    method: 'get',
+    headers: { 'Content-Type': 'application/json' },
+  }
+  ));
+
+  const data = await response.json();
+
+  return data.eventId;
 }
 
 //conta quantos agendamentos foram realizados de acorodo com o intervalo de dias passado, é necessario passar o token
@@ -80,4 +96,23 @@ export const fetchAPiCountCancel = async (days: number, token: string) => {
   const data = await response.json();
   
   return data;
+}
+
+export const fetchAPiGoogleEvent = async (values: Values) => {
+  const response = (await fetch(`${BASEURL}/googleEvent`, {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(values)
+  }));
+
+  const data = await response.json();
+  return data.event.id
+}
+
+export const fetchAPiGoogleEventDelete = async (eventId: string) => {
+ (await fetch(`${BASEURL}/googleEvent/${eventId}`, {
+      method: 'delete',
+      headers: { 'Content-Type': 'application/json' },
+  }));
+  
 }

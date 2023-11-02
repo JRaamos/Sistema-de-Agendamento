@@ -6,6 +6,7 @@ export type Values = {
   date: string;
   hour: string;
   services: string[];
+  eventId: string;
   agendamentos: string;
 }
 
