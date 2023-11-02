@@ -7,8 +7,8 @@ const sequelize_1 = __importDefault(require("sequelize"));
 const schedules_model_1 = __importDefault(require("../database/models/schedules.model"));
 const service_model_1 = __importDefault(require("../database/models/service.model"));
 const createSchedule = async (schedule) => {
-    const { date, hour, userId } = schedule;
-    const scheduleResult = await schedules_model_1.default.create({ date, hour, userId });
+    const { date, hour, userId, eventId } = schedule;
+    const scheduleResult = await schedules_model_1.default.create({ date, hour, userId, eventId });
     return scheduleResult.dataValues;
 };
 const finaAllSchedulesDate = async (date) => {

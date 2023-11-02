@@ -19,6 +19,11 @@ exports.default = {
                 type: sequelize_1.DataTypes.STRING(255),
                 allowNull: false,
             },
+            eventId: {
+                type: sequelize_1.DataTypes.STRING(255),
+                allowNull: false,
+                field: 'event_id',
+            },
             userId: {
                 type: sequelize_1.DataTypes.INTEGER.UNSIGNED,
                 allowNull: false,

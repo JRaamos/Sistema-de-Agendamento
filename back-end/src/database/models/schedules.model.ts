@@ -21,6 +21,11 @@ const ScheduleModel: ScheduleSequelizeModelCreator = db.define('Schedule', {
     type: DataTypes.STRING(128),
     allowNull: false,
   },
+  eventId: {
+    type: DataTypes.STRING(128),
+    allowNull: false,
+    field: 'event_id',
+  },
   userId: {
     type: DataTypes.INTEGER,
     allowNull: false,

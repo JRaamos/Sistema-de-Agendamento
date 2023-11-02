@@ -23,4 +23,13 @@ const createEventService = async (eventData: GoogleEvent) => {
   return event.data;
 };
 
-export default { createEventService };
+const deleteEventService = async (eventId: string) => {
+  await client.authorize();
+  const event = await calendar.events.delete({
+    calendarId: process.env.CALENDAR_ID,
+    eventId,
+  });
+  return event.data;
+};
+
+export default { createEventService, deleteEventService };

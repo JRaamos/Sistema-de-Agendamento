@@ -8,4 +8,10 @@ const createEvent = async (req: Request, res: Response) => {
   return res.status(200).json({ message: 'Evento criado com sucesso!', event });
 };
 
-export default { createEvent };
+const deleteEvent = async (req: Request, res: Response) => {
+  const { eventId } = req.params;
+  const event = await googleEvent.deleteEventService(eventId);
+  return res.status(200).json({ message: 'Evento deletado com sucesso!', event });
+};
+
+export default { createEvent, deleteEvent };
