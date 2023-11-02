@@ -4,4 +4,5 @@ export type Agendamentos = {
   hour: string | number;
   services: string[];
   agendamentos: string;
+  price?: number;
 }
