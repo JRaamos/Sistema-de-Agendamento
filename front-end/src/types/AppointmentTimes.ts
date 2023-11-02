@@ -5,4 +5,5 @@ export type BookTime = {
     duration: string;
     price: string;
   }];
+  totalDuration: string;
 };

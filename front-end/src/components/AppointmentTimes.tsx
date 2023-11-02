@@ -5,6 +5,8 @@ import services from "../utils/services.json";
 import "../styles/appointmentTimes.css";
 import AgendamentosContext from "../context/AgendamentosContext";
 import { fetchAPiGet } from "../utils/fetchApi";
+import { Service } from "../types/Service";
+import { BookTime } from "../types/AppointmentTimes";
 
 const AppointmentTimes = () => {
   const [selectedTimes, setSelectedTimes] = useState<any[]>([]);
@@ -24,7 +26,7 @@ const AppointmentTimes = () => {
     const response = await fetchAPiGet(date);
     return response.map((item: any) => {
       // Calcula a duração total de todos os serviços para este horário
-      const totalDuration = item.services.reduce((total, service) => {
+      const totalDuration = item.services.reduce((total: number, service: Service) => {
         return total + service.duration;
       }, 0);
 
@@ -54,7 +56,7 @@ const AppointmentTimes = () => {
         .add(totalDuration, "minutes");
 
       // Verificar se o intervalo de tempo proposto não se sobrepõe com os horários já agendados
-      const isOverlapping = bookedTimes.some((bookedTime) => {
+      const isOverlapping = bookedTimes.some((bookedTime: BookTime) => {
         const bookedStartTime = moment(selectedDate + " " + bookedTime.hour);
         const bookedEndTime = bookedStartTime
           .clone()
