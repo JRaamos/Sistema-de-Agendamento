@@ -122,6 +122,7 @@ Rota para autenticação de login e quando sucesso retorna um token JWT
   ```json
   {
 <<<<<<< HEAD
+<<<<<<< HEAD
     "token": "your-jwt-token"
     // outras informações do usuário
   }
@@ -132,6 +133,12 @@ Rota para autenticação de login e quando sucesso retorna um token JWT
     // outras informações do usuário
   }
 >>>>>>> f351c7c (fix: ajus documentação do back-end para incluir mais detalhes as rotas que usam metodo posto e incluir o uso de uma API externa)
+=======
+    "token": "your-jwt-token"
+    // outras informações do usuário
+  }
+  ```
+>>>>>>> bf2a463 (feat: adiciona rota para deletar um evento no Google calendar)
 
 ### Registre
 
@@ -161,10 +168,14 @@ Rota para autenticação de login e quando sucesso retorna um token JWT
     }
   }
 <<<<<<< HEAD
+<<<<<<< HEAD
   ```
 =======
 
 >>>>>>> f351c7c (fix: ajus documentação do back-end para incluir mais detalhes as rotas que usam metodo posto e incluir o uso de uma API externa)
+=======
+  ```
+>>>>>>> bf2a463 (feat: adiciona rota para deletar um evento no Google calendar)
 
 ### Schedules
 
@@ -197,13 +208,17 @@ Rota para contar quantos agendamentos foram realizados de acordo com o intervalo
 
 - `200 OK`: A solicitação foi bem-sucedida e o agendamento foi cancelado.
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   
 >>>>>>> f351c7c (fix: ajus documentação do back-end para incluir mais detalhes as rotas que usam metodo posto e incluir o uso de uma API externa)
+=======
+>>>>>>> bf2a463 (feat: adiciona rota para deletar um evento no Google calendar)
 - `404 Not Found`: Retorna uma mensagem de erro se o agendamento não for encontrado.
 
   ```json
   "Schedule not found"
+<<<<<<< HEAD
 <<<<<<< HEAD
   ```
 
@@ -213,6 +228,11 @@ Rota para contar quantos agendamentos foram realizados de acordo com o intervalo
 
 ### Google Calendar Agendamento
 >>>>>>> f351c7c (fix: ajus documentação do back-end para incluir mais detalhes as rotas que usam metodo posto e incluir o uso de uma API externa)
+=======
+  ```
+
+### Google Calendar
+>>>>>>> bf2a463 (feat: adiciona rota para deletar um evento no Google calendar)
 
 - **Rota:** POST `/googleEvent`
 
@@ -238,6 +258,9 @@ Cria um novo evento de agendamento no Google Calendar utilizando os dados de age
     }
   }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> bf2a463 (feat: adiciona rota para deletar um evento no Google calendar)
   ```
 
 
@@ -261,5 +284,8 @@ Deleta um evento existente no Google Calendar.
     }
   }
   ```
+<<<<<<< HEAD
 =======
 >>>>>>> f351c7c (fix: ajus documentação do back-end para incluir mais detalhes as rotas que usam metodo posto e incluir o uso de uma API externa)
+=======
+>>>>>>> bf2a463 (feat: adiciona rota para deletar um evento no Google calendar)
