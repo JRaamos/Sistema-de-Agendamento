@@ -5,6 +5,7 @@ import AgendamentosProvider from "./context/AgendamentosProvider";
 import { useEffect } from "react";
 import MensageConclusão from "./components/MensageConclusão";
 import MeusAgendamentos from "./pages/MeusAgendamentos";
+import Login from "./pages/Login";
 
 function App() {
   useEffect(() => {
@@ -17,6 +18,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/agendamentos" element={<Agendamentos />} />
           <Route path="/meus-agendamentos" element={<MeusAgendamentos />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </AgendamentosProvider>
     </div>
