@@ -113,7 +113,16 @@ Rota para autenticação de login e quando sucesso retorna um token JWT
 - **Rota:** POST `/login` 
 >>>>>>> 551d17e (feat: adiciona consultas as rotas disponiveis no front e adiciona codigo para cancelamento e liberação do horario no banco de dados)
 
+<<<<<<< HEAD
 >>>>>>> f351c7c (fix: ajus documentação do back-end para incluir mais detalhes as rotas que usam metodo posto e incluir o uso de uma API externa)
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+Rota para autenticação de login e quando sucesso retorna um token JWT
+=======
+>>>>>>> dc29f94 (feat: adiciona rota para deletar um evento no Google calendar)
+>>>>>>> 44fc261 (feat: adiciona rota para deletar um evento no Google calendar)
   Autentica o login do barbeiro e, em caso de sucesso, retorna um token JWT.
 
 #### Parâmetros do Corpo (Body Parameters)
@@ -133,6 +142,7 @@ Rota para autenticação de login e quando sucesso retorna um token JWT
     // outras informações do usuário
   }
   ```
+<<<<<<< HEAD
 >>>>>>> bf2a463 (feat: adiciona rota para deletar um evento no Google calendar)
 =======
     "token": "your-jwt-token",
@@ -145,6 +155,12 @@ Rota para autenticação de login e quando sucesso retorna um token JWT
   }
   ```
 >>>>>>> bf2a463 (feat: adiciona rota para deletar um evento no Google calendar)
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> bf2a463 (feat: adiciona rota para deletar um evento no Google calendar)
+>>>>>>> dc29f94 (feat: adiciona rota para deletar um evento no Google calendar)
+>>>>>>> 44fc261 (feat: adiciona rota para deletar um evento no Google calendar)
 
 ### Registre
 
@@ -176,6 +192,7 @@ Rota para autenticação de login e quando sucesso retorna um token JWT
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   ```
 =======
 
@@ -184,11 +201,19 @@ Rota para autenticação de login e quando sucesso retorna um token JWT
   ```
 >>>>>>> bf2a463 (feat: adiciona rota para deletar um evento no Google calendar)
 =======
+=======
+>>>>>>> 44fc261 (feat: adiciona rota para deletar um evento no Google calendar)
   ```
 =======
 
 >>>>>>> e84dfcb (fix: ajus documentação do back-end para incluir mais detalhes as rotas que usam metodo posto e incluir o uso de uma API externa)
+<<<<<<< HEAD
 >>>>>>> 8f050e3 (fix: ajus documentação do back-end para incluir mais detalhes as rotas que usam metodo posto e incluir o uso de uma API externa)
+=======
+=======
+  ```
+>>>>>>> dc29f94 (feat: adiciona rota para deletar um evento no Google calendar)
+>>>>>>> 44fc261 (feat: adiciona rota para deletar um evento no Google calendar)
 
 ### Schedules
 
@@ -223,6 +248,7 @@ Rota para contar quantos agendamentos foram realizados de acordo com o intervalo
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   
 >>>>>>> f351c7c (fix: ajus documentação do back-end para incluir mais detalhes as rotas que usam metodo posto e incluir o uso de uma API externa)
@@ -233,6 +259,13 @@ Rota para contar quantos agendamentos foram realizados de acordo com o intervalo
   
 >>>>>>> e84dfcb (fix: ajus documentação do back-end para incluir mais detalhes as rotas que usam metodo posto e incluir o uso de uma API externa)
 >>>>>>> 8f050e3 (fix: ajus documentação do back-end para incluir mais detalhes as rotas que usam metodo posto e incluir o uso de uma API externa)
+=======
+=======
+  
+>>>>>>> e84dfcb (fix: ajus documentação do back-end para incluir mais detalhes as rotas que usam metodo posto e incluir o uso de uma API externa)
+=======
+>>>>>>> dc29f94 (feat: adiciona rota para deletar um evento no Google calendar)
+>>>>>>> 44fc261 (feat: adiciona rota para deletar um evento no Google calendar)
 - `404 Not Found`: Retorna uma mensagem de erro se o agendamento não for encontrado.
 
   ```json
@@ -240,8 +273,11 @@ Rota para contar quantos agendamentos foram realizados de acordo com o intervalo
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 8f050e3 (fix: ajus documentação do back-end para incluir mais detalhes as rotas que usam metodo posto e incluir o uso de uma API externa)
+=======
+>>>>>>> 44fc261 (feat: adiciona rota para deletar um evento no Google calendar)
   ```
 
 ### Google Calendar
@@ -258,7 +294,15 @@ Rota para contar quantos agendamentos foram realizados de acordo com o intervalo
 >>>>>>> bf2a463 (feat: adiciona rota para deletar um evento no Google calendar)
 =======
 >>>>>>> e84dfcb (fix: ajus documentação do back-end para incluir mais detalhes as rotas que usam metodo posto e incluir o uso de uma API externa)
+<<<<<<< HEAD
 >>>>>>> 8f050e3 (fix: ajus documentação do back-end para incluir mais detalhes as rotas que usam metodo posto e incluir o uso de uma API externa)
+=======
+=======
+  ```
+
+### Google Calendar
+>>>>>>> dc29f94 (feat: adiciona rota para deletar um evento no Google calendar)
+>>>>>>> 44fc261 (feat: adiciona rota para deletar um evento no Google calendar)
 
 - **Rota:** POST `/googleEvent`
 
@@ -286,10 +330,15 @@ Cria um novo evento de agendamento no Google Calendar utilizando os dados de age
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> bf2a463 (feat: adiciona rota para deletar um evento no Google calendar)
 =======
 >>>>>>> 8f050e3 (fix: ajus documentação do back-end para incluir mais detalhes as rotas que usam metodo posto e incluir o uso de uma API externa)
+=======
+=======
+>>>>>>> dc29f94 (feat: adiciona rota para deletar um evento no Google calendar)
+>>>>>>> 44fc261 (feat: adiciona rota para deletar um evento no Google calendar)
   ```
 
 
@@ -315,6 +364,7 @@ Deleta um evento existente no Google Calendar.
   ```
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> f351c7c (fix: ajus documentação do back-end para incluir mais detalhes as rotas que usam metodo posto e incluir o uso de uma API externa)
 =======
@@ -323,3 +373,9 @@ Deleta um evento existente no Google Calendar.
 =======
 >>>>>>> e84dfcb (fix: ajus documentação do back-end para incluir mais detalhes as rotas que usam metodo posto e incluir o uso de uma API externa)
 >>>>>>> 8f050e3 (fix: ajus documentação do back-end para incluir mais detalhes as rotas que usam metodo posto e incluir o uso de uma API externa)
+=======
+=======
+>>>>>>> e84dfcb (fix: ajus documentação do back-end para incluir mais detalhes as rotas que usam metodo posto e incluir o uso de uma API externa)
+=======
+>>>>>>> dc29f94 (feat: adiciona rota para deletar um evento no Google calendar)
+>>>>>>> 44fc261 (feat: adiciona rota para deletar um evento no Google calendar)
