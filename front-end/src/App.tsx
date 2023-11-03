@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import MensageConclusão from "./components/MensageConclusão";
 import MeusAgendamentos from "./pages/MeusAgendamentos";
 import Login from "./pages/Login";
+import BarberDashboard from "./pages/BarberDashboard";
 
 function App() {
   useEffect(() => {
@@ -19,6 +20,7 @@ function App() {
           <Route path="/agendamentos" element={<Agendamentos />} />
           <Route path="/meus-agendamentos" element={<MeusAgendamentos />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/barber-dashboard" element={<BarberDashboard />} />
         </Routes>
       </AgendamentosProvider>
     </div>

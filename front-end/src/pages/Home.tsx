@@ -19,7 +19,6 @@ function Home() {
           Login
         </Link>
       </nav>
-
       <div
         className={`menu-hamburguer ${isMenuOpen ? "active" : ""}`}
         onClick={toggleMenu}
@@ -28,7 +27,6 @@ function Home() {
         <span></span>
         <span></span>
       </div>
-
       <div className="container-logo-button">
         <section className="section-logo">
           <img src={logo} alt="logo" className="img-logo" />

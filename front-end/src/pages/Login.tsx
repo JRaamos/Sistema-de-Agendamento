@@ -18,7 +18,7 @@ function Login() {
       return;
     }
     localStorage.setItem("token", token.mensage);
-    navigate("/barbers");
+    navigate("/barber-dashboard");
   };
 
   return (

@@ -14,7 +14,9 @@
 .form-login {
   align-items: center;
   border-radius: 5px;
-  box-shadow: 0 0 15px 0 rgba(53, 188, 197, 0.4);
+
+  /* stylelint-disable-next-line max-line-length */
+  box-shadow: 0 -5px 10px -7px rgba(53, 188, 197, 0.4), 0 10px 5px -8px rgba(53, 188, 197, 0.4);
   display: flex;
   flex-direction: column;
   height: 40vh;
