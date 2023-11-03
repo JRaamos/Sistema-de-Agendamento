@@ -4,17 +4,17 @@ import scheduleController from '../controllers/schedules.controller';
 const routerSchedules = Router();
 
 routerSchedules.get(
-  '/schedules/:date',
+  '/schedules/date/:date',
   scheduleController.finaAllSchedulesDate,
 );
 
 routerSchedules.get(
-  '/schedules/:date/:hour',
+  '/schedules/date/:date/hour/:hour',
   scheduleController.findByScheduleDateId,
 );
 
 routerSchedules.get(
-  '/schedules/:intervalDays',
+  '/schedules/count/:intervalDays',
   scheduleController.countSchedules,
 );
 

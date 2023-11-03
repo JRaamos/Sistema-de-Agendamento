@@ -1,20 +1,19 @@
 import React, { useState } from "react";
 import "../styles/barberDashboard.css"; 
+import DashboardAgendamentos from "../components/DashboardAgendamentos";
+import BarberUSer from "../components/BarberUser";
 
 function BarberDashboard() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Estado para controlar qual aba está ativa.
   const [activeTab, setActiveTab] = useState("agendamentos");
 
-  // Função para alternar a visibilidade do menu.
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  // Função para trocar a aba e ocultar o menu.
-  const changeTab = (tab) => {
-    setActiveTab(tab);
+  const changeTab = (option: string) => {
+    setActiveTab(option);
     setIsMenuOpen(false);
   };
 
@@ -47,8 +46,8 @@ function BarberDashboard() {
         </nav>
       </aside>
       <main className="content">
-        {activeTab === "agendamentos" && <div>Conteúdo dos Agendamentos</div>}
-        {activeTab === "barbeiro" && <div>Conteúdo do Barbeiro</div>}
+        {activeTab === "agendamentos" && <DashboardAgendamentos />}
+        {activeTab === "barbeiro" &&  <BarberUSer />}
       </main>
     </div>
   );

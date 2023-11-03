@@ -36,7 +36,7 @@ export const fetchAPiLogin = async (email: string, password: string) => {
 //faz a busca dos agendamentos no banco de dados de acordo com a data
 export const fetchAPiGet = async (date: string | null) => {
   const formattedDate = date?.replace(/\//g, '-');
-  const response = (await fetch(`${BASEURL}/schedules/${formattedDate}`, {
+  const response = (await fetch(`${BASEURL}/schedules/date/${formattedDate}`, {
     method: 'get',
     headers: { 'Content-Type': 'application/json' },
   }
@@ -50,7 +50,7 @@ export const fetchAPiGet = async (date: string | null) => {
 export const fetchAPiGetId = async (date: string | null, hour: string | number) => {
   const formattedDate = date?.replace(/\//g, '-');
 
-  const response = (await fetch(`${BASEURL}/schedules/${formattedDate}/${hour}`, {
+  const response = (await fetch(`${BASEURL}/schedules/date/${formattedDate}/hour/${hour}`, {
     method: 'get',
     headers: { 'Content-Type': 'application/json' },
   }
@@ -63,7 +63,7 @@ export const fetchAPiGetId = async (date: string | null, hour: string | number) 
 
 //conta quantos agendamentos foram realizados de acorodo com o intervalo de dias passado, é necessario passar o token
 export const fetchAPiCount = async (days: number, token: string) => {
-  const response = (await fetch(`${BASEURL}/schedules/${days}`, {
+  const response = (await fetch(`${BASEURL}/schedules/count/${days}`, {
     method: 'get',
     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
   }

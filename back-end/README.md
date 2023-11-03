@@ -37,14 +37,14 @@ Neste projeto, as principais tecnologias e ferramentas utilizadas no desenvolvim
 ## Normalização do Banco de Dados
 
 <details>
-  <summary><strong>Tabelas e suas associações</strong></summary>summary>
+  <summary><strong>Tabelas e suas associações</strong></summary>
   
 - **Tabela de Usuários**
 
-- `Nome da Tabela`: **'users'**
-- `user_id` (Chave Primária)
-- `name` (Nome do usuário)
-- `phone` (Número de telefone)
+  - `Nome da Tabela`: **'users'**
+  - `user_id` (Chave Primária)
+  - `name` (Nome do usuário)
+  - `phone` (Número de telefone)
 
 - **Tabela de Serviços**
 
@@ -141,19 +141,20 @@ Neste projeto, as principais tecnologias e ferramentas utilizadas no desenvolvim
 
 ### Schedules
 
-- **Rota:** GET `/schedules/:date`
+- **Rota:** GET `/schedules/date/:date`
 
-Rota para pegar **todos** os agendamentos realizados em uma **data especifica**,
-nessa rota é incluido todos os serviços que foram/serão realizados nessa data especifica
+  Rota para pegar **todos** os agendamentos realizados em uma **data especifica**,
+  nessa rota é incluido todos os serviços que foram/serão realizados nessa data especifica.
 
-- **Rota:** GET `/schedules/:date/:hour`
+- **Rota:** GET `/schedules/date/:date/hour/:hour`
 
-Rota para pegar **UM** agentamento em uma **data e hora especifica**, nessa rota é
-incluido todos os serviços que foram/serão realizados nesse agendameto
+  Rota para pegar **UM** agendamento em uma **data e hora especifica**, nessa rota é
+  incluido todos os serviços que foram/serão realizados nesse agendamento.
 
-- **Rota:** GET `/schedules/:intervalDays`
+- **Rota:** GET `/schedules/count/:intervalDays`
 
-Rota para contar quantos agendamentos foram realizados de acordo com o intervalo de dias que é passado
+  Rota para contar quantos agendamentos foram realizados de acordo com o intervalo de dias que é passado.
+
 
 ### Cancellations
 

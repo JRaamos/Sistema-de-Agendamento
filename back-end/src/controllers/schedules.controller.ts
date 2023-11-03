@@ -14,8 +14,10 @@ const findByScheduleDateId = async (req: Request, res: Response) => {
 };
 
 const countSchedules = async (req: Request, res: Response) => {
-  const { rageDays } = req.params;
-  const result = await schedulesService.countSchedules(Number(rageDays));
+  const {intervalDays}  = req.params;
+  console.log(intervalDays);
+  
+  const result = await schedulesService.countSchedules(Number(intervalDays));
   return res.status(200).json({ result });
 };
 
