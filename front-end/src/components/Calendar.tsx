@@ -5,6 +5,7 @@ import "../styles/calendar.css";
 import AgendamentosContext from "../context/AgendamentosContext";
 import { DateList } from "../types/Calendar";
 import { useFetcher } from "react-router-dom";
+import { fetchApiGetDayOff } from "../utils/fetchApi";
 
 const Calendar = () => {
   const {
@@ -39,7 +40,6 @@ const Calendar = () => {
   }, []);
 
   const handleButtonClick = (dayInfo: string) => {
-    
     setSelectedDate(dayInfo);
     setIsSelected(true);
     setValues({ ...values, date: dayInfo });
@@ -50,16 +50,22 @@ const Calendar = () => {
       const scrollHeight = container.scrollHeight;
       container.scrollTop = scrollHeight;
     }
-  }, [dates ]);
+  }, [dates]);
 
   useEffect(() => {
-    const offDays = localStorage.getItem("offDays");
+    const handleDayOff = async () => {
+      const offDays = await fetchApiGetDayOff();
+      if (offDays.length > 0 ) {
+        setBarberUnavailability(offDays);
+      }
+      console.log(offDays);
+      
 
-    if (offDays) {
-      const offDaysArray = JSON.parse(offDays);
-     setBarberUnavailability(offDaysArray);
-    }
+
+    };
+    handleDayOff();
   }, [selectedDate]);
+
   return (
     <div className="date-container">
       {dates.map((dateInfo, index) => (

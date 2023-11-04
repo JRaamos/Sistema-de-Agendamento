@@ -111,10 +111,15 @@ const [dayOffTimes, setDayOffTimes] = useState({
     });
 
     const afternoonOffEnd = moment(selectedDate).set({ hour: 20, minute: 0 });
+   const formattedDate = moment(selectedDate, "MM/DD/YYYY").format(
+     "YYYY-MM-DD"
+   ); 
 
     const isOffDay = barberUnavailability.some(
-      (offDay) => offDay.selectedDate === selectedDate && dayOffTimes.fullDayOff
+      (offDay) =>
+        offDay.selectedDate === formattedDate && dayOffTimes.fullDayOff
     );
+    
 
     if (isOffDay) {
       return ["Sem horários disponíveis"];
@@ -182,9 +187,14 @@ const [dayOffTimes, setDayOffTimes] = useState({
 
   };
  const updateDayOffTimesBasedOnUnavailability = () => {
+   const formattedDate = moment(selectedDate, "MM/DD/YYYY").format("YYYY-MM-DD"); 
+   console.log(formattedDate);
+   
    const unavailabilityForSelectedDate = barberUnavailability.find(
-     (offDay) => offDay.selectedDate === selectedDate
+     (offDay) => offDay.selectedDate === formattedDate
+         
    );
+   
 
    if (unavailabilityForSelectedDate) {
      setDayOffTimes({

@@ -1,6 +1,6 @@
 export type DayOffDb = {
-  dayOffId: number;
+  dayOffId?: number;
   barberId: number;
-  dayOff: Date;
-  time: number;
+  dayOff: string;
+  time: string;
 } 

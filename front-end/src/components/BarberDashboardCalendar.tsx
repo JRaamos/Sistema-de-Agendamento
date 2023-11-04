@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 import "../styles/barberDashboardCalendar.css";
+import { fetchApiCreateDayOff } from "../utils/fetchApi";
 
 dayjs.locale("pt-br"); // Defina o local globalmente
 type OffDay = {
@@ -21,7 +22,7 @@ function BarberDashboardCalendar() {
   const [cancellationCandidate, setCancellationCandidate] = useState<
     string | null
   >(null);
-
+const token = localStorage.getItem("token");
   const prepareCancellation = (day: number) => {
     const dateString = dayjs(new Date(currentYear, currentMonth, day)).format(
       "MM/DD/YYYY"
@@ -90,13 +91,15 @@ function BarberDashboardCalendar() {
   };
 
   // Função para confirmar os dias de folga selecionados
-  const confirmSelectedOffDays = () => {
+  const confirmSelectedOffDays = async () => {
+    
+    await fetchApiCreateDayOff(selectedOffDay, token);
+
     setOffDays([...offDays, ...selectedOffDay]);
     localStorage.setItem(
       "offDays",
       JSON.stringify([...offDays, ...selectedOffDay])
     );
-    // Limpa o estado selectedOffDays após a confirmação
     setSelectedOffDays({});
     setSelectedDay(null); // Limpa o dia selecionado atualmente
     setSelectedOffDay([]); // Limpa os dias selecionados

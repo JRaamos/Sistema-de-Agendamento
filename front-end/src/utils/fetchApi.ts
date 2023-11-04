@@ -1,4 +1,4 @@
-import { Values } from "../types/AgendamentosProvider";
+import { DayOff, Values } from "../types/AgendamentosProvider";
 const BASEURL = 'http://localhost:3001';
 
 //faz o registro/criação do agendamento no banco de dados
@@ -15,7 +15,7 @@ export const fetchAPi = async (values: Values) => {
   ));
 
   const data = await response.json();
-  
+
   return data;
 }
 
@@ -27,9 +27,9 @@ export const fetchAPiLogin = async (email: string, password: string) => {
     body: JSON.stringify({ email, password })
   }
   ));
-  
+
   const data = await response.json();
-  
+
   return data;
 }
 
@@ -43,7 +43,7 @@ export const fetchAPiGet = async (date: string | null) => {
   ));
 
   const data = await response.json();
-  
+
   return data
 }
 
@@ -62,7 +62,7 @@ export const fetchAPiGetId = async (date: string | null, hour: string | number) 
 }
 
 //conta quantos agendamentos foram realizados de acorodo com o intervalo de dias passado, é necessario passar o token
-export const fetchAPiCount = async (days: number | string , token: string | null) => {
+export const fetchAPiCount = async (days: number | string, token: string | null) => {
   const response = (await fetch(`${BASEURL}/schedules/count/${days}`, {
     method: 'get',
     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
@@ -70,7 +70,7 @@ export const fetchAPiCount = async (days: number | string , token: string | null
   ));
 
   const data = await response.json();
-  
+
   return data;
 }
 
@@ -87,7 +87,7 @@ export const fetchAPiCountFuture = async (token: string | null) => {
 
 //realiza o cancelamento de um agendamento de acordo com a data e a hora do agendamento
 export const fetchAPiCancel = async (dateonly: string, hour: string | number) => {
-   (await fetch(`${BASEURL}/cancellation`, {
+  (await fetch(`${BASEURL}/cancellation`, {
     method: 'post',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ dateonly, hour })
@@ -97,7 +97,7 @@ export const fetchAPiCancel = async (dateonly: string, hour: string | number) =>
 }
 
 //conta quantos cancelamentos foram realizados de acorodo com o intervalo de dias passado, é necessario passar o token
-export const fetchAPiCountCancel = async (days: number | string, token: string | null ) => {
+export const fetchAPiCountCancel = async (days: number | string, token: string | null) => {
   const response = (await fetch(`${BASEURL}/cancellation/${days}`, {
     method: 'get',
     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
@@ -105,15 +105,15 @@ export const fetchAPiCountCancel = async (days: number | string, token: string |
   ));
 
   const data = await response.json();
-  
+
   return data;
 }
 
 export const fetchAPiGoogleEvent = async (values: Values) => {
   const response = (await fetch(`${BASEURL}/googleEvent`, {
-      method: 'post',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(values)
+    method: 'post',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(values)
   }));
 
   const data = await response.json();
@@ -121,9 +121,39 @@ export const fetchAPiGoogleEvent = async (values: Values) => {
 }
 
 export const fetchAPiGoogleEventDelete = async (eventId: string) => {
- (await fetch(`${BASEURL}/googleEvent/${eventId}`, {
-      method: 'delete',
-      headers: { 'Content-Type': 'application/json' },
+  (await fetch(`${BASEURL}/googleEvent/${eventId}`, {
+    method: 'delete',
+    headers: { 'Content-Type': 'application/json' },
   }));
-  
+
+}
+
+export const fetchApiCreateDayOff = async (dayOff: DayOff[], token: string | null) => {
+  (await fetch(`${BASEURL}/dayOff`, {
+    method: 'post',
+    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+    body: JSON.stringify(dayOff)
+  }))
+}
+
+type DayOffDb = {
+  dayOffId: number;
+  barberId: number;
+  dayOff: Date;
+  time: number;
+}
+
+export const fetchApiGetDayOff = async () => {
+  const response = (await fetch(`${BASEURL}/dayOff`, {
+    method: 'get',
+    headers: { 'Content-Type': 'application/json' },
+  }))
+  const data = await response.json();
+  const newData = data.map((item: DayOffDb) =>
+  ({
+    selectedDate: item.dayOff,
+    timeOff: item.time,
+
+  }))
+  return newData;
 }

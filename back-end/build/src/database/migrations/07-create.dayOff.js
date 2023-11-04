@@ -9,17 +9,20 @@ exports.default = {
                 allowNull: false,
                 primaryKey: true,
                 autoIncrement: true,
+                field: 'day_off_id',
             },
             barberId: {
                 type: sequelize_1.DataTypes.INTEGER,
                 allowNull: false,
+                field: 'barber_id',
             },
             dayOff: {
-                type: sequelize_1.DataTypes.STRING(50),
+                type: sequelize_1.DataTypes.DATEONLY,
+                allowNull: false,
                 field: 'day_off',
             },
             time: {
-                type: sequelize_1.DataTypes.INTEGER,
+                type: sequelize_1.DataTypes.STRING(50),
                 allowNull: false,
             },
         });

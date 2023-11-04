@@ -23,10 +23,9 @@ const DayOffModel = index_1.default.define('DayOff', {
         allowNull: false,
         field: 'day_off',
     },
-    timeOffType: {
-        type: sequelize_1.DataTypes.INTEGER,
+    time: {
+        type: sequelize_1.DataTypes.STRING,
         allowNull: false,
-        field: 'time_off_type',
     },
 }, {
     tableName: 'day_off',

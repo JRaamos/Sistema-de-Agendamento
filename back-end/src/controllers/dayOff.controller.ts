@@ -1,15 +1,12 @@
-import dayOffService from "../services/dayOff.service"; 
-import {Request, Response} from 'express';
+import dayOffService from "../services/dayOff.service";
+import { Request, Response } from 'express';
 
 const createDayOff = async (req: Request, res: Response) => {
   const dayOff = req.body;
-  const objDayOff = {
-    barberId: 1,
-    dayOff: dayOff.dayOff,
-    time: dayOff.timeOffType,
-  }
-  const newDayOff = await dayOffService.createDayOff(objDayOff);
-  res.status(201).json(newDayOff);
+console.log(dayOff);
+
+    await dayOffService.createDayOff(dayOff);
+  res.status(201).json('DayOff created');
 }
 
 const getDayOffs = async (req: Request, res: Response) => {
