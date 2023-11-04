@@ -70,7 +70,13 @@ export type AgendamentosContextType = {
   containerRef: any;
   bookedTimes: string[];
   setBookedTimes: Dispatch<SetStateAction<string[]>>;
+  barberUnavailability: DayOff[];
+  setBarberUnavailability: Dispatch<SetStateAction<DayOff[]>>;
   
+};
+export type DayOff = {
+  selectedDate: string;
+  timeOff: string;
 };
 
 export type AgendamentosProviderProps = {

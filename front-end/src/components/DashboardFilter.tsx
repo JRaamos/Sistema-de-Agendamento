@@ -9,14 +9,14 @@ function DashboardFilter({ setRagesDays, ragesDays }: ChartRagesDay) {
         <button
           type="button"
           onClick={() => setRagesDays(0)}
-          className={ragesDays === 0 ? "button-filter active" : "button-filter"}
+          className={ragesDays === 0 ? "button-filter actived" : "button-filter"}
         >
           Todos
         </button>
         <button
           type="button"
           onClick={() => setRagesDays(7)}
-          className={ragesDays === 7 ? "button-filter active" : "button-filter"}
+          className={ragesDays === 7 ? "button-filter actived" : "button-filter"}
         >
           Últimos 7 dias
         </button>
@@ -24,7 +24,7 @@ function DashboardFilter({ setRagesDays, ragesDays }: ChartRagesDay) {
           type="button"
           onClick={() => setRagesDays(30)}
           className={
-            ragesDays === 30 ? "button-filter active" : "button-filter"
+            ragesDays === 30 ? "button-filter actived" : "button-filter"
           }
         >
           Últimos 30 dias
@@ -33,7 +33,7 @@ function DashboardFilter({ setRagesDays, ragesDays }: ChartRagesDay) {
           type="button"
           onClick={() => setRagesDays(90)}
           className={
-            ragesDays === 90 ? "button-filter active" : "button-filter"
+            ragesDays === 90 ? "button-filter actived" : "button-filter"
           }
         >
           Últimos 90 dias
@@ -42,7 +42,7 @@ function DashboardFilter({ setRagesDays, ragesDays }: ChartRagesDay) {
           type="button"
           onClick={() => setRagesDays(180)}
           className={
-            ragesDays === 180 ? "button-filter active" : "button-filter"
+            ragesDays === 180 ? "button-filter actived" : "button-filter"
           }
         >
           Últimos 180 dias
@@ -51,7 +51,7 @@ function DashboardFilter({ setRagesDays, ragesDays }: ChartRagesDay) {
           type="button"
           onClick={() => setRagesDays(365)}
           className={
-            ragesDays === 365 ? "button-filter active" : "button-filter"
+            ragesDays === 365 ? "button-filter actived" : "button-filter"
           }
         >
           Último ano

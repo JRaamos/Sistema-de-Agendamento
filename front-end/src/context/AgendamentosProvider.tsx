@@ -32,6 +32,7 @@ function AgendamentosProvider({ children }: AgendamentosProviderProps) {
   const [canRender, setCanRender] = useState(false);
   const [msgServices, setMsgServices] = useState(false);
   const [bookedTimes, setBookedTimes] = useState<string[]>([]);
+  const [barberUnavailability, setBarberUnavailability] = useState([]);
 
   const [values, setValues] = useState<Values>({
     name: "",
@@ -152,6 +153,8 @@ function AgendamentosProvider({ children }: AgendamentosProviderProps) {
         setIsPhone,
         isName,
         setIsName,
+        barberUnavailability,
+        setBarberUnavailability,
       }}
     >
       {children}

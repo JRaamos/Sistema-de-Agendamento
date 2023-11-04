@@ -10,7 +10,7 @@ function DashboardChartType({ chartType, setChartType}: ChartType) {
           type="button"
           onClick={() => setChartType("bar")}
           className={
-            chartType === "bar" ? "button-chart active" : "button-chart"
+            chartType === "bar" ? "button-chart actived" : "button-chart"
           }
         >
           Grafico de Barras
@@ -19,7 +19,7 @@ function DashboardChartType({ chartType, setChartType}: ChartType) {
           type="button"
           onClick={() => setChartType("pie")}
           className={
-            chartType === "pie" ? "button-chart active" : "button-chart"
+            chartType === "pie" ? "button-chart actived" : "button-chart"
           }
         >
           Grafico de Pizza

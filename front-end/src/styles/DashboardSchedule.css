@@ -37,7 +37,7 @@
   margin-bottom: 5px;
 }
 
-.active {
+.actived {
   box-shadow: inset 5px 5px 10px 5px #2ca788de;
   color: white;
   text-decoration: none;

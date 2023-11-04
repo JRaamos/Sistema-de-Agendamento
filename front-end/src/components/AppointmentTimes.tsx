@@ -10,6 +10,12 @@ import { BookTime } from "../types/AppointmentTimes";
 
 const AppointmentTimes = () => {
   const [selectedTimes, setSelectedTimes] = useState<any[]>([]);
+const [dayOffTimes, setDayOffTimes] = useState({
+  morningOff: false,
+  afternoonOff: false,
+  fullDayOff: false,
+  tuesdayOff: false,
+});
   const {
     servicesSelected,
     values,
@@ -19,6 +25,7 @@ const AppointmentTimes = () => {
     selectedDate,
     availableTimes,
     setAvailableTimes,
+    barberUnavailability,
   } = useContext(AgendamentosContext);
 
   // Função para buscar os horários já agendados
@@ -77,6 +84,7 @@ const AppointmentTimes = () => {
       return !isOverlapping;
     });
 
+
     setAvailableTimes(availableTimes);
   };
 
@@ -96,36 +104,68 @@ const AppointmentTimes = () => {
   const generateTimes = (dayOfWeek: string, totalDuration: number) => {
     const startTime = moment(selectedDate).set({ hour: 7, minute: 0 });
     let endTime = moment(selectedDate).set({ hour: 20, minute: 0 });
+    const morningOffEnd = moment(selectedDate).set({ hour: 12, minute: 0 });
+    const afternoonOffStart = moment(selectedDate).set({
+      hour: 12,
+      minute: 0,
+    });
 
-    if (dayOfWeek === "Saturday") {
+    const afternoonOffEnd = moment(selectedDate).set({ hour: 20, minute: 0 });
+
+    const isOffDay = barberUnavailability.some(
+      (offDay) => offDay.selectedDate === selectedDate && dayOffTimes.fullDayOff
+    );
+
+    if (isOffDay) {
+      return ["Sem horários disponíveis"];
+    }
+
+    if (dayOfWeek === "sábado") {
       endTime = moment(selectedDate).set({ hour: 19, minute: 0 });
     }
-    if (dayOfWeek === "Sunday") {
+    if (dayOfWeek === "domingo") {
       endTime = moment(selectedDate).set({ hour: 11, minute: 0 });
     }
 
-    const times = [];
-
-    if (dayOfWeek === "Tuesday") {
+    if (dayOfWeek === "terça-feira" && dayOffTimes.tuesdayOff) {
       return ["Sem horários disponíveis"];
     }
+    const times = [];
 
     while (startTime.isBefore(endTime)) {
       const currentTime = startTime.format("HH:mm");
       if (
-        startTime.isSameOrAfter(
-          moment(selectedDate).set({ hour: 12, minute: 0 })
-        ) &&
+        dayOffTimes.morningOff &&
+        startTime.isBefore(morningOffEnd)
+      ) {
+        startTime.add(totalDuration, "minutes");
+        continue;
+      }
+
+      if (
+        dayOffTimes.afternoonOff &&
+        startTime.isAfter(afternoonOffStart) &&
+        startTime.isBefore(afternoonOffEnd)
+      ) {
+        startTime.add(totalDuration, "minutes");
+        continue;
+      }
+
+      if (
+        startTime.isAfter(moment(selectedDate).set({ hour: 12, minute: 0 })) &&
         startTime.isBefore(moment(selectedDate).set({ hour: 14, minute: 0 }))
       ) {
-      } else {
-        times.push(currentTime);
+        startTime.add(totalDuration, "minutes");
+        continue;
       }
+
+      times.push(currentTime);
       startTime.add(totalDuration, "minutes");
     }
 
     return times;
   };
+
 
   const handleTimeClick = (time: string) => {
     if (selectedTimes.includes(time)) {
@@ -139,11 +179,37 @@ const AppointmentTimes = () => {
       setValues({ ...values, hour: time });
       setButtonEnviar(true);
     }
-  };
 
-  useEffect(() => {
-    calculateAvailableTimes();
-  }, [selectedDate, servicesSelected]);
+  };
+ const updateDayOffTimesBasedOnUnavailability = () => {
+   const unavailabilityForSelectedDate = barberUnavailability.find(
+     (offDay) => offDay.selectedDate === selectedDate
+   );
+
+   if (unavailabilityForSelectedDate) {
+     setDayOffTimes({
+       morningOff: unavailabilityForSelectedDate.timeOff === "morning",
+       afternoonOff: unavailabilityForSelectedDate.timeOff === "afternoon",
+       fullDayOff: unavailabilityForSelectedDate.timeOff === "full-day",
+       tuesdayOff: dayjs(selectedDate).day() === 2, 
+     });
+   } else {
+     setDayOffTimes({
+       morningOff: false,
+       afternoonOff: false,
+       fullDayOff: false,
+       tuesdayOff: dayjs(selectedDate).day() === 2,
+     });
+   }
+ };
+ useEffect(() => {
+   updateDayOffTimesBasedOnUnavailability();
+ }, [selectedDate]);
+ useEffect(() => {
+   calculateAvailableTimes();
+ }, [selectedDate, servicesSelected, barberUnavailability]);
+
+
 
   return (
     <div className="hours-contain">

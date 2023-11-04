@@ -1,11 +1,16 @@
+import React, { useState } from 'react';
+import BarberDashboardCalendar from './BarberDashboardCalendar';
 
 function BarberUSer() {
   return (
     <div>
-      <h2>Barbeiro</h2>
- 
+      <BarberDashboardCalendar />
     </div>
-  );
+  )
 }
+
+  
+
+
 
 export default BarberUSer;

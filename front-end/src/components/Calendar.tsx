@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
-import { format, addDays } from "date-fns";
+import { format, addDays, set } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
 import "../styles/calendar.css";
 import AgendamentosContext from "../context/AgendamentosContext";
 import { DateList } from "../types/Calendar";
+import { useFetcher } from "react-router-dom";
 
 const Calendar = () => {
   const {
@@ -12,6 +13,8 @@ const Calendar = () => {
     values,
     setValues,
     containerRef,
+    barberUnavailability,
+    setBarberUnavailability,
   } = useContext(AgendamentosContext);
   const currentDate = new Date();
   const [dates, setDates] = useState<DateList[]>([]);
@@ -49,6 +52,14 @@ const Calendar = () => {
     }
   }, [dates ]);
 
+  useEffect(() => {
+    const offDays = localStorage.getItem("offDays");
+
+    if (offDays) {
+      const offDaysArray = JSON.parse(offDays);
+     setBarberUnavailability(offDaysArray);
+    }
+  }, [selectedDate]);
   return (
     <div className="date-container">
       {dates.map((dateInfo, index) => (
