@@ -1,62 +1,95 @@
-import React, { useState, useEffect } from "react";
-import { fetchAPiCount, fetchAPiCountCancel } from "../utils/fetchApi";
+import React, {  useContext } from "react";
+
 import { Bar } from "react-chartjs-2";
+import "../styles/ScheduleChart.css";
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
   BarElement,
-  Title,
+  Title as ChartTitle, 
   Tooltip,
   Legend,
 } from "chart.js";
+import AgendamentosContext from "../context/AgendamentosContext";
 
 ChartJS.register(
   CategoryScale,
   LinearScale,
   BarElement,
-  Title,
+  ChartTitle, 
   Tooltip,
   Legend
 );
 
-function ScheduleChart({ token, days }) {
-  const [agendamentosData, setAgendamentosData] = useState([]);
-  const [cancelamentosData, setCancelamentosData] = useState([]);
-
-  useEffect(() => {
-    async function loadData() {
-        const agendamentos = await fetchAPiCount(days, token);
-        const cancelamentos = await fetchAPiCountCancel(days, token);
-        setAgendamentosData(agendamentos.result);
-        setCancelamentosData(cancelamentos.result); 
-    }
-
-    loadData();
-  }, [token, days]);
+function ScheduleChart() {
+const {scheduleData, cancellationsData, futureSchedulesData} = useContext(AgendamentosContext);
 
   const data = {
-    labels: ["Agendamentos realizados", " Agendamentos cancelados"],
+    labels: [`realizados`, "cancelados", "futuros"],
     datasets: [
       {
-        label: "Total",
-        data: [agendamentosData, cancelamentosData],
-        backgroundColor: ["rgba(255, 99, 132, 0.2)", "rgba(54, 162, 235, 0.2)"],
-        borderColor: ["rgba(255, 99, 132, 1)", "rgba(54, 162, 235, 1)"],
+        data: [scheduleData, cancellationsData, futureSchedulesData],
+        backgroundColor: [
+          "rgba(0, 128, 0, 0.2)", // Verde mais forte
+          "rgba(255, 99, 132, 0.2)", // Vermelho
+          "rgba(255, 206, 86, 0.2)", // Amarelo
+        ],
+        borderColor: [
+          "rgba(75, 192, 192, 1)", // Verde
+          "rgba(255, 99, 132, 1)", // Vermelho
+          "rgba(255, 206, 86, 1)", // Amarelo
+        ],
         borderWidth: 1.5,
       },
     ],
   };
 
   const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      title: {
+        display: true,
+        text: "Distribuição de Agendamentos",
+        color: "#fff",
+        font: {
+          size: 18,
+        },
+        padding: {
+          top: 10,
+          bottom: 30,
+        },
+      },
+      legend: {
+        display: false,
+      },
+    },
     scales: {
+      x: {
+        ticks: {
+          font: {
+            size: 15,
+          },
+        },
+      },
       y: {
         beginAtZero: true,
+        ticks: {
+          stepSize: 1,
+          font: {
+            size: 15,
+          },
+        },
       },
     },
   };
 
-  return <Bar data={data} options={options} />;
+  return (
+    <div className="chart-container">
+      <Bar data={data} options={options} />
+    </div>
+  );
 }
 
 export default ScheduleChart;

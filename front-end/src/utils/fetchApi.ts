@@ -62,7 +62,7 @@ export const fetchAPiGetId = async (date: string | null, hour: string | number) 
 }
 
 //conta quantos agendamentos foram realizados de acorodo com o intervalo de dias passado, é necessario passar o token
-export const fetchAPiCount = async (days: number, token: string) => {
+export const fetchAPiCount = async (days: number | string , token: string | null) => {
   const response = (await fetch(`${BASEURL}/schedules/count/${days}`, {
     method: 'get',
     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
@@ -71,6 +71,17 @@ export const fetchAPiCount = async (days: number, token: string) => {
 
   const data = await response.json();
   
+  return data;
+}
+
+//conta quantos agendamentos futuros foram realizados, é necessario passar o token
+export const fetchAPiCountFuture = async (token: string | null) => {
+  const response = (await fetch(`${BASEURL}/schedules/count/future`, {
+    method: 'get',
+    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+  }));
+
+  const data = await response.json();
   return data;
 }
 
@@ -86,7 +97,7 @@ export const fetchAPiCancel = async (dateonly: string, hour: string | number) =>
 }
 
 //conta quantos cancelamentos foram realizados de acorodo com o intervalo de dias passado, é necessario passar o token
-export const fetchAPiCountCancel = async (days: number, token: string) => {
+export const fetchAPiCountCancel = async (days: number | string, token: string | null ) => {
   const response = (await fetch(`${BASEURL}/cancellation/${days}`, {
     method: 'get',
     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },

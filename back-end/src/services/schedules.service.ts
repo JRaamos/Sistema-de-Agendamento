@@ -1,10 +1,12 @@
-import sequelize from 'sequelize';
+import sequelize, { Op } from 'sequelize';
 import ScheduleModel, { ScheduleInputtableTypes } from '../database/models/schedules.model';
 import ServiceModel from '../database/models/service.model';
 import { Schedule } from '../types/schedules';
+import moment from 'moment-timezone';
+
 
 const createSchedule = async (schedule: ScheduleInputtableTypes):
-Promise<Schedule> => {
+  Promise<Schedule> => {
   const { date, hour, userId, eventId } = schedule;
 
   const scheduleResult = await ScheduleModel.create({ date, hour, userId, eventId });
@@ -44,19 +46,62 @@ const deleteSchedule = async (scheduleId: number) => {
 };
 
 const countSchedules = async (rageDays: number) => {
-  const dateStart = new Date();
-  dateStart.setDate(dateStart.getDate() - rageDays);
+  const currentDate = new Date();
+  currentDate.setHours(23, 59, 59, 999);
+  let dateStart = new Date();
+
+  if (rageDays > 0) {
+    dateStart.setDate(currentDate.getDate() - rageDays);
+  } else {
+    dateStart = new Date('1970-01-01');
+  }
+
+  dateStart.setHours(0, 0, 0, 0);
+
   const result = await ScheduleModel.count({
     where: {
       date: {
-        [sequelize.Op.gte]: dateStart, 
+        [sequelize.Op.between]: [dateStart, currentDate],
       },
     },
   });
+
   return result;
 };
 
-export default { 
+
+const countFutureSchedules = async () => {
+  const now = moment.tz('America/Sao_Paulo');
+  const currentDate = now.format('YYYY-MM-DD');
+  const currentTime = now.format('HH:mm:ss');
+
+  const result = await ScheduleModel.count({
+    where: {
+      date: {
+        [Op.gte]: currentDate,
+      },
+      [Op.or]: [
+        {
+          date: {
+            [Op.gt]: currentDate,
+          },
+        },
+        {
+          [Op.and]: [
+            { date: currentDate },
+            { hour: { [Op.gt]: currentTime } },
+          ],
+        },
+      ],
+    },
+  });
+
+  return result;
+};
+
+
+export default {
+  countFutureSchedules,
   createSchedule,
   finaAllSchedulesDate,
   findByScheduleDateId,

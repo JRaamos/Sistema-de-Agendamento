@@ -70,6 +70,13 @@ export type AgendamentosContextType = {
   containerRef: any;
   bookedTimes: string[];
   setBookedTimes: Dispatch<SetStateAction<string[]>>;
+  scheduleData: number | null;
+  setScheduleData: Dispatch<SetStateAction<number | null>>;
+  cancellationsData: number | null;
+  setCancelationsData: Dispatch<SetStateAction<number | null>>;
+  futureSchedulesData: number | null;
+  setFutureSchedulesData: Dispatch<SetStateAction<number | null>>;
+  
 };
 
 export type AgendamentosProviderProps = {

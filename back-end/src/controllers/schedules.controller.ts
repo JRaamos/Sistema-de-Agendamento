@@ -14,11 +14,16 @@ const findByScheduleDateId = async (req: Request, res: Response) => {
 };
 
 const countSchedules = async (req: Request, res: Response) => {
-  const {intervalDays}  = req.params;
+  const { intervalDays } = req.params;
   console.log(intervalDays);
-  
+
   const result = await schedulesService.countSchedules(Number(intervalDays));
   return res.status(200).json({ result });
 };
 
-export default { finaAllSchedulesDate, findByScheduleDateId, countSchedules };
+const countFutureSchedules = async (req: Request, res: Response) => {
+  const result = await schedulesService.countFutureSchedules();
+  return res.status(200).json({ result });
+}
+
+export default { finaAllSchedulesDate, findByScheduleDateId, countSchedules, countFutureSchedules };

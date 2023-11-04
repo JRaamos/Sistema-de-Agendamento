@@ -23,7 +23,7 @@ function AgendamentosProvider({ children }: AgendamentosProviderProps) {
   const [text2, setText2] = useState("");
   const [istext, setIsText] = useState(false);
   const [isDate, setIsDate] = useState(false);
-  const [phone, setPhone] = useState<string | number | null| undefined >("");
+  const [phone, setPhone] = useState<string | number | null | undefined>("");
   const [isAgendamentos, setIsAgendamentos] = useState(false);
   const [buttonEnviar, setButtonEnviar] = useState(false);
   const [inputPhone, setInputPhone] = useState(false);
@@ -41,9 +41,12 @@ function AgendamentosProvider({ children }: AgendamentosProviderProps) {
     services: [],
     eventId: "",
     agendamentos: "",
-
   });
-    const [availableTimes, setAvailableTimes] = useState<string[]>([]);
+  const [scheduleData, setScheduleData] = useState<number | null>(0);
+const [cancellationsData, setCancelationsData] = useState<number | null>(0);
+const [futureSchedulesData, setFutureSchedulesData] = useState<number | null>(0)
+  const [availableTimes, setAvailableTimes] = useState<string[]>([]);
+
   const handleLocalStorange = () => {
     const storage = localStorage.getItem("agendamentos");
     if (storage) {
@@ -54,7 +57,7 @@ function AgendamentosProvider({ children }: AgendamentosProviderProps) {
     }
     localStorage.setItem("agendamentos", JSON.stringify([values]));
   };
-    const containerRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   const resetStates = () => {
     setInputValue("");
@@ -104,11 +107,18 @@ function AgendamentosProvider({ children }: AgendamentosProviderProps) {
         containerRef,
         text2,
         setText2,
-        availableTimes, setAvailableTimes,
+        availableTimes,
+        setAvailableTimes,
         resetStates,
         setValues,
+        scheduleData,
+        setScheduleData,
         isServices,
         buttonWelcome,
+        cancellationsData,
+        setCancelationsData,
+        futureSchedulesData,
+        setFutureSchedulesData,
         setButtonWelcome,
         inputPhone,
         canRender,
@@ -122,8 +132,10 @@ function AgendamentosProvider({ children }: AgendamentosProviderProps) {
         disableButton,
         setDisableButton,
         servicesSelected,
-        msgServices, setMsgServices,
-        bookedTimes, setBookedTimes,
+        msgServices,
+        setMsgServices,
+        bookedTimes,
+        setBookedTimes,
         isServicesSelected,
         setServicesSelected,
         isMyAgendamentos,
