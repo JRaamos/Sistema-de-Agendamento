@@ -49,29 +49,26 @@ const countSchedules = async (rangeDays: number) => {
   const now = moment.tz('America/Sao_Paulo');
   const currentDate = now.format('YYYY-MM-DD');
   const currentTime = now.format('HH:mm:ss');
-  const startDate = rangeDays > 0 ? now.subtract(rangeDays, 'days').format('YYYY-MM-DD') : currentDate;
+  let startDate;
+
+  if (rangeDays > 0) {
+    startDate = now.subtract(rangeDays, 'days').format('YYYY-MM-DD');
+  } else {
+    startDate = '1970-01-01'; 
+  }
 
   const result = await ScheduleModel.count({
     where: {
-      [Op.and]: [
+      [Op.or]: [
         {
           date: {
-            [Op.between]: [startDate, currentDate], 
+            [Op.lt]: currentDate, 
           },
         },
         {
-          [Op.or]: [
-            {
-              date: {
-                [Op.lt]: currentDate, 
-              },
-            },
-            {
-              [Op.and]: [
-                { date: currentDate },
-                { hour: { [Op.lte]: currentTime } }, 
-              ],
-            },
+          [Op.and]: [
+            { date: currentDate },
+            { hour: { [Op.lte]: currentTime } }, 
           ],
         },
       ],
@@ -80,6 +77,7 @@ const countSchedules = async (rangeDays: number) => {
 
   return result;
 };
+
 
 
 

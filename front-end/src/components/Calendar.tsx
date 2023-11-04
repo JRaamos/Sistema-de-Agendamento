@@ -4,7 +4,6 @@ import ptBR from "date-fns/locale/pt-BR";
 import "../styles/calendar.css";
 import AgendamentosContext from "../context/AgendamentosContext";
 import { DateList } from "../types/Calendar";
-import { fetchAPiGet } from "../utils/fetchApi";
 
 const Calendar = () => {
   const {

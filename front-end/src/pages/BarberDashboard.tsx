@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import "../styles/barberDashboard.css"; 
-import DashboardAgendamentos from "../components/DashboardAgendamentos";
 import BarberUSer from "../components/BarberUser";
+import DashboardSchedule from "../components/DashboardSchedule";
 
 function BarberDashboard() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   const [activeTab, setActiveTab] = useState("agendamentos");
 
   const toggleMenu = () => {
@@ -18,7 +17,10 @@ function BarberDashboard() {
   };
 
   return (
-    <div className="dashboard-container" onClick={()=>isMenuOpen && setIsMenuOpen(false)}>
+    <div
+      className="dashboard-container"
+      onClick={() => isMenuOpen && setIsMenuOpen(false)}
+    >
       <div
         className={`menu-hamburguer ${isMenuOpen ? "open" : ""}`}
         onClick={toggleMenu}
@@ -46,8 +48,8 @@ function BarberDashboard() {
         </nav>
       </aside>
       <main className="content">
-        {activeTab === "agendamentos" && <DashboardAgendamentos />}
-        {activeTab === "barbeiro" &&  <BarberUSer />}
+        {activeTab === "agendamentos" && <DashboardSchedule />}
+        {activeTab === "barbeiro" && <BarberUSer />}
       </main>
     </div>
   );
