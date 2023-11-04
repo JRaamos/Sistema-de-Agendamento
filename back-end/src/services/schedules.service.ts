@@ -45,29 +45,42 @@ const deleteSchedule = async (scheduleId: number) => {
   await ScheduleModel.destroy({ where: { scheduleId } });
 };
 
-const countSchedules = async (rageDays: number) => {
-  const currentDate = new Date();
-  currentDate.setHours(23, 59, 59, 999);
-  let dateStart = new Date();
-
-  if (rageDays > 0) {
-    dateStart.setDate(currentDate.getDate() - rageDays);
-  } else {
-    dateStart = new Date('1970-01-01');
-  }
-
-  dateStart.setHours(0, 0, 0, 0);
+const countSchedules = async (rangeDays: number) => {
+  const now = moment.tz('America/Sao_Paulo');
+  const currentDate = now.format('YYYY-MM-DD');
+  const currentTime = now.format('HH:mm:ss');
+  const startDate = rangeDays > 0 ? now.subtract(rangeDays, 'days').format('YYYY-MM-DD') : currentDate;
 
   const result = await ScheduleModel.count({
     where: {
-      date: {
-        [sequelize.Op.between]: [dateStart, currentDate],
-      },
+      [Op.and]: [
+        {
+          date: {
+            [Op.between]: [startDate, currentDate], 
+          },
+        },
+        {
+          [Op.or]: [
+            {
+              date: {
+                [Op.lt]: currentDate, 
+              },
+            },
+            {
+              [Op.and]: [
+                { date: currentDate },
+                { hour: { [Op.lte]: currentTime } }, 
+              ],
+            },
+          ],
+        },
+      ],
     },
   });
 
   return result;
 };
+
 
 
 const countFutureSchedules = async () => {

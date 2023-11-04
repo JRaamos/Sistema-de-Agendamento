@@ -10,16 +10,13 @@ const [ragesDays, setRagesDays] = useState(0);
 const token = localStorage.getItem("token");
 
 
-
   useEffect(() => {
     async function loadData() {
       const agendamentos = await fetchAPiCount(
         ragesDays === 0 ? "all" : ragesDays,
         token
       );
-      const cancelamentos = await fetchAPiCountCancel(
-        ragesDays === 0 ? "all" : ragesDays,
-        token
+      const cancelamentos = await fetchAPiCountCancel(ragesDays, token
       );
       const futureSchedules = await fetchAPiCountFuture(token);
 
