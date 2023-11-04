@@ -25,8 +25,8 @@ const createCancellation = async (req, res) => {
     return res.status(200).end();
 };
 const countCancellation = async (req, res) => {
-    const { intervaloDias } = req.params;
-    const result = await cancellation_service_1.default.countCancellation(Number(intervaloDias));
+    const { intervalDays } = req.params;
+    const result = await cancellation_service_1.default.countCancellation(Number(intervalDays));
     return res.status(200).json({ result });
 };
 exports.default = { createCancellation, countCancellation };
