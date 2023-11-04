@@ -1,6 +1,6 @@
 import React, {  useContext } from "react";
 
-import { Bar } from "react-chartjs-2";
+import { Bar, Pie } from "react-chartjs-2";
 import "../styles/ScheduleChart.css";
 import {
   Chart as ChartJS,
@@ -11,7 +11,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import AgendamentosContext from "../context/AgendamentosContext";
+import { ChartProps } from "../types/Chart";
 
 ChartJS.register(
   CategoryScale,
@@ -22,8 +22,12 @@ ChartJS.register(
   Legend
 );
 
-function ScheduleChart() {
-const {scheduleData, cancellationsData, futureSchedulesData} = useContext(AgendamentosContext);
+function ScheduleChart({
+  scheduleData,
+  cancellationsData,
+  futureSchedulesData,
+}: ChartProps) {
+
 
   const data = {
     labels: [`realizados`, "cancelados", "futuros"],

@@ -42,9 +42,7 @@ function AgendamentosProvider({ children }: AgendamentosProviderProps) {
     eventId: "",
     agendamentos: "",
   });
-  const [scheduleData, setScheduleData] = useState<number | null>(0);
-const [cancellationsData, setCancelationsData] = useState<number | null>(0);
-const [futureSchedulesData, setFutureSchedulesData] = useState<number | null>(0)
+
   const [availableTimes, setAvailableTimes] = useState<string[]>([]);
 
   const handleLocalStorange = () => {
@@ -111,14 +109,8 @@ const [futureSchedulesData, setFutureSchedulesData] = useState<number | null>(0)
         setAvailableTimes,
         resetStates,
         setValues,
-        scheduleData,
-        setScheduleData,
         isServices,
         buttonWelcome,
-        cancellationsData,
-        setCancelationsData,
-        futureSchedulesData,
-        setFutureSchedulesData,
         setButtonWelcome,
         inputPhone,
         canRender,
