@@ -1,6 +1,6 @@
-import React, {  useContext } from "react";
+import React from "react";
 
-import { Bar, Pie } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 import "../styles/ScheduleChart.css";
 import {
   Chart as ChartJS,
@@ -10,6 +10,7 @@ import {
   Title as ChartTitle, 
   Tooltip,
   Legend,
+  ChartOptions,
 } from "chart.js";
 import { ChartProps } from "../types/Chart";
 
@@ -22,7 +23,7 @@ ChartJS.register(
   Legend
 );
 
-function ScheduleChart({
+function ScheduleBarChart({
   scheduleData,
   cancellationsData,
   futureSchedulesData,
@@ -49,7 +50,7 @@ function ScheduleChart({
     ],
   };
 
-  const options = {
+  const options: ChartOptions = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
@@ -71,13 +72,16 @@ function ScheduleChart({
     },
     scales: {
       x: {
+        type: "category",
         ticks: {
+          color: "#fff",
           font: {
             size: 15,
           },
         },
       },
       y: {
+        type: "linear",
         beginAtZero: true,
         ticks: {
           stepSize: 1,
@@ -96,4 +100,4 @@ function ScheduleChart({
   );
 }
 
-export default ScheduleChart;
+export default ScheduleBarChart;

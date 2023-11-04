@@ -1,3 +1,5 @@
+import React from "react";
+
 import { Pie } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -51,6 +53,7 @@ function SchedulePieChart({ scheduleData, cancellationsData, futureSchedulesData
         labels: {
           boxWidth: 20,
           padding: 20,
+          color: "white",
         },
       },
       title: {
