@@ -13,6 +13,7 @@ const countCancellation = async (rageDays: number) => {
   const now = moment.tz('America/Sao_Paulo');
   const currentDate = now.format('YYYY-MM-DD');
   const currentTime = now.format('HH:mm:ss');
+console.log(currentDate + ' ' + currentTime);
 
   let dateStart = new Date(currentDate + ' ' + currentTime);
 
@@ -27,7 +28,7 @@ const countCancellation = async (rageDays: number) => {
 
   const result = await CancellationModel.count({
     where: {
-      dateSchedule: {
+      dateCancellation: {
         [sequelize.Op.between]: [dateStart, currentDate + ' ' + currentTime],
       },
     },

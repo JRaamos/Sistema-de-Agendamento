@@ -97,7 +97,7 @@ export const fetchAPiCancel = async (dateonly: string, hour: string | number) =>
 }
 
 //conta quantos cancelamentos foram realizados de acorodo com o intervalo de dias passado, é necessario passar o token
-export const fetchAPiCountCancel = async (days: number | string, token: string | null) => {
+export const fetchAPiCountCancel = async (days: number , token: string | null) => {
   const response = (await fetch(`${BASEURL}/cancellation/${days}`, {
     method: 'get',
     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
@@ -105,7 +105,8 @@ export const fetchAPiCountCancel = async (days: number | string, token: string |
   ));
 
   const data = await response.json();
-
+  console.log(data);
+  
   return data;
 }
 

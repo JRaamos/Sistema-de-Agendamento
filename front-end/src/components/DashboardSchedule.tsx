@@ -25,7 +25,6 @@ function DashboardSchedule() {
         ragesDays === 0 ? "all" : ragesDays,
         token
       );
-      console.log(agendamentos);
 
       const cancelamentos = await fetchAPiCountCancel(ragesDays, token);
       const futureSchedules = await fetchAPiCountFuture(token);

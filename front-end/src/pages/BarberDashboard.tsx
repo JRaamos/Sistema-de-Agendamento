@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import "../styles/barberDashboard.css"; 
-import BarberUSer from "../components/BarberUser";
+import "../styles/barberDashboard.css";
 import DashboardSchedule from "../components/DashboardSchedule";
+import BarberDashboardUser from "../components/BarberDashboardUser";
 
 function BarberDashboard() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -49,7 +49,7 @@ function BarberDashboard() {
       </aside>
       <main className="content">
         {activeTab === "agendamentos" && <DashboardSchedule />}
-        {activeTab === "barbeiro" && <BarberUSer />}
+        {activeTab === "barbeiro" && <BarberDashboardUser />}
       </main>
     </div>
   );
