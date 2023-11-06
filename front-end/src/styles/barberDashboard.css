@@ -1,5 +1,7 @@
+/* Estilos globais */
 .dashboard-container {
-  position: relative;
+  display: flex;
+  height: 100vh;
 }
 
 .menu-hamburguer {
@@ -8,72 +10,106 @@
   flex-direction: column;
   height: 25px;
   justify-content: space-around;
-  position: fixed;
-  right: 10px;
-  top: 10px;
-  width: 25px;
-  z-index: 1001;
+  position: fixed; /* Fixa o hambúrguer na tela */
+  right: 20px; /* Espaçamento da esquerda */
+  top: 20px; /* Espaçamento do topo */
+  width: 30px; /* Largura do hambúrguer */
+  z-index: 1001; /* Garante que o menu fique acima do conteúdo */
 }
 
-.menu-hamburguer .bar {
-  background-color: #d8d6d6;
-  height: 3px;
-  width: 100%;
-}
-
-.sidebar {
-  background-color: #333;
-  bottom: 0;
-  color: white;
-  left: -100%;
-  padding: 20px;
-  position: fixed;
-  top: 0;
-  transition: left 0.3s ease;
-  width: 200px;
-  z-index: 1000;
-}
-
-.sidebar.active {
-  left: 0;
-}
-
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-}
-
-.sidebar li {
-  border-left: 3px solid transparent;
-  cursor: pointer;
-  padding: 10px;
-}
-
-.sidebar .active {
-  border-left: 3px solid blue;
-}
-
-.content {
-  min-height: 100vh;
-  padding-top: 10px; /* Espaço para o menu hambúrguer */
-}
-
-/* Estilos adicionais para quando o menu estiver aberto */
-.menu-hamburguer.open .bar:nth-child( 2 ) {
-  opacity: 0;
+.bar {
+  background-color: #f7f7f7; /* Cor da barra */
+  height: 3px; /* Altura da barra */
+  transition: all 1s ease; /* Animação suave para as barras */
+  width: 100%; /* Largura da barra */
 }
 
 .menu-hamburguer.open .bar:nth-child( 1 ) {
-  transform: translateY(8px) rotate(45deg);
+  transform: rotate(45deg) translate(5px, -5px); /* Ajuste de posição e rotação para alinhamento */
+  transform-origin: 60% 3%; /* Ponto de origem para a transformação */
+}
+
+.menu-hamburguer.open .bar:nth-child( 2 ) {
+  opacity: 0;
+  transform: translateX(20px); /* Esconde a barra do meio com transparência e translação */
 }
 
 .menu-hamburguer.open .bar:nth-child( 3 ) {
-  transform: translateY(-8px) rotate(-45deg);
+  transform: rotate(-45deg) translate(5px, 5px); /* Ajuste de posição e rotação para alinhamento */
+  transform-origin: 20% 3%; /* Ponto de origem para a transformação */
 }
 
+.sidebar {
+  background: linear-gradient(to bottom, rgb(3, 31, 77), rgb(4, 53, 133), rgb(12, 100, 158));
+  bottom: 0; /* Alinha a base do menu com a base da página */
+  left: -250px; /* Posição inicial escondida */
+  padding-top: 60px; /* Espaço no topo dentro do menu */
+  position: fixed; /* Faz o menu ser fixo na lateral */
+  top: 0; /* Alinha o topo do menu com o topo da página */
+  transition: left 0.3s ease; /* Animação suave para o menu lateral */
+  width: 250px; /* Largura do menu lateral */
+  z-index: 1000; /* Garante que o menu fique acima do conteúdo */
+}
 
-/* @media ( min-width : 600px ) {
+.sidebar.active {
+  left: 0; /* Posição do menu quando visível */
+}
+
+.sidebar ul {
+  list-style: none; /* Remove estilos de lista */
+  margin: 0; /* Remove margens padrão */
+  padding: 0; /* Remove padding padrão */
+}
+
+.sidebar ul li {
+  background: rgba(0, 20, 77, 0.9); /* Cor de fundo para os itens */
+  border-bottom: 1px solid #65b2e6; /* Linha divisória entre os itens */
+  border-radius: 10px;
+  cursor: pointer; /* Indica que os itens são clicáveis */
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  margin-top: 10px;
+  padding: 10px 20px; /* Espaçamento interno para os itens */
+  text-align: center;
+  transition: background 0.3s ease; /* Animação de fundo para hover */
 
 }
-/*
-*/
+
+.sidebar ul li:hover , .sidebar ul li.active {
+  box-shadow: inset 0 0 20px 8px #2c9fa7de;
+  color: white;
+  text-decoration: none;
+}
+
+.content {
+  flex-grow: 1; /* Faz o conteúdo expandir para o espaço restante */
+  margin-left: 250px; /* Margem para não sobrepor o menu lateral */
+  padding: 20px; /* Espaçamento interno do conteúdo */
+  transition: margin-left 0.3s ease; /* Animação suave ao abrir/fechar o menu */
+}
+
+/* Estilo responsivo para telas menores */
+
+@media screen and ( max-width : 768px ) {
+
+  .sidebar {
+    left: -200px; /* Ajusta a posição escondida do menu */
+    width: 200px; /* Ajusta a largura do menu para telas menores */
+  }
+
+  .content {
+    margin-left: 0; /* Remove a margem do conteúdo quando o menu está fechado */
+  }
+
+  .sidebar.active {
+    left: 0; /* Ajusta a posição do menu quando ativo */
+  }
+
+  .menu-hamburguer.open .bar:nth-child( 1 ) {
+    transform: rotate(45deg) translate(3px, 4px);
+  }
+
+  .menu-hamburguer.open .bar:nth-child( 3 ) {
+    transform: rotate(-45deg) translate(5px, -4px);
+  }
+}
