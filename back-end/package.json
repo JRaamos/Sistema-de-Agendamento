@@ -9,7 +9,7 @@
   "scripts": {
     "start": "ts-node src/server.ts",
     "dev": "nodemon --watch \"./src/**\" --ext \"ts,js\" --ignore \"src/**/*.spec.ts,src/**/*.json\" --exec \"ts-node src/server.ts\"",
-    "build": "npx -y tsc",
+    "build": "tsc",
     "pretest": "npx -y tsc",
     "test": "jest -i --runInBand --forceExit --verbose --testTimeout=60000",
     "test:local": "mocha",
