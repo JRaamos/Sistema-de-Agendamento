@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "src/server.js",
-  "engines": {
-    "node": ">=18"
-  },
+
   "scripts": {
     "start": "ts-node src/server.ts",
     "dev": "nodemon --watch \"./src/**\" --ext \"ts,js\" --ignore \"src/**/*.spec.ts,src/**/*.json\" --exec \"ts-node src/server.ts\"",
@@ -13,6 +11,8 @@
     "pretest": "npx -y tsc",
     "test": "jest -i --runInBand --forceExit --verbose --testTimeout=60000",
     "test:local": "mocha",
+    "vercel-postinstall": "npm run build",
+    "vercel-build": "npx prisma migrate deploy",
     "test:coverage": "nyc mocha",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "db:reset": "npx -y tsc && npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all"
