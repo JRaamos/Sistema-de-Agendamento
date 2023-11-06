@@ -47,28 +47,35 @@ const deleteSchedule = async (scheduleId: number) => {
 
 const countSchedules = async (rangeDays: number) => {
   const now = moment.tz('America/Sao_Paulo');
-  const currentDate = now.format('YYYY-MM-DD');
-  const currentTime = now.format('HH:mm:ss');
-  let startDate;
+  const endDate = now.format('YYYY-MM-DD');
+  const endTime = now.format('HH:mm:ss');
 
-  if (rangeDays > 0) {
-    startDate = now.subtract(rangeDays, 'days').format('YYYY-MM-DD');
-  } else {
-    startDate = '1970-01-01'; 
+  let startDate = now.clone().subtract(rangeDays, 'days').format('YYYY-MM-DD');
+  
+
+  if (rangeDays <= 0) {
+    startDate = "1970-01-01"; 
   }
+  console.log(startDate);
 
   const result = await ScheduleModel.count({
     where: {
-      [Op.or]: [
+      [Op.and]: [
+        { date: { [Op.gte]: startDate } }, // Data igual ou posterior a 'startDate'.
+        { date: { [Op.lte]: endDate } },   // Data igual ou anterior a 'endDate'.
         {
-          date: {
-            [Op.lt]: currentDate, 
-          },
-        },
-        {
-          [Op.and]: [
-            { date: currentDate },
-            { hour: { [Op.lte]: currentTime } }, 
+          [Op.or]: [
+            {
+              date: {
+                [Op.lt]: endDate, // Data anterior a 'endDate'.
+              },
+            },
+            {
+              [Op.and]: [
+                { date: endDate },
+                { hour: { [Op.lte]: endTime } }, // Hora menor ou igual a 'endTime' se for o mesmo 'endDate'.
+              ],
+            },
           ],
         },
       ],

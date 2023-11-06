@@ -21,10 +21,7 @@ function DashboardScheduleChart() {
 
   useEffect(() => {
     async function loadData() {
-      const agendamentos = await fetchAPiCount(
-        ragesDays === 0 ? "all" : ragesDays,
-        token
-      );
+      const agendamentos = await fetchAPiCount(ragesDays, token);
 
       const cancelamentos = await fetchAPiCountCancel(ragesDays, token);
       const futureSchedules = await fetchAPiCountFuture(token);
