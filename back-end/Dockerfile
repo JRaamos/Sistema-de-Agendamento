@@ -8,7 +8,8 @@ WORKDIR /app-backend
 COPY package*.json ./
 RUN npm install
 
-COPY .eslintignore ./
-COPY .eslintrc.json ./
-COPY .sequelizerc ./
-COPY tsconfig.json ./
+COPY . .
+
+EXPOSE 3001
+
+CMD ["npm", "start"]
