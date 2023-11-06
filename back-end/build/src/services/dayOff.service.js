@@ -17,7 +17,15 @@ const createDayOff = async (dayOff) => {
 const getDayOffs = async () => {
     return await dayOff_Model_1.default.findAll();
 };
+const deleteDayOff = async (date) => {
+    return await dayOff_Model_1.default.destroy({
+        where: {
+            dayOff: date,
+        }
+    });
+};
 exports.default = {
     createDayOff,
     getDayOffs,
+    deleteDayOff,
 };

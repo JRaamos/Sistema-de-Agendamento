@@ -9,4 +9,5 @@ const validateJWT_1 = __importDefault(require("../middlewares/validateJWT"));
 const routerDayOff = (0, express_1.Router)();
 routerDayOff.get('/dayOff', dayOff_controller_1.default.getDayOffs);
 routerDayOff.post('/dayOff', validateJWT_1.default, dayOff_controller_1.default.createDayOff);
+routerDayOff.delete('/dayOff/:date', dayOff_controller_1.default.deleteDayOff);
 exports.default = routerDayOff;

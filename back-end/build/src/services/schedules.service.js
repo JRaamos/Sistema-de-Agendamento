@@ -41,27 +41,30 @@ const deleteSchedule = async (scheduleId) => {
 };
 const countSchedules = async (rangeDays) => {
     const now = moment_timezone_1.default.tz('America/Sao_Paulo');
-    const currentDate = now.format('YYYY-MM-DD');
-    const currentTime = now.format('HH:mm:ss');
-    let startDate;
-    if (rangeDays > 0) {
-        startDate = now.subtract(rangeDays, 'days').format('YYYY-MM-DD');
-    }
-    else {
-        startDate = '1970-01-01';
+    const endDate = now.format('YYYY-MM-DD');
+    const endTime = now.format('HH:mm:ss');
+    let startDate = now.clone().subtract(rangeDays, 'days').format('YYYY-MM-DD');
+    if (rangeDays <= 0) {
+        startDate = "1970-01-01";
     }
     const result = await schedules_model_1.default.count({
         where: {
-            [sequelize_1.Op.or]: [
+            [sequelize_1.Op.and]: [
+                { date: { [sequelize_1.Op.gte]: startDate } },
+                { date: { [sequelize_1.Op.lte]: endDate } },
                 {
-                    date: {
-                        [sequelize_1.Op.lt]: currentDate,
-                    },
-                },
-                {
-                    [sequelize_1.Op.and]: [
-                        { date: currentDate },
-                        { hour: { [sequelize_1.Op.lte]: currentTime } },
+                    [sequelize_1.Op.or]: [
+                        {
+                            date: {
+                                [sequelize_1.Op.lt]: endDate, // Data anterior a 'endDate'.
+                            },
+                        },
+                        {
+                            [sequelize_1.Op.and]: [
+                                { date: endDate },
+                                { hour: { [sequelize_1.Op.lte]: endTime } }, // Hora menor ou igual a 'endTime' se for o mesmo 'endDate'.
+                            ],
+                        },
                     ],
                 },
             ],

@@ -56,7 +56,6 @@ const countSchedules = async (rangeDays: number) => {
   if (rangeDays <= 0) {
     startDate = "1970-01-01"; 
   }
-  console.log(startDate);
 
   const result = await ScheduleModel.count({
     where: {

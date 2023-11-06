@@ -1,5 +1,6 @@
 import React, { FC, useContext, useEffect, useState } from "react";
-import moment from "moment";
+import moment from "moment-timezone";
+
 import dayjs from "dayjs";
 import services from "../utils/services.json";
 import "../styles/appointmentTimes.css";
@@ -10,12 +11,11 @@ import { BookTime } from "../types/AppointmentTimes";
 
 const AppointmentTimes = () => {
   const [selectedTimes, setSelectedTimes] = useState<any[]>([]);
-const [dayOffTimes, setDayOffTimes] = useState({
-  morningOff: false,
-  afternoonOff: false,
-  fullDayOff: false,
-  tuesdayOff: false,
-});
+  const [dayOffTimes, setDayOffTimes] = useState({
+    morningOff: false,
+    afternoonOff: false,
+    fullDayOff: false,
+  });
   const {
     servicesSelected,
     values,
@@ -33,9 +33,12 @@ const [dayOffTimes, setDayOffTimes] = useState({
     const response = await fetchAPiGet(date);
     return response.map((item: any) => {
       // Calcula a duração total de todos os serviços para este horário
-      const totalDuration = item.services.reduce((total: number, service: Service) => {
-        return total + service.duration;
-      }, 0);
+      const totalDuration = item.services.reduce(
+        (total: number, service: Service) => {
+          return total + service.duration;
+        },
+        0
+      );
 
       return {
         hour: item.hour,
@@ -84,7 +87,6 @@ const [dayOffTimes, setDayOffTimes] = useState({
       return !isOverlapping;
     });
 
-
     setAvailableTimes(availableTimes);
   };
 
@@ -102,47 +104,62 @@ const [dayOffTimes, setDayOffTimes] = useState({
   };
 
   const generateTimes = (dayOfWeek: string, totalDuration: number) => {
-    const startTime = moment(selectedDate).set({ hour: 7, minute: 0 });
-    let endTime = moment(selectedDate).set({ hour: 20, minute: 0 });
+  
+    const saoPauloZone = "America/Sao_Paulo";
+    let startTime = moment(selectedDate)
+    .tz(saoPauloZone)
+      .set({ hour: 7, minute: 0 });
+    let endTime = moment(selectedDate)
+      .tz(saoPauloZone)
+      .set({ hour: 20, minute: 0 });
     const morningOffEnd = moment(selectedDate).set({ hour: 12, minute: 0 });
     const afternoonOffStart = moment(selectedDate).set({
       hour: 12,
       minute: 0,
     });
-
-    const afternoonOffEnd = moment(selectedDate).set({ hour: 20, minute: 0 });
-   const formattedDate = moment(selectedDate, "MM/DD/YYYY").format(
-     "YYYY-MM-DD"
-   ); 
-
-    const isOffDay = barberUnavailability.some(
-      (offDay) =>
-        offDay.selectedDate === formattedDate && dayOffTimes.fullDayOff
-    );
     
+    const afternoonOffEnd = moment(selectedDate).set({ hour: 20, minute: 0 });
+    const formattedDate = moment(selectedDate, "MM/DD/YYYY").format(
+      "YYYY-MM-DD"
+      );
+      
+      const isOffDay = barberUnavailability.some(
+        (offDay) =>
+        offDay.selectedDate === selectedDate && dayOffTimes.fullDayOff
+        );
+        
+        if (isOffDay) {          
+          return ["Sem horários disponíveis"];
+        }
+        
+        if (dayOfWeek === "sábado") {
+          endTime = moment(selectedDate).set({ hour: 19, minute: 0 });
+        }
+        if (dayOfWeek === "domingo") {
+          endTime = moment(selectedDate).set({ hour: 11, minute: 0 });
+        }
+     
 
-    if (isOffDay) {
-      return ["Sem horários disponíveis"];
-    }
-
-    if (dayOfWeek === "sábado") {
-      endTime = moment(selectedDate).set({ hour: 19, minute: 0 });
-    }
-    if (dayOfWeek === "domingo") {
-      endTime = moment(selectedDate).set({ hour: 11, minute: 0 });
-    }
-
-    if (dayOfWeek === "terça-feira" && dayOffTimes.tuesdayOff) {
-      return ["Sem horários disponíveis"];
-    }
+    const currentTimeInSaoPaulo = moment().tz(saoPauloZone);
     const times = [];
+
+    // Verifique se a data selecionada é hoje e ajuste startTime se necessário
+    if (currentTimeInSaoPaulo.isSame(startTime, "day")) {
+      // Se for o dia atual, ajuste startTime para o próximo horário inteiro após 60 minutos do horário atual
+      const minutesToAdd = 30 - currentTimeInSaoPaulo.minutes(); // Isso irá calcular os minutos restantes para a próxima hora cheia.
+      const potentialStartTime = currentTimeInSaoPaulo
+        .add(minutesToAdd, "minutes")
+        .startOf("hour")
+        .add(1, "hour"); // Adiciona o restante para chegar na próxima hora cheia e depois adiciona uma hora.
+      if (potentialStartTime.isAfter(startTime)) {
+        startTime = potentialStartTime; // Se a hora potencial for mais tarde do que o startTime atual, atualizamos o startTime para refletir isso.
+      }
+    }
 
     while (startTime.isBefore(endTime)) {
       const currentTime = startTime.format("HH:mm");
-      if (
-        dayOffTimes.morningOff &&
-        startTime.isBefore(morningOffEnd)
-      ) {
+
+      if (dayOffTimes.morningOff && startTime.isBefore(morningOffEnd)) {
         startTime.add(totalDuration, "minutes");
         continue;
       }
@@ -171,7 +188,6 @@ const [dayOffTimes, setDayOffTimes] = useState({
     return times;
   };
 
-
   const handleTimeClick = (time: string) => {
     if (selectedTimes.includes(time)) {
       setSelectedTimes(
@@ -184,42 +200,38 @@ const [dayOffTimes, setDayOffTimes] = useState({
       setValues({ ...values, hour: time });
       setButtonEnviar(true);
     }
-
   };
- const updateDayOffTimesBasedOnUnavailability = () => {
-   const formattedDate = moment(selectedDate, "MM/DD/YYYY").format("YYYY-MM-DD"); 
-   console.log(formattedDate);
-   
-   const unavailabilityForSelectedDate = barberUnavailability.find(
-     (offDay) => offDay.selectedDate === formattedDate
-         
-   );
-   
+  const updateDayOffTimesBasedOnUnavailability = () => {
+    const formattedDate = moment(selectedDate, "MM/DD/YYYY").format(
+      "YYYY-MM-DD"
+    );
+console.log(selectedDate);
 
-   if (unavailabilityForSelectedDate) {
-     setDayOffTimes({
-       morningOff: unavailabilityForSelectedDate.timeOff === "morning",
-       afternoonOff: unavailabilityForSelectedDate.timeOff === "afternoon",
-       fullDayOff: unavailabilityForSelectedDate.timeOff === "full-day",
-       tuesdayOff: dayjs(selectedDate).day() === 2, 
-     });
-   } else {
-     setDayOffTimes({
-       morningOff: false,
-       afternoonOff: false,
-       fullDayOff: false,
-       tuesdayOff: dayjs(selectedDate).day() === 2,
-     });
-   }
- };
- useEffect(() => {
-   updateDayOffTimesBasedOnUnavailability();
- }, [selectedDate]);
- useEffect(() => {
-   calculateAvailableTimes();
- }, [selectedDate, servicesSelected, barberUnavailability]);
+    const unavailabilityForSelectedDate = barberUnavailability.find(
+      (offDay) => offDay.selectedDate === selectedDate
+    );
 
-
+    if (unavailabilityForSelectedDate) {
+      
+      setDayOffTimes({
+        morningOff: unavailabilityForSelectedDate.timeOff === "morning",
+        afternoonOff: unavailabilityForSelectedDate.timeOff === "afternoon",
+        fullDayOff: unavailabilityForSelectedDate.timeOff === "full-day",
+      });
+    } else {
+      setDayOffTimes({
+        morningOff: false,
+        afternoonOff: false,
+        fullDayOff: false,
+      });
+    }
+  };
+  useEffect(() => {
+    updateDayOffTimesBasedOnUnavailability();
+  }, [selectedDate]);
+  useEffect(() => {
+    calculateAvailableTimes();
+  }, [selectedDate, servicesSelected, barberUnavailability]);
 
   return (
     <div className="hours-contain">

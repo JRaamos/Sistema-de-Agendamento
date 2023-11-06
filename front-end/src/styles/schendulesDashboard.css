@@ -1,3 +1,11 @@
+.sevice-mensage {
+  background-color: #0020498c;
+  box-shadow: inset 5px 5px 25px 5px #043980;
+  letter-spacing: 0.8px;
+  padding-right: 8px;
+  width: 100%;
+}
+
 .agendamento-contain {
   margin: 0 auto;
   max-width: 600px;
@@ -38,7 +46,7 @@
   width: 250px;
 }
 
-@media screen and ( min-height : 590px ) {
+@media screen and ( min-width : 590px ) {
 
   .paragraph-contain {
     width: 500px;

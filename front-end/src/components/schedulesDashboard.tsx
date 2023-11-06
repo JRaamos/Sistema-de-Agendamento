@@ -171,7 +171,7 @@ function SchedulesDashboard({
                 </button>
               </div>
               <div className="service-selected ">
-                <div className="section-mensagem">{<Services />}</div>
+                <div className="section-mensagem sevice-mensage">{<Services />}</div>
                 <button
                   className="button-usuario button-enviar-service"
                   type="button"

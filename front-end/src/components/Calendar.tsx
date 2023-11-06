@@ -57,10 +57,7 @@ const Calendar = () => {
       const offDays = await fetchApiGetDayOff();
       if (offDays.length > 0 ) {
         setBarberUnavailability(offDays);
-      }
-      console.log(offDays);
-      
-
+      }  
 
     };
     handleDayOff();

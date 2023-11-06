@@ -2,7 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 import "../styles/barberDashboardCalendar.css";
-import { fetchApiCreateDayOff, fetchApiDeleteDayOff } from "../utils/fetchApi";
+import {
+  fetchApiCreateDayOff,
+  fetchApiDeleteDayOff,
+  fetchApiGetDayOff,
+} from "../utils/fetchApi";
 import ButtonOffDayCalendar from "./ButtonOffDayCalendar";
 import CalendarNavigation from "./CalendarNavigation";
 import CalendarGrid from "./CalendarGrid";
@@ -63,16 +67,16 @@ function BarberDashboardUser() {
       setOffDays(selectedOffDayCancelled);
       setCancellationCandidate(null); // Limpa a candidata a cancelamento após o cancelamento
       localStorage.setItem("offDays", JSON.stringify(selectedOffDayCancelled));
-       setTimeout(() => {
-         if (data) {
-           setLoading(false);
-         }
-       }, 3000);
-         setTimeout(() => {
-           if (data) {
-             setDeleteOffDay('');
-           }
-         }, 10000);
+      setTimeout(() => {
+        if (data) {
+          setLoading(false);
+        }
+      }, 3000);
+      setTimeout(() => {
+        if (data) {
+          setDeleteOffDay("");
+        }
+      }, 10000);
     }
   };
   // Função para alternar o estado de um dia selecionado
@@ -164,15 +168,15 @@ function BarberDashboardUser() {
     setSelectedOffDay([]); // Limpa os dias selecionados
     setIsOffDaySelected(false);
     setConfirmOffDay(false);
-    setDeleteOffDay(data)
- setTimeout(() => {
+    setDeleteOffDay(data);
+    setTimeout(() => {
       if (data) {
         setLoading(false);
       }
     }, 3000);
     setTimeout(() => {
       if (data) {
-        setDeleteOffDay('');
+        setDeleteOffDay("");
       }
     }, 10000);
   };
@@ -218,10 +222,13 @@ function BarberDashboardUser() {
     }
   };
   useEffect(() => {
-    const offDays = localStorage.getItem("offDays");
-    if (offDays) {
-      setOffDays(JSON.parse(offDays));
-    }
+    const handleOffDays = async () => {
+      const data = await fetchApiGetDayOff();
+      if (data) {
+        setOffDays(data);
+      }
+    };
+    handleOffDays();
   }, []);
 
   return (
