@@ -1,5 +1,5 @@
 import { DayOff, Values } from "../types/AgendamentosProvider";
-const BASEURL = 'http://localhost:3001';
+const BASEURL = 'https://sistema-de-agendamento-production.up.railway.app';
 
 //faz o registro/criação do agendamento no banco de dados
 export const fetchAPi = async (values: Values) => {

@@ -205,7 +205,6 @@ const AppointmentTimes = () => {
     const formattedDate = moment(selectedDate, "MM/DD/YYYY").format(
       "YYYY-MM-DD"
     );
-console.log(selectedDate);
 
     const unavailabilityForSelectedDate = barberUnavailability.find(
       (offDay) => offDay.selectedDate === selectedDate
