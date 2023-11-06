@@ -38,7 +38,7 @@ function AgendamentosProvider({ children }: AgendamentosProviderProps) {
   const [values, setValues] = useState<Values>({
     name: "",
     phone: undefined,
-    date: "",
+    date: "" ,
     hour: "",
     services: [],
     eventId: "",

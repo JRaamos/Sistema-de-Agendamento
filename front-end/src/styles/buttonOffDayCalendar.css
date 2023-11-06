@@ -1,0 +1,128 @@
+.off-day-contain {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 600px;
+}
+
+.off-day-selection {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.button-typed-off-day {
+  width: 160px;
+}
+
+.button-OffDay {
+  display: flex;
+  flex-direction: column;
+}
+
+.confirm-off-days {
+  height: 50px;
+  margin-top: 10px;
+  max-width: 600px;
+}
+
+.button-confirm-off-day {
+  background-color: #4e030d;
+  border: none;
+  border-radius: 5px;
+  box-shadow: inset 5px 5px 7px 5px #a74f2c;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 5px;
+  margin-bottom: 40px;
+  padding: 8px 10px;
+  text-align: center;
+  text-decoration: none;
+
+}
+
+.cancel-option {
+  text-align: center;
+}
+
+@media screen and ( min-width : 599px ) {
+
+  .button-OffDay {
+    display: flex;
+    flex-direction: row;
+  }
+
+
+}
+
+@keyframes fadeIn {
+
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeButton1 {
+
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeButton2 {
+
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeButton3 {
+
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 2s ease forwards;
+}
+
+.fade-button1 {
+  animation: fadeIn 1.5s ease forwards;
+}
+
+.fade-button2 {
+  animation: fadeIn 1.8s ease forwards;
+}
+
+.fade-button3 {
+  animation: fadeIn 2s ease forwards;
+}

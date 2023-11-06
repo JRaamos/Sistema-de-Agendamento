@@ -9,7 +9,7 @@ import "../styles/DashboardSchedule.css";
 import ScheduleBarChart from "./ScheduleBarChart";
 import DashboardFilter from "./DashboardFilter";
 import DashboardChartType from "./DashboardChartType";
-function DashboardSchedule() {
+function DashboardScheduleChart() {
   const [ragesDays, setRagesDays] = useState(0);
   const [chartType, setChartType] = useState("bar");
   const [scheduleData, setScheduleData] = useState<number | null>(0);
@@ -60,4 +60,4 @@ function DashboardSchedule() {
     </div>
   );
 }
-export default DashboardSchedule;
+export default DashboardScheduleChart;

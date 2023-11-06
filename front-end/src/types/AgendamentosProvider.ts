@@ -3,7 +3,7 @@ import { Dispatch, ReactNode, SetStateAction } from "react";
 export type Values = {
   name: string;
   phone: string | undefined;
-  date: string;
+  date: string | null;
   hour: string;
   services: string[];
   eventId: string;

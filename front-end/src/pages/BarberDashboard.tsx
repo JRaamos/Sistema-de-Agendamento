@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../styles/barberDashboard.css";
-import DashboardSchedule from "../components/DashboardSchedule";
+import DashboardScheduleChart from "../components/DashboardScheduleChart";
 import BarberDashboardUser from "../components/BarberDashboardUser";
 
 function BarberDashboard() {
@@ -48,7 +48,7 @@ function BarberDashboard() {
         </nav>
       </aside>
       <main className="content">
-        {activeTab === "agendamentos" && <DashboardSchedule />}
+        {activeTab === "agendamentos" && <DashboardScheduleChart />}
         {activeTab === "barbeiro" && <BarberDashboardUser />}
       </main>
     </div>

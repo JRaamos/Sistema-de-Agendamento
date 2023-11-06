@@ -1,4 +1,9 @@
 .barber-schedule {
+  border-radius: 12px;
+  box-shadow: inset 5px 5px 35px 5px #043980;
+}
+
+.title-contain {
   margin: 0 auto;
   margin-top: 50px;
   max-width: 600px;
@@ -40,13 +45,15 @@
 }
 
 .calendar-day.off-day {
-  background-color: rgba(121, 224, 61, 0.5);
+  background-color: rgba(68, 151, 12, 0.63);
 }
 
 
 .calendar-header div {
   border-right: 1px solid #ddd;
+  font-weight: 600;
   padding: 5px;
+
 }
 
 .calendar-header div:last-child {
@@ -66,11 +73,11 @@
 
 .calendar-navigation {
   align-items: center;
-  box-sizing: border-box; /* Para incluir o padding no cálculo da largura */
+  box-sizing: border-box;
   display: flex;
   justify-content: space-between;
   padding: 10px;
-  width: 100%; /* ou a largura máxima do seu calendário */
+  width: 100%;
 }
 
 .calendar-navigation span {
@@ -81,12 +88,47 @@
   background-color: #03234e;
   border: none;
   border-radius: 5px;
-  box-shadow: inset 5px 5px 7px 5px #2c61a7;
+  box-shadow: inset 5px 5px 18px 5px #2c61a7;
   color: white;
   cursor: pointer;
   font-size: 16px;
   margin: 5px;
-  padding: 5px 10px;
+  padding: 7px 10px;
   text-align: center;
   text-decoration: none;
+}
+
+.actived {
+  box-shadow: inset 5px 5px 20px 5px #2ca788de;
+  color: white;
+  text-decoration: none;
+}
+
+.text {
+  font-size: 17px;
+  font-weight: 600;
+  text-align: center;
+
+}
+
+.button-options {
+  display: flex;
+  justify-content: center;
+
+}
+
+.option-one {
+  height: 50px;
+  margin-bottom: 20px;
+  margin-top: -24px;
+  max-width: 600px;
+  position: sticky;
+  width: 250px;
+}
+
+.paragraph {
+  color: whitesmoke;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
 }

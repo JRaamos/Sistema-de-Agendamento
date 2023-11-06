@@ -1,5 +1,5 @@
 // CalendarGrid.js
-import React from "react";
+import React, { useContext } from "react";
 import dayjs from "dayjs";
 
 const CalendarGrid = ({
@@ -11,6 +11,9 @@ const CalendarGrid = ({
   cancellationCandidate,
   setCancellationCandidate,
   setSelectedOffDays,
+  setIsOffDaySelected,
+  isRecurrentClient,
+  setConfirmOffDay,
 }: any) => {
   const handleCancelationsConditions = (
     dateString: string,
@@ -58,8 +61,12 @@ const CalendarGrid = ({
           className={`calendar-day ${offDayClass}`}
           onClick={() => {
             toggleOffDay(i);
+            setConfirmOffDay(true);
             if (isOffDay) {
               handleCancelationsConditions(dateString, isOffDay);
+            }
+            if (isRecurrentClient) {
+              setIsOffDaySelected(true);
             }
           }}
         >
@@ -78,7 +85,7 @@ const CalendarGrid = ({
   };
 
   return (
-    <div className="calendar-contain">
+    <div className="calendar-contain fade-in">
       <div className="calendar-header">
         <div>Dom</div>
         <div>Seg</div>
@@ -88,7 +95,7 @@ const CalendarGrid = ({
         <div>Sex</div>
         <div>Sáb</div>
       </div>
-      <div className="calendar-grid">{renderCalendarDays()}</div>
+      <div className="calendar-grid fade-in">{renderCalendarDays()}</div>
     </div>
   );
 };
