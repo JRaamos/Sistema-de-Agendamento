@@ -5,6 +5,8 @@ import Services from "./Services";
 import AgendamentosContext from "../context/AgendamentosContext";
 import { fetchAPi, fetchApiGetDayOff } from "../utils/fetchApi";
 import Loading from "./Loading";
+import "../styles/schendulesDashboard.css";
+import arrow from "../images/arrow-1.svg";
 
 function SchedulesDashboard({
   isOffDaySelected,
@@ -27,6 +29,7 @@ function SchedulesDashboard({
   const [times, setTimes] = useState(false);
   const [sucesso, setSucesso] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [disableButton, setDisableButton] = useState(true);
 
   useEffect(() => {
     const handleDayOff = async () => {
@@ -54,7 +57,7 @@ function SchedulesDashboard({
       return data;
     });
     const response = await Promise.all(data);
-    
+
     if (response[0].scheduleResult) {
       setLoading(false);
       setSucesso(true);
@@ -70,95 +73,163 @@ function SchedulesDashboard({
     setIsOffDaySelected(false);
     setSelectedOffDays({});
     setServicesSelected([]);
+    setTimeout(() => {
+      setSucesso(false);
+    }, 10000);
   };
-
+  const handlePhoneButton = () => {
+    if (phoneNumber?.length === 15) {
+      return false;
+    } else {
+      return true;
+    }
+  };
   return (
     <>
       {isOffDaySelected && (
-        <div>
+        <div className="agendamento-contain">
           {Object.keys(selectedOffDays).length > 0 && inputName && (
             <>
-              <p>Qual o nome do cliente: </p>
-              <input
-                type="text"
-                placeholder="Nome do cliente"
-                value={name}
-                onChange={({ target }) => setName(target.value)}
-              />
-              <button
-                className="button-enviar"
-                type="button"
-                onClick={() => {
-                  setInputName(false);
-                  setInputPhone(true);
-                }}
-              >
-                enviar
-              </button>
+              <p className="paragraph">Qual o nome do cliente: </p>
+              <div className="client-contain">
+                <label htmlFor="input-usuario">
+                  <input
+                    type="text"
+                    placeholder="Nome do cliente"
+                    value={name}
+                    className="input-usuario input-barber"
+                    onChange={({ target }) => {
+                      setName(target.value);
+                      if (target.value.length > 3) {
+                        setDisableButton(false);
+                      } else {
+                        setDisableButton(true);
+                      }
+                    }}
+                  />
+                </label>
+                <button
+                  className="button-usuario"
+                  type="button"
+                  disabled={disableButton}
+                  onClick={() => {
+                    setInputName(false);
+                    setInputPhone(true);
+                  }}
+                >
+                  enviar
+                </button>
+              </div>
             </>
           )}
           {inputPhone && (
             <>
-              <p>Qual o número do cliente: </p>
-              <PhoneNumberInput />
-              <button
-                className="button-enviar"
-                type="button"
-                onClick={() => {
-                  setInputPhone(false);
-                  setServices(true);
-                }}
-              >
-                enviar
-              </button>
+              <div className="top-agendamentos">
+                <p className="paragraph paragraph-contain">
+                  Qual o número do cliente:{" "}
+                </p>
+                <button
+                  className="button-back"
+                  onClick={() => {
+                    setInputName(true);
+                    setInputPhone(false);
+                  }}
+                >
+                  <img src={arrow} alt="arrow" className="button-arrow" />
+                </button>
+              </div>
+              <div className="client-contain">
+                <PhoneNumberInput />
+                <button
+                  className="button-usuario button-enviar"
+                  type="button"
+                  disabled={handlePhoneButton()}
+                  onClick={() => {
+                    setInputPhone(false);
+                    setServices(true);
+                  }}
+                >
+                  enviar
+                </button>
+              </div>
             </>
           )}
           {services && (
             <>
-              <p>Selecione o serviço que sera realizado: </p>
-              {<Services />}
-              <button
-                className="button-enviar"
-                type="button"
-                onClick={() => {
-                  setServices(false);
-                  setTimes(true);
-                }}
-              >
-                Enviar
-              </button>
+              <div className="top-agendamentos">
+                <p className="paragraph paragraph-contain">
+                  Selecione o serviço que sera realizado :
+                </p>
+                <button
+                  className="button-back"
+                  onClick={() => {
+                    setServices(false);
+                    setInputPhone(true);
+                  }}
+                >
+                  <img src={arrow} alt="arrow" className="button-arrow" />
+                </button>
+              </div>
+              <div className="service-selected ">
+                <div className="section-mensagem">{<Services />}</div>
+                <button
+                  className="button-usuario button-enviar-service"
+                  type="button"
+                  disabled={servicesSelected.length === 0}
+                  onClick={() => {
+                    setServices(false);
+                    setTimes(true);
+                  }}
+                >
+                  Enviar
+                </button>
+              </div>
             </>
           )}
           {times && (
             <>
-              <p>Escolha o horário para realizar o agendamento: </p>
-              {<AppointmentTimes />}
-              <button
-                className="button-enviar"
-                type="button"
-                onClick={() => {
-                  handleValues();
-                  handleRestoredValues();
-                }}
-              >
-                enviar
-              </button>
+              <div className="top-agendamentos">
+                <p className="paragraph paragraph-contain">
+                  Escolha o horário para realizar o agendamento:
+                </p>
+                <button
+                  className="button-back"
+                  onClick={() => {
+                    setTimes(false);
+                    setServices(true);
+                    setServicesSelected([]);
+                  }}
+                >
+                  <img src={arrow} alt="arrow" className="button-arrow" />
+                </button>
+              </div>
+              <div className="service-selected ">
+                {<AppointmentTimes />}
+                <button
+                  className="button-usuario"
+                  type="button"
+                  disabled={values.hour === ""}
+                  onClick={() => {
+                    handleValues();
+                    handleRestoredValues();
+                  }}
+                >
+                  enviar
+                </button>
+              </div>
             </>
           )}
         </div>
       )}
 
-      {
-      loading &&
-       <Loading />
-      }
-          <div>
-            {!loading && sucesso && (
-              <div className="sucesso">
-                <p>Agendamento realizado com sucesso!</p>
-              </div>
-            )}
+      {loading && <Loading />}
+      <div>
+        {!loading && sucesso && (
+          <div className="fade-in">
+            <p className="paragraph">Agendamento realizado com sucesso!</p>
           </div>
+        )}
+      </div>
     </>
   );
 }

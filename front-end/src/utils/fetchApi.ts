@@ -97,7 +97,7 @@ export const fetchAPiCancel = async (dateonly: string, hour: string | number) =>
 }
 
 //conta quantos cancelamentos foram realizados de acorodo com o intervalo de dias passado, é necessario passar o token
-export const fetchAPiCountCancel = async (days: number , token: string | null) => {
+export const fetchAPiCountCancel = async (days: number, token: string | null) => {
   const response = (await fetch(`${BASEURL}/cancellation/${days}`, {
     method: 'get',
     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
@@ -106,7 +106,7 @@ export const fetchAPiCountCancel = async (days: number , token: string | null) =
 
   const data = await response.json();
   console.log(data);
-  
+
   return data;
 }
 
@@ -130,11 +130,13 @@ export const fetchAPiGoogleEventDelete = async (eventId: string) => {
 }
 
 export const fetchApiCreateDayOff = async (dayOff: DayOff[], token: string | null) => {
-  (await fetch(`${BASEURL}/dayOff`, {
+ const response = (await fetch(`${BASEURL}/dayOff`, {
     method: 'post',
     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
     body: JSON.stringify(dayOff)
   }))
+  const data = await response.json();
+  return data.message;
 }
 
 type DayOffDb = {
@@ -158,3 +160,16 @@ export const fetchApiGetDayOff = async () => {
   }))
   return newData;
 }
+
+export const fetchApiDeleteDayOff = async (date: string, token: string | null ) => {
+  const formattedDate = date?.replace(/\//g, '-');
+
+  const response = (await fetch(`${BASEURL}/dayOff/${formattedDate}`, {
+    method: 'delete', 
+    headers: { 'Content-Type': 'application/json' , 'Authorization': `Bearer ${token}`},
+
+  }))
+  const data = await response.json();
+  return data.message;
+}
+

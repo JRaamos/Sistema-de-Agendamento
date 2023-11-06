@@ -49,6 +49,10 @@
   text-align: center;
 }
 
+.loadin-contain {
+  margin-top: -60px;
+}
+
 @media screen and ( min-width : 599px ) {
 
   .button-OffDay {

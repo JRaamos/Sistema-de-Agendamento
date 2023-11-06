@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../styles/buttonOffDayCalendar.css";
-import { is } from "date-fns/locale";
+import Loading from "./Loading";
 
 function ButtonOffDayCalendar({
   handleAddOffDay,
@@ -14,8 +14,11 @@ function ButtonOffDayCalendar({
   setTypeOffDaySelected,
   confirmOffDay,
   selectedOffDay,
+  deleteOffDay,
+  loading,
 }: any) {
   const [isOffDaySelected, setIsOffDaySelected] = useState(false);
+
   return (
     <div className="off-day-contain fade-in">
       {Object.keys(selectedOffDays).length > 0 ? (
@@ -100,7 +103,6 @@ function ButtonOffDayCalendar({
               className="button-confirm-off-day"
               onClick={() => {
                 confirmSelectedOffDays();
-                
               }}
             >
               Confirmar Dia de Folga ?
@@ -116,11 +118,20 @@ function ButtonOffDayCalendar({
                   Deseja cancelar o dia de folga: {cancellationCandidate}
                 </p>
               </div>
-              <button className="button-confirm-off-day fade-in" onClick={cancelOffDay}>
-                Cancelar Folga Selecionada
+              <button
+                className="button-confirm-off-day fade-in"
+                onClick={cancelOffDay}
+              >
+                Cancelar Folga Selecionada?
               </button>
             </div>
           )}
+      </div>
+      <div className="loadin-contain">
+        {loading && <Loading />}
+        {!loading && deleteOffDay && (
+          <p className="paragraph fade-in">{deleteOffDay}</p>
+        )}
       </div>
     </div>
   );

@@ -2,13 +2,14 @@ import React, { useContext, useEffect, useState } from "react";
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 import "../styles/barberDashboardCalendar.css";
-import { fetchApiCreateDayOff } from "../utils/fetchApi";
+import { fetchApiCreateDayOff, fetchApiDeleteDayOff } from "../utils/fetchApi";
 import ButtonOffDayCalendar from "./ButtonOffDayCalendar";
 import CalendarNavigation from "./CalendarNavigation";
 import CalendarGrid from "./CalendarGrid";
 import SchedulesDashboard from "./schedulesDashboard";
 import { AgendamentosContextType } from "../types/AgendamentosProvider";
 import AgendamentosContext from "../context/AgendamentosContext";
+import { set } from "date-fns";
 
 dayjs.locale("pt-br");
 type OffDay = {
@@ -34,6 +35,8 @@ function BarberDashboardUser() {
   const [typeOffDay, setTypeOffDay] = useState(false);
   const [typeOffDaySelected, setTypeOffDaySelected] = useState("");
   const [confirmOffDay, setConfirmOffDay] = useState(false);
+  const [deleteOffDay, setDeleteOffDay] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const { setSelectedDate } =
     useContext<AgendamentosContextType>(AgendamentosContext);
@@ -47,14 +50,29 @@ function BarberDashboardUser() {
     setCancellationCandidate(dateString);
   };
 
-  const cancelOffDay = () => {
+  const cancelOffDay = async () => {
     if (cancellationCandidate) {
+      setLoading(true);
+      const data = await fetchApiDeleteDayOff(cancellationCandidate, token);
+      if (data) {
+        setDeleteOffDay(data);
+      }
       const selectedOffDayCancelled = offDays.filter(
         (offDay) => offDay.selectedDate !== cancellationCandidate
       );
       setOffDays(selectedOffDayCancelled);
       setCancellationCandidate(null); // Limpa a candidata a cancelamento após o cancelamento
       localStorage.setItem("offDays", JSON.stringify(selectedOffDayCancelled));
+       setTimeout(() => {
+         if (data) {
+           setLoading(false);
+         }
+       }, 3000);
+         setTimeout(() => {
+           if (data) {
+             setDeleteOffDay('');
+           }
+         }, 10000);
     }
   };
   // Função para alternar o estado de um dia selecionado
@@ -97,45 +115,44 @@ function BarberDashboardUser() {
   };
 
   // Função para adicionar um dia de folga
-const addOffDay = (
-  day: number,
-  timeOffType: "morning" | "afternoon" | "full-day" = "full-day"
-) => {
-  const dateString = dayjs(new Date(currentYear, currentMonth, day)).format(
-    "MM/DD/YYYY"
-  );
-
-  // Atualiza ou adiciona o dia de folga com o tipo selecionado.
-  setSelectedOffDay((prevOffDays) => {
-    // Encontrar índice do dia atual se existir
-    const existingIndex = prevOffDays.findIndex(
-      (offDay) => offDay.selectedDate === dateString
+  const addOffDay = (
+    day: number,
+    timeOffType: "morning" | "afternoon" | "full-day" = "full-day"
+  ) => {
+    const dateString = dayjs(new Date(currentYear, currentMonth, day)).format(
+      "MM/DD/YYYY"
     );
 
-    // Se já existe um OffDay para esta data, apenas atualize o tipo.
-    if (existingIndex !== -1) {
-      return prevOffDays.map((offDay, index) =>
-        index === existingIndex ? { ...offDay, timeOff: timeOffType } : offDay
+    // Atualiza ou adiciona o dia de folga com o tipo selecionado.
+    setSelectedOffDay((prevOffDays) => {
+      // Encontrar índice do dia atual se existir
+      const existingIndex = prevOffDays.findIndex(
+        (offDay) => offDay.selectedDate === dateString
       );
-    } else {
-      // Se estiver no modo de dia de folga único, substitua quaisquer dias de folga existentes.
-      if (isOffDay) {
-        return [{ selectedDate: dateString, timeOff: timeOffType }];
 
+      // Se já existe um OffDay para esta data, apenas atualize o tipo.
+      if (existingIndex !== -1) {
+        return prevOffDays.map((offDay, index) =>
+          index === existingIndex ? { ...offDay, timeOff: timeOffType } : offDay
+        );
+      } else {
+        // Se estiver no modo de dia de folga único, substitua quaisquer dias de folga existentes.
+        if (isOffDay) {
+          return [{ selectedDate: dateString, timeOff: timeOffType }];
+        }
+        // Caso contrário, adicione o novo dia de folga à lista.
+        return [
+          ...prevOffDays,
+          { selectedDate: dateString, timeOff: timeOffType },
+        ];
       }
-      // Caso contrário, adicione o novo dia de folga à lista.
-      return [
-        ...prevOffDays,
-        { selectedDate: dateString, timeOff: timeOffType },
-      ];
-    }
-  });
-};
-
+    });
+  };
 
   // Função para confirmar os dias de folga selecionados
   const confirmSelectedOffDays = async () => {
-    await fetchApiCreateDayOff(selectedOffDay, token);
+    setLoading(true);
+    const data = await fetchApiCreateDayOff(selectedOffDay, token);
 
     setOffDays([...offDays, ...selectedOffDay]);
     localStorage.setItem(
@@ -147,33 +164,45 @@ const addOffDay = (
     setSelectedOffDay([]); // Limpa os dias selecionados
     setIsOffDaySelected(false);
     setConfirmOffDay(false);
+    setDeleteOffDay(data)
+ setTimeout(() => {
+      if (data) {
+        setLoading(false);
+      }
+    }, 3000);
+    setTimeout(() => {
+      if (data) {
+        setDeleteOffDay('');
+      }
+    }, 10000);
   };
 
-const handleAddOffDay = (timeOffType: "morning" | "afternoon" | "full-day") => {
-  if (selectedDay !== null) {
-    // Certifique-se de que um dia está selecionado
-    const dateString = dayjs(
-      new Date(currentYear, currentMonth, selectedDay)
-    ).format("MM/DD/YYYY");
+  const handleAddOffDay = (
+    timeOffType: "morning" | "afternoon" | "full-day"
+  ) => {
+    if (selectedDay !== null) {
+      // Certifique-se de que um dia está selecionado
+      const dateString = dayjs(
+        new Date(currentYear, currentMonth, selectedDay)
+      ).format("MM/DD/YYYY");
 
-    // Verifique se o dia selecionado já está marcado com o mesmo tipo de folga.
-    const isAlreadyOff = selectedOffDay.some(
-      (offDay) =>
-        offDay.selectedDate === dateString && offDay.timeOff === timeOffType
-    );
-
-    if (isAlreadyOff) {
-      // Se for o mesmo tipo de dia de folga, resete o estado para remover a seleção.
-      setSelectedOffDay(
-        selectedOffDay.filter((offDay) => offDay.selectedDate !== dateString)
+      // Verifique se o dia selecionado já está marcado com o mesmo tipo de folga.
+      const isAlreadyOff = selectedOffDay.some(
+        (offDay) =>
+          offDay.selectedDate === dateString && offDay.timeOff === timeOffType
       );
-    } else {
-      // Caso contrário, adicione ou atualize o dia de folga.
-      addOffDay(selectedDay, timeOffType);
-    }
-  }
-};
 
+      if (isAlreadyOff) {
+        // Se for o mesmo tipo de dia de folga, resete o estado para remover a seleção.
+        setSelectedOffDay(
+          selectedOffDay.filter((offDay) => offDay.selectedDate !== dateString)
+        );
+      } else {
+        // Caso contrário, adicione ou atualize o dia de folga.
+        addOffDay(selectedDay, timeOffType);
+      }
+    }
+  };
 
   const goToPreviousMonth = () => {
     setCurrentMonth((prevMonth) => (prevMonth === 0 ? 11 : prevMonth - 1));
@@ -283,6 +312,8 @@ const handleAddOffDay = (timeOffType: "morning" | "afternoon" | "full-day") => {
             setTypeOffDaySelected={setTypeOffDaySelected}
             confirmOffDay={confirmOffDay}
             selectedOffDay={selectedOffDay}
+            deleteOffDay={deleteOffDay}
+            loading={loading}
           />
         )}
         {isRecurrentClient && (

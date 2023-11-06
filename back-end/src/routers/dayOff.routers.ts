@@ -2,13 +2,17 @@ import { Router } from 'express';
 import dayOffController from '../controllers/dayOff.controller';
 import validateJWT from '../middlewares/validateJWT';
 
-const routerDayOff= Router();
+const routerDayOff = Router();
 
 routerDayOff.get('/dayOff',
-dayOffController.getDayOffs);
+  dayOffController.getDayOffs);
 
-routerDayOff.post('/dayOff', 
-validateJWT,
-dayOffController.createDayOff);
+routerDayOff.post('/dayOff',
+  validateJWT,
+  dayOffController.createDayOff);
 
-export default routerDayOff ;
+routerDayOff.delete('/dayOff/:date',
+  dayOffController.deleteDayOff
+);
+
+export default routerDayOff;
