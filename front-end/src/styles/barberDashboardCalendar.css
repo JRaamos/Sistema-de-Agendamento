@@ -1,0 +1,134 @@
+.barber-schedule {
+  border-radius: 12px;
+  box-shadow: inset 5px 5px 35px 5px #043980;
+}
+
+.title-contain {
+  margin: 0 auto;
+  margin-top: 50px;
+  max-width: 600px;
+}
+
+.calendar-header {
+  background: rgba(33, 101, 202, 0.5);
+  border-bottom: 1px solid #ddd;
+  color: white;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  padding: 5px;
+  text-align: center;
+}
+
+.calendar {
+  border: 1px solid #ddd;
+  display: grid;
+  gap: 5px;
+  grid-template-columns: repeat(7, 1fr);
+  max-width: 350px;
+}
+
+.calendar-day {
+  align-items: center;
+  background: rgba(0, 2, 92, 0.575);
+  border: 1px solid #ddd;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  min-height: 40px;
+  min-width: 40px;
+  transition: background-color 0.3s ease;
+}
+
+.calendar-day.selected {
+  background-color: rgba(61, 178, 224, 0.5);
+
+}
+
+.calendar-day.off-day {
+  background-color: rgba(68, 151, 12, 0.63);
+}
+
+
+.calendar-header div {
+  border-right: 1px solid #ddd;
+  font-weight: 600;
+  padding: 5px;
+
+}
+
+.calendar-header div:last-child {
+  border-right: none;
+}
+
+.day-on {
+  background: rgba(0, 2, 92, 0.575);
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+}
+
+
+.calendar-navigation {
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  width: 100%;
+}
+
+.calendar-navigation span {
+  font-weight: 700;
+}
+
+.button-calendar {
+  background-color: #03234e;
+  border: none;
+  border-radius: 5px;
+  box-shadow: inset 5px 5px 18px 5px #2c61a7;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 5px;
+  padding: 7px 10px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.actived {
+  box-shadow: inset 5px 5px 20px 5px #2ca788de;
+  color: white;
+  text-decoration: none;
+}
+
+.text {
+  font-size: 17px;
+  font-weight: 600;
+  text-align: center;
+
+}
+
+.button-options {
+  display: flex;
+  justify-content: center;
+
+}
+
+.option-one {
+  height: 50px;
+  margin-bottom: 20px;
+  margin-top: -24px;
+  max-width: 600px;
+  position: sticky;
+  width: 250px;
+}
+
+.paragraph {
+  color: whitesmoke;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+}

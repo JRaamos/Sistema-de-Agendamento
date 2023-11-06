@@ -1,0 +1,45 @@
+.button-chart-contain {
+  display: flex;
+  justify-content: center;
+}
+
+.chart-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 600px;
+  width: 100%;
+}
+
+.title {
+  font-size: 25px;
+  letter-spacing: 1.5px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.button-chart , .button-filter {
+  background-color: #03234e;
+  border: none;
+  border-radius: 5px;
+  box-shadow: inset 5px 5px 7px 5px #2c61a7;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 5px;
+  margin-bottom: 40px;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.button-filter {
+  margin-bottom: 5px;
+}
+
+.actived {
+  box-shadow: inset 5px 5px 10px 5px #2ca788de;
+  color: white;
+  text-decoration: none;
+}

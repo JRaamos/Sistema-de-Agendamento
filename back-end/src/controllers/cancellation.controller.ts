@@ -27,9 +27,9 @@ const createCancellation = async (req: Request, res: Response) => {
 };
 
 const countCancellation = async (req: Request, res: Response) => {
-  const { intervaloDias } = req.params;
+  const { intervalDays } = req.params;
 
-  const result = await cancellationService.countCancellation(Number(intervaloDias));
+  const result = await cancellationService.countCancellation(Number(intervalDays));
 
   return res.status(200).json({ result });
 };

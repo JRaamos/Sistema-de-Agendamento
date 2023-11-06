@@ -1,0 +1,54 @@
+.sevice-mensage {
+  background-color: #0020498c;
+  box-shadow: inset 5px 5px 25px 5px #043980;
+  letter-spacing: 0.8px;
+  padding-right: 8px;
+  width: 100%;
+}
+
+.agendamento-contain {
+  margin: 0 auto;
+  max-width: 600px;
+}
+
+.button-enviar {
+  margin-top: -60px;
+}
+
+.client-contain {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.service-selected {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 360px;
+  width: 100%;
+}
+
+.button-back {
+  background-color: transparent;
+  border: none;
+}
+
+.top-agendamentos {
+  display: flex;
+  justify-content: space-between;
+}
+
+.paragraph-contain {
+  width: 250px;
+}
+
+@media screen and ( min-width : 590px ) {
+
+  .paragraph-contain {
+    width: 500px;
+  }
+}

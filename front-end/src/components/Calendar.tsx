@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import { format, addDays } from "date-fns";
+import { format, addDays, set } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
 import "../styles/calendar.css";
 import AgendamentosContext from "../context/AgendamentosContext";
 import { DateList } from "../types/Calendar";
-import { fetchAPiGet } from "../utils/fetchApi";
+import { useFetcher } from "react-router-dom";
+import { fetchApiGetDayOff } from "../utils/fetchApi";
 
 const Calendar = () => {
   const {
@@ -13,6 +14,8 @@ const Calendar = () => {
     values,
     setValues,
     containerRef,
+    barberUnavailability,
+    setBarberUnavailability,
   } = useContext(AgendamentosContext);
   const currentDate = new Date();
   const [dates, setDates] = useState<DateList[]>([]);
@@ -37,7 +40,6 @@ const Calendar = () => {
   }, []);
 
   const handleButtonClick = (dayInfo: string) => {
-    
     setSelectedDate(dayInfo);
     setIsSelected(true);
     setValues({ ...values, date: dayInfo });
@@ -48,7 +50,18 @@ const Calendar = () => {
       const scrollHeight = container.scrollHeight;
       container.scrollTop = scrollHeight;
     }
-  }, [dates ]);
+  }, [dates]);
+
+  useEffect(() => {
+    const handleDayOff = async () => {
+      const offDays = await fetchApiGetDayOff();
+      if (offDays.length > 0 ) {
+        setBarberUnavailability(offDays);
+      }  
+
+    };
+    handleDayOff();
+  }, [selectedDate]);
 
   return (
     <div className="date-container">

@@ -40,7 +40,7 @@ function PhoneNumberInput() {
         id="phoneNumber"
         className="input-usuario msg-bottom "
         mask={phoneMask}
-        placeholder="Digite seu telefone"
+        placeholder="Digite o numero de telefone"
         guide={false}
         showMask
         value={phoneNumber}

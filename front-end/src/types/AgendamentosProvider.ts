@@ -3,7 +3,7 @@ import { Dispatch, ReactNode, SetStateAction } from "react";
 export type Values = {
   name: string;
   phone: string | undefined;
-  date: string;
+  date: string | null;
   hour: string;
   services: string[];
   eventId: string;
@@ -70,6 +70,13 @@ export type AgendamentosContextType = {
   containerRef: any;
   bookedTimes: string[];
   setBookedTimes: Dispatch<SetStateAction<string[]>>;
+  barberUnavailability: DayOff[];
+  setBarberUnavailability: Dispatch<SetStateAction<DayOff[]>>;
+  
+};
+export type DayOff = {
+  selectedDate: string;
+  timeOff: string;
 };
 
 export type AgendamentosProviderProps = {

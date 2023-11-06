@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "src/server.js",
+  "engines": {
+    "node": ">=18.18.0 <19.0.0"
+  },
   "scripts": {
     "start": "ts-node src/server.ts",
     "dev": "nodemon --watch \"./src/**\" --ext \"ts,js\" --ignore \"src/**/*.spec.ts,src/**/*.json\" --exec \"ts-node src/server.ts\"",
@@ -60,13 +63,14 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
     "express": "4.17.1",
     "express-async-errors": "3.1.1",
     "google-auth-library": "^9.2.0",
     "googleapis": "^128.0.0",
     "joi": "17.6.0",
     "jsonwebtoken": "9.0.0",
-    "mysql2": "2.3.0",
+    "mysql2": "^2.3.0",
     "sequelize": "6.25.5",
     "sequelize-cli": "6.4.1",
     "sinon-chai": "3.7.0"

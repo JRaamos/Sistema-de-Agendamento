@@ -10,12 +10,19 @@ const validateJWT = async (req, res, next) => {
         return res.status(401).json({ message: 'Token not found' });
     }
     const token = authorization.split(' ')[1];
-    const userCode = jwt_utils_1.default.verifyToken(token);
-    if (!userCode) {
+    try {
+        const userCode = jwt_utils_1.default.verifyToken(token);
+        if (!userCode) {
+            return res.status(401).json({
+                message: 'Expired or invalid token',
+            });
+        }
+        next();
+    }
+    catch (error) {
         return res.status(401).json({
             message: 'Expired or invalid token',
         });
     }
-    next();
 };
 exports.default = validateJWT;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../images/logo-1.png";
 import { fetchAPiLogin } from "../utils/fetchApi";
 import { useNavigate } from "react-router-dom";
@@ -18,7 +18,7 @@ function Login() {
       return;
     }
     localStorage.setItem("token", token.mensage);
-    navigate("/barbers");
+    navigate("/barber-dashboard");
   };
 
   return (
