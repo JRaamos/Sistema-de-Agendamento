@@ -1,6 +1,6 @@
 import React from "react";
 
-const OffDaySelector = ({ confirmOffDays, isRangeSelected }) => {
+const OffDaySelector = ({ confirmOffDays, isRangeSelected }: any) => {
   return (
     <div className="confirm-off-days">
       <button onClick={confirmOffDays} disabled={!isRangeSelected}>

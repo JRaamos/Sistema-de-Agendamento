@@ -220,6 +220,7 @@ function BarberDashboardUser() {
       setCurrentYear((prevYear) => prevYear + 1);
     }
   };
+  
   useEffect(() => {
     const handleOffDays = async () => {
       const data = await fetchApiGetDayOff();

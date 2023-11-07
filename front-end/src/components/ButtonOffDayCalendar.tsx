@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/buttonOffDayCalendar.css";
 import Loading from "./Loading";
+import { format, parse } from "date-fns";
+import { da } from "date-fns/locale";
 
 function ButtonOffDayCalendar({
   handleAddOffDay,
@@ -18,6 +20,22 @@ function ButtonOffDayCalendar({
   loading,
 }: any) {
   const [isOffDaySelected, setIsOffDaySelected] = useState(false);
+  const [selectedDate, setSelectedDate] = useState("");
+  useEffect(() => {
+    function convertDateFormat() {
+      if (Object.keys(selectedOffDay).length > 0) {
+        // Separa a string de data por traço em vez de barras
+        const [month, day, year] = selectedOffDay[0].selectedDate.split("/"); // Desestruturação para pegar ano, mês e dia
+
+        setSelectedDate(`${day}/${month}/${year}`); // Reorganiza no formato DD/MM/YYYY
+      }
+      if (cancellationCandidate && Object.keys(selectedOffDays).length === 0) {
+        const [month, day, year] = cancellationCandidate.split("/"); // Desestruturação para pegar ano, mês e dia
+        setSelectedDate(`${day}/${month}/${year}`); // Reorganiza no formato DD/MM/YYYY
+      }
+    }
+    convertDateFormat();
+  }, [selectedOffDay, cancellationCandidate]);
 
   return (
     <div className="off-day-contain fade-in">
@@ -89,7 +107,7 @@ function ButtonOffDayCalendar({
       {isOffDaySelected && Object.keys(selectedOffDay).length > 0 && (
         <div>
           <p className="paragraph fade-in">
-            Deseja confirmar a folga do dia: {selectedOffDay[0].selectedDate}
+            Deseja confirmar a folga do dia: {selectedDate}
           </p>
         </div>
       )}
@@ -115,7 +133,7 @@ function ButtonOffDayCalendar({
             <div>
               <div className="cancel-option fade-in">
                 <p className="paragraph ">
-                  Deseja cancelar o dia de folga: {cancellationCandidate}
+                  Deseja cancelar a folga do dia: {selectedDate} 
                 </p>
               </div>
               <button

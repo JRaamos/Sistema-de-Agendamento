@@ -13,7 +13,7 @@ function SchedulesDashboard({
   setIsOffDaySelected,
   selectedOffDays,
   setSelectedOffDays,
-}) {
+}: any) {
   const {
     values,
     phoneNumber,

@@ -7,7 +7,7 @@ const CalendarNavigation = ({
   currentMonth,
   goToPreviousMonth,
   goToNextMonth,
-}) => {
+}: any) => {
   const monthName = dayjs(new Date(currentYear, currentMonth)).format("MMMM");
   const yearName = dayjs(new Date(currentYear, currentMonth)).format("YYYY");
 

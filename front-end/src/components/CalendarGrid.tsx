@@ -1,6 +1,7 @@
 // CalendarGrid.js
 import React, { useContext } from "react";
 import dayjs from "dayjs";
+import { DayOff } from "../types/AgendamentosProvider";
 
 const CalendarGrid = ({
   currentYear,
@@ -46,7 +47,7 @@ const CalendarGrid = ({
         "MM/DD/YYYY"
       );
       const isOffDay = offDays.some(
-        (offDay) => offDay.selectedDate === dateString
+        (offDay: DayOff) => offDay.selectedDate === dateString
       ); // Verifica se a data está em offDays
       const isSelected = selectedOffDays[dateString] === "selected"; // Verifica se a data está em selectedOffDays como 'selected'
 

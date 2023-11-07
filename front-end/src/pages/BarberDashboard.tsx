@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import "../styles/barberDashboard.css";
 import DashboardScheduleChart from "../components/DashboardScheduleChart";
 import BarberDashboardUser from "../components/BarberDashboardUser";
+import { useNavigate } from "react-router-dom";
 
 function BarberDashboard() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("agendamentos");
-
+  const navigate = useNavigate();
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -16,6 +17,10 @@ function BarberDashboard() {
     setIsMenuOpen(false);
   };
 
+  const logout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
   return (
     <div
       className="dashboard-container"
@@ -33,7 +38,7 @@ function BarberDashboard() {
         <nav>
           <ul>
             <li
-              className={activeTab === "agendamentos" ? "active" : ""}
+              className="button-menu"
               onClick={() => changeTab("agendamentos")}
             >
               Agendamentos
@@ -45,6 +50,12 @@ function BarberDashboard() {
               Barbeiro
             </li>
           </ul>
+          <button
+            className={activeTab === "barbeiro" ? "active" : ""}
+            onClick={logout}
+          >
+            Sair
+          </button>
         </nav>
       </aside>
       <main className="content">

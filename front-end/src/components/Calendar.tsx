@@ -4,7 +4,6 @@ import ptBR from "date-fns/locale/pt-BR";
 import "../styles/calendar.css";
 import AgendamentosContext from "../context/AgendamentosContext";
 import { DateList } from "../types/Calendar";
-import { useFetcher } from "react-router-dom";
 import { fetchApiGetDayOff } from "../utils/fetchApi";
 
 const Calendar = () => {
