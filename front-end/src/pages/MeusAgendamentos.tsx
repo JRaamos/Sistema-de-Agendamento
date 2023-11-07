@@ -12,6 +12,7 @@ import {
   fetchAPiGetId,
   fetchAPiGoogleEventDelete,
 } from "../utils/fetchApi";
+import AgendamentosCard from "../components/AgendamentosCard";
 
 function MeusAgendamentos() {
   const location = useLocation();
@@ -65,6 +66,7 @@ function MeusAgendamentos() {
     const dataBr = date.split(" ");
     const dataObj = parse(dataBr[1], "dd/MM/yyyy", new Date());
     const dataUS = format(dataObj, "MM/dd/yyyy");
+    const dataYear = format(dataObj, "yyyy-MM-dd");
 
     if (storage) {
       const storageAgendamentos = JSON.parse(storage);
@@ -77,8 +79,8 @@ function MeusAgendamentos() {
       localStorage.setItem("agendamentos", JSON.stringify(newAgendamentos));
       setCancelar(false);
       setAgendamentos(newAgendamentos);
-      fetchAPiCancel(dataUS, hour);
-      const eventId = await fetchAPiGetId(dataUS, hour);
+      fetchAPiCancel(dataYear, hour);
+      const eventId = await fetchAPiGetId(dataYear, hour);
       fetchAPiGoogleEventDelete(eventId);
     }
   };
@@ -97,36 +99,12 @@ function MeusAgendamentos() {
       <div className="agendamentos-container">
         <h2>Meus agendamentos</h2>
         <div>
-          {agendamentos.map((agendamento: Agendamentos, index) => (
-            <div key={index} className="agendamento-card">
-              <div className="header-card">
-                <p>{agendamento.date}</p>
-                <button
-                  onClick={() => {
-                    setHour(agendamento.hour);
-                    setDate(agendamento.date);
-                    setCancelar(true);
-                  }}
-                  className="cancelar"
-                >
-                  Cancelar
-                </button>
-              </div>
-              <div className="footer-card">
-                <div>
-                  <h3>{agendamento.name}</h3>
-                  <div>
-                    {agendamento.services.map((service, index) => (
-                      <p key={index}>{service}</p>
-                    ))}
-                  </div>
-                </div>
-                <div>
-                  <p className="money">R$ {`${agendamento.price},00`}</p>
-                </div>
-              </div>
-            </div>
-          ))}
+          <AgendamentosCard
+            agendamentos={agendamentos}
+            setCancelar={setCancelar}
+            setHour={setHour}
+            setDate={setDate}
+          />
         </div>
       </div>
       <div className="atencion-contain">

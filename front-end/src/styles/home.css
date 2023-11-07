@@ -9,7 +9,8 @@
 
 .img-logo {
   border-radius: 47%;
-  box-shadow: 0 0 15px 0 rgba(96, 148, 207, 0.5);
+
+  /* box-shadow: 0 0 15px 0 rgba(96, 148, 207, 0.5); */
   margin-top: 30px;
 }
 

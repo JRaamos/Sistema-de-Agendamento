@@ -104,84 +104,73 @@ const AppointmentTimes = () => {
   };
 
   const generateTimes = (dayOfWeek: string, totalDuration: number) => {
-  
     const saoPauloZone = "America/Sao_Paulo";
     let startTime = moment(selectedDate)
-    .tz(saoPauloZone)
+      .tz(saoPauloZone)
       .set({ hour: 7, minute: 0 });
     let endTime = moment(selectedDate)
       .tz(saoPauloZone)
-      .set({ hour: 20, minute: 0 });
-    const morningOffEnd = moment(selectedDate).set({ hour: 12, minute: 0 });
-    const afternoonOffStart = moment(selectedDate).set({
-      hour: 12,
-      minute: 0,
-    });
-    
-    const afternoonOffEnd = moment(selectedDate).set({ hour: 20, minute: 0 });
-      
-      const isOffDay = barberUnavailability.some(
+      .set(
+        dayOfWeek === "domingo"
+          ? { hour: 11, minute: 0 }
+          : { hour: 20, minute: 0 }
+      );
+
+    // Se for sábado, ajuste o horário de encerramento
+    if (dayOfWeek === "sábado") {
+      endTime.set({ hour: 19, minute: 0 });
+    }
+
+    const lunchStart = moment(selectedDate)
+      .tz(saoPauloZone)
+      .set({ hour: 12, minute: 0 });
+    const lunchEnd = lunchStart.clone().add(2, "hours"); // Cria uma cópia de lunchStart e adiciona 2 horas para chegar ao final do almoço
+
+    // Verificação de dia indisponível
+    if (
+      barberUnavailability.some(
         (offDay) =>
-        offDay.selectedDate === selectedDate && dayOffTimes.fullDayOff
-        );
-        
-        if (isOffDay) {          
-          return ["Sem horários disponíveis"];
-        }
-        
-        if (dayOfWeek === "sábado") {
-          endTime = moment(selectedDate).set({ hour: 19, minute: 0 });
-        }
-        if (dayOfWeek === "domingo") {
-          endTime = moment(selectedDate).set({ hour: 11, minute: 0 });
-        }
-     
+          offDay.selectedDate === selectedDate && offDay.timeOff === "full-day"
+      )
+    ) {
+      return ["Sem horários disponíveis"];
+    }
 
+    // Ajuste do tempo de início se hoje for a data selecionada
     const currentTimeInSaoPaulo = moment().tz(saoPauloZone);
-    const times = [];
-
-    // Verifique se a data selecionada é hoje e ajuste startTime se necessário
-    if (currentTimeInSaoPaulo.isSame(startTime, "day")) {
-      // Se for o dia atual, ajuste startTime para o próximo horário inteiro após 60 minutos do horário atual
-      const minutesToAdd = 30 - currentTimeInSaoPaulo.minutes(); // Isso irá calcular os minutos restantes para a próxima hora cheia.
-      const potentialStartTime = currentTimeInSaoPaulo
-        .add(minutesToAdd, "minutes")
-        .startOf("hour")
-        .add(1, "hour"); // Adiciona o restante para chegar na próxima hora cheia e depois adiciona uma hora.
-      if (potentialStartTime.isAfter(startTime)) {
-        startTime = potentialStartTime; // Se a hora potencial for mais tarde do que o startTime atual, atualizamos o startTime para refletir isso.
-      }
+    if (
+      currentTimeInSaoPaulo.isSame(startTime, "day") &&
+      currentTimeInSaoPaulo.isAfter(startTime)
+    ) {
+      startTime = currentTimeInSaoPaulo.add(1, "hour").startOf("hour");
     }
-
+    const morningEnd = moment(selectedDate)
+      .tz(saoPauloZone)
+      .set({ hour: 12, minute: 0 });
+    const afternoonStart = morningEnd.clone(); // Pode ajustar se houver outro horário específico para começar a tarde
+    let times = [];
     while (startTime.isBefore(endTime)) {
-      const currentTime = startTime.format("HH:mm");
-
-      if (dayOffTimes.morningOff && startTime.isBefore(morningOffEnd)) {
-        startTime.add(totalDuration, "minutes");
-        continue;
+      // Ignora horários de manhã se a manhã for período de folga
+      if (dayOffTimes.morningOff && startTime.isBefore(morningEnd)) {
+        startTime = afternoonStart.clone(); // Ajusta o início para depois do horário da tarde
       }
 
-      if (
-        dayOffTimes.afternoonOff &&
-        startTime.isAfter(afternoonOffStart) &&
-        startTime.isBefore(afternoonOffEnd)
-      ) {
-        startTime.add(totalDuration, "minutes");
-        continue;
+      // Interrompe a adição de horários se for período de folga à tarde
+      if (dayOffTimes.afternoonOff && startTime.isSameOrAfter(afternoonStart)) {
+        break; // Não adicionar mais horários porque a tarde está de folga
       }
 
-      if (
-        startTime.isAfter(moment(selectedDate).set({ hour: 12, minute: 0 })) &&
-        startTime.isBefore(moment(selectedDate).set({ hour: 14, minute: 0 }))
-      ) {
-        startTime.add(totalDuration, "minutes");
-        continue;
+      // Ignora horários durante a pausa do almoço, se existir
+      if (startTime.isBetween(lunchStart, lunchEnd, null, "[]")) {
+        startTime = lunchEnd.clone();
       }
 
-      times.push(currentTime);
-      startTime.add(totalDuration, "minutes");
+      // Verifica se ainda estamos dentro do horário de funcionamento depois das verificações acima
+      if (startTime.isBefore(endTime)) {
+        times.push(startTime.format("HH:mm"));
+        startTime.add(totalDuration, "minutes"); // Adiciona a duração total ao startTime para obter o próximo horário disponível
+      }
     }
-
     return times;
   };
 
@@ -204,7 +193,6 @@ const AppointmentTimes = () => {
     );
 
     if (unavailabilityForSelectedDate) {
-      
       setDayOffTimes({
         morningOff: unavailabilityForSelectedDate.timeOff === "morning",
         afternoonOff: unavailabilityForSelectedDate.timeOff === "afternoon",
