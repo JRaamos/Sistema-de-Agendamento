@@ -30,9 +30,26 @@ function MeusAgendamentos() {
   const [date, setDate] = useState("");
 
   useEffect(() => {
+    const currentDateTime = new Date(); // Obtem a data e hora atual
     const values = localStorage.getItem("agendamentos");
+
     if (values) {
-      const result = JSON.parse(values);
+      let result = JSON.parse(values);
+
+      // Filtra agendamentos que são antigos
+      result = result.filter((agendamento: Agendamentos) => {
+        const agendamentoDate = agendamento.date.split(" as ")[0]; // Assume que agendamento.date é uma string como "Seg, 12/04/2023 as 14:00"
+        const agendamentoHour = agendamento.hour; // "14:00" por exemplo
+        const agendamentoDateTime = new Date(
+          `${agendamentoDate} ${agendamentoHour}`
+        );
+        return agendamentoDateTime >= currentDateTime;
+      });
+
+      // Atualiza o local storage após filtrar os agendamentos antigos
+      localStorage.setItem("agendamentos", JSON.stringify(result));
+
+      // Mapeia para o novo formato
       const updatedAgendamentos = result.map((agendamento: any) => {
         const inputDate = new Date(agendamento.date);
         const formattedDate = format(inputDate, "EEE, dd/MM/yyy", {
@@ -49,7 +66,8 @@ function MeusAgendamentos() {
 
         return agendamento;
       });
-      setAgendamentos(updatedAgendamentos);
+
+      setAgendamentos(updatedAgendamentos); // Atualiza o estado com os agendamentos atualizados
     }
   }, [cancelar]);
 
