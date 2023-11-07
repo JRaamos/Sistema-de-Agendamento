@@ -1,5 +1,5 @@
-import React from 'react'
-import { ChartRagesDay } from '../types/Chart';
+import React from "react";
+import { ChartRagesDay } from "../types/Chart";
 
 function DashboardFilter({ setRagesDays, ragesDays }: ChartRagesDay) {
   return (
@@ -9,14 +9,18 @@ function DashboardFilter({ setRagesDays, ragesDays }: ChartRagesDay) {
         <button
           type="button"
           onClick={() => setRagesDays(0)}
-          className={ragesDays === 0 ? "button-filter actived" : "button-filter"}
+          className={
+            ragesDays === 0 ? "button-filter actived" : "button-filter"
+          }
         >
           Todos
         </button>
         <button
           type="button"
           onClick={() => setRagesDays(7)}
-          className={ragesDays === 7 ? "button-filter actived" : "button-filter"}
+          className={
+            ragesDays === 7 ? "button-filter actived" : "button-filter"
+          }
         >
           Últimos 7 dias
         </button>
@@ -60,4 +64,4 @@ function DashboardFilter({ setRagesDays, ragesDays }: ChartRagesDay) {
     </section>
   );
 }
-export default  DashboardFilter
+export default DashboardFilter;

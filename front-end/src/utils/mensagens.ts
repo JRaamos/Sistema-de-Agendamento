@@ -6,7 +6,7 @@ const mensagensInicial = {
   mensagem03: (name: string) => `Seja bem vindo ${name} a Stylus Barbearia`,
   mensagem04: 'Selecione o(os) serviço(os) que deseja agendar e clique em enviar.',
   mensagem05: 'Blz, e qual o melhor dia e horário para você ser atendido?',
-  mensagem06: `Me informe seu numero de telefone, por favor com o DDD.`,
+  mensagem06: `Me informe seu numero de telefone, por favor comZZZ o DDD. Exemplo: (71)99999-9999`,
   mensagem07: 'Perfeito ... Tudo certo',
   mensagem08: (service: string, date: string) => `Agendamento realizado com sucesso! Um(a) ${service}, com o barbeiro CHUCA no(a), ${date}`,
   mensagem09: 'Muito obrigado, até mais!',

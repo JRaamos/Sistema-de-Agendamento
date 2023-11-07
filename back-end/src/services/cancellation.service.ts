@@ -1,11 +1,11 @@
 import sequelize from 'sequelize';
-import CancellationModel, { CancellationInputtableTypes } 
+import CancellationModel, { CancellationInputtableTypes }
   from '../database/models/cancellation.model';
 import moment from 'moment-timezone';
 
 
 const createCancellation = async (cancellation: CancellationInputtableTypes):
-Promise<void> => {
+  Promise<void> => {
   await CancellationModel.create(cancellation);
 };
 
@@ -13,8 +13,6 @@ const countCancellation = async (rageDays: number) => {
   const now = moment.tz('America/Sao_Paulo');
   const currentDate = now.format('YYYY-MM-DD');
   const currentTime = now.format('HH:mm:ss');
-console.log(currentDate + ' ' + currentTime);
-
   let dateStart = new Date(currentDate + ' ' + currentTime);
 
   if (rageDays > 0) {

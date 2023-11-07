@@ -13,7 +13,6 @@ import CalendarGrid from "./CalendarGrid";
 import SchedulesDashboard from "./schedulesDashboard";
 import { AgendamentosContextType } from "../types/AgendamentosProvider";
 import AgendamentosContext from "../context/AgendamentosContext";
-import { set } from "date-fns";
 
 dayjs.locale("pt-br");
 type OffDay = {
@@ -233,7 +232,7 @@ function BarberDashboardUser() {
 
   return (
     <>
-      <h2 className="title">O que você quer faze? </h2>
+      <h2 className="title">O que você quer fazer? </h2>
       <div className="button-options">
         <button
           className={

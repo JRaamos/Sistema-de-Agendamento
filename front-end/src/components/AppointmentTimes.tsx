@@ -119,9 +119,6 @@ const AppointmentTimes = () => {
     });
     
     const afternoonOffEnd = moment(selectedDate).set({ hour: 20, minute: 0 });
-    const formattedDate = moment(selectedDate, "MM/DD/YYYY").format(
-      "YYYY-MM-DD"
-      );
       
       const isOffDay = barberUnavailability.some(
         (offDay) =>
@@ -202,10 +199,6 @@ const AppointmentTimes = () => {
     }
   };
   const updateDayOffTimesBasedOnUnavailability = () => {
-    const formattedDate = moment(selectedDate, "MM/DD/YYYY").format(
-      "YYYY-MM-DD"
-    );
-
     const unavailabilityForSelectedDate = barberUnavailability.find(
       (offDay) => offDay.selectedDate === selectedDate
     );
