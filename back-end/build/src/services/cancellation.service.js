@@ -13,7 +13,6 @@ const countCancellation = async (rageDays) => {
     const now = moment_timezone_1.default.tz('America/Sao_Paulo');
     const currentDate = now.format('YYYY-MM-DD');
     const currentTime = now.format('HH:mm:ss');
-    console.log(currentDate + ' ' + currentTime);
     let dateStart = new Date(currentDate + ' ' + currentTime);
     if (rageDays > 0) {
         dateStart = now.subtract(rageDays, 'days').toDate();
