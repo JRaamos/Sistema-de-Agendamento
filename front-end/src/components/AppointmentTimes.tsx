@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import services from "../utils/services.json";
 import "../styles/appointmentTimes.css";
 import AgendamentosContext from "../context/AgendamentosContext";
-import { fetchAPiGet  } from "../utils/fetchApi";
+import { fetchAPiGet } from "../utils/fetchApi";
 import { Service } from "../types/ApiReturn";
 // import { Service } from "../types/Service";
 import { BookTime } from "../types/AppointmentTimes";
@@ -58,23 +58,33 @@ const AppointmentTimes = () => {
     const dayOfWeek = dayjs(selectedDate).format("dddd");
     const totalDuration = getTotalDuration(servicesSelected);
     const times = generateTimes(dayOfWeek, totalDuration);
-    console.log(bookedTimes);
-    
-    // Remove os horários já agendados da lista de horários disponíveis
+
+    // Define os horários de almoço e final do expediente
+    const lunchStartTime = moment(selectedDate).hour(12).minute(0);
+    const lunchEndTime = lunchStartTime.clone().add(2, "hours");
+    const dayEndTime = moment(selectedDate)
+      .hour(dayOfWeek === "domingo" ? 11 : 20)
+      .minute(0);
+
+    // Remove os horários que se sobrepõem com os horários de almoço e final do dia
     const availableTimes = times.filter((time) => {
       const proposedStartTime = moment(selectedDate + " " + time);
       const proposedEndTime = proposedStartTime
         .clone()
         .add(totalDuration, "minutes");
 
+      // Verifica se o horário proposto se sobrepõe com o horário de almoço ou final do expediente
+      const isDuringLunch =
+        proposedStartTime.isBefore(lunchEndTime) &&
+        proposedEndTime.isAfter(lunchStartTime);
+      const isPastDayEnd = proposedEndTime.isAfter(dayEndTime);
+
       // Verificar se o intervalo de tempo proposto não se sobrepõe com os horários já agendados
-      const isOverlapping = bookedTimes.some((bookedTime: BookTime) => {
+      const isOverlappingBooked = bookedTimes.some((bookedTime) => {
         const bookedStartTime = moment(selectedDate + " " + bookedTime.hour);
         const bookedEndTime = bookedStartTime
           .clone()
           .add(bookedTime.totalDuration, "minutes");
-
-        // Verifica se há sobreposição
         return (
           proposedStartTime.isBetween(
             bookedStartTime,
@@ -86,11 +96,13 @@ const AppointmentTimes = () => {
         );
       });
 
-      return !isOverlapping;
+      // O horário é válido se não se sobrepõe com o almoço, não passa do final do expediente e não está reservado
+      return !isDuringLunch && !isPastDayEnd && !isOverlappingBooked;
     });
 
     setAvailableTimes(availableTimes);
   };
+
 
   const getTotalDuration = (selectedServices: string[]) => {
     return selectedServices.reduce((acc, servicesSelected) => {
