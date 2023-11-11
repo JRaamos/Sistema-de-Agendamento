@@ -6,6 +6,18 @@
 
 }
 
+.custom-button-login {
+  background-color: transparent;
+  border: none;
+  left: 10px;
+  position: absolute;
+  top: 20px;
+}
+
+.custom-button-login:hover {
+  cursor: pointer;
+}
+
 .img-logo-login {
   border-radius: 45%;
   box-shadow: none;

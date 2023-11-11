@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import logo from "../images/logo-1.png";
 import { fetchAPiLogin } from "../utils/fetchApi";
 import { useNavigate } from "react-router-dom";
+import arrow from "../images/arrow-1.svg";
 import "../styles/login.css";
 import Loading from "../components/Loading";
 
@@ -28,6 +29,14 @@ function Login() {
 
   return (
     <div className="login-container">
+      <button
+        onClick={() => {
+          navigate("/");
+        }}
+        className="custom-button-login"
+      >
+        <img src={arrow} alt="arrow" className="button-image" />
+      </button>
       <section className="section-logo">
         <img src={logo} alt="logo" className="img-logo img-logo-login" />
       </section>

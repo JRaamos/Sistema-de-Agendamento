@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import "../styles/agendamentos.css";
 import Services from "../components/Services";
+import arrow from "../images/arrow-1.svg";
 import Welcome from "../components/Welcome";
 import AgendamentosContext from "../context/AgendamentosContext";
 import MensagemDate from "../components/MensagemDate";
@@ -38,7 +39,7 @@ function Agendamentos() {
     setValues,
     values,
     availableTimes,
-  }: any = useContext(AgendamentosContext);
+  } = useContext(AgendamentosContext);
   const [buttomMeusAgendamentos, setButtomMeusAgendamentos] = useState(false);
 
   useEffect(() => {
@@ -79,6 +80,15 @@ function Agendamentos() {
     <div className="container-agendamentos" ref={containerRef}>
       {buttomMeusAgendamentos && (
         <div className="button-meus-agendamentos-contain">
+          <button
+            onClick={() => {
+              resetStates();
+              navigate("/");
+            }}
+            className="custom-button"
+          >
+            <img src={arrow} alt="arrow" className="button-image" />
+          </button>
           <button
             className="button-meus-agendamentos-header"
             onClick={() => navigate("/meus-agendamentos")}
@@ -139,9 +149,7 @@ function Agendamentos() {
           {selectedDate && (
             <div className="hours">
               <section className={isAgendamentos ? "" : "msg-bottom"}>
-                {
-                  <AppointmentTimes/>
-                }
+                {<AppointmentTimes />}
               </section>
             </div>
           )}
@@ -170,7 +178,7 @@ function Agendamentos() {
       {phone && (
         <div className={phoneBottom ? "" : "msg-bottom"}>
           <section className="section-mensagem-usuario">
-            <section className="section-name" style={{ padding: 0}}>
+            <section className="section-name" style={{ padding: 0 }}>
               <p>{phone}</p>
             </section>
           </section>

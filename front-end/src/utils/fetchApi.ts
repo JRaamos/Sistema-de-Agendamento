@@ -1,6 +1,7 @@
 import { DayOff, Values } from "../types/AgendamentosProvider";
-const BASEURL = 'https://sistema-de-agendamento-production.up.railway.app';
-
+import { FetchAPiGet } from "../types/ApiReturn";
+// const BASEURL = 'https://sistema-de-agendamento-production.up.railway.app';
+const BASEURL = 'http://localhost:3001';
 //faz o registro/criação do agendamento no banco de dados
 export const fetchAPi = async (values: Values) => {
   const eventId = await fetchAPiGoogleEvent(values)
@@ -34,7 +35,7 @@ export const fetchAPiLogin = async (email: string, password: string) => {
 }
 
 //faz a busca dos agendamentos no banco de dados de acordo com a data
-export const fetchAPiGet = async (date: string | null) => {
+export const fetchAPiGet = async (date: string | null): Promise<FetchAPiGet[]> => {
   const formattedDate = date?.replace(/\//g, '-');
   const response = (await fetch(`${BASEURL}/schedules/date/${formattedDate}`, {
     method: 'get',

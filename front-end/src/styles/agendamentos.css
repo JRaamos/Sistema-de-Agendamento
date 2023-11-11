@@ -37,7 +37,6 @@
   width: 275px;
 }
 
-
 .section-mensagem-usuario {
   align-items: flex-end;
   display: flex;
@@ -63,7 +62,7 @@
 .button-meus-agendamentos-contain {
   align-items: end;
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
   margin: 5px 0;
   position: fixed;
   width: 85%;
