@@ -5,8 +5,9 @@ import dayjs from "dayjs";
 import services from "../utils/services.json";
 import "../styles/appointmentTimes.css";
 import AgendamentosContext from "../context/AgendamentosContext";
-import { fetchAPiGet } from "../utils/fetchApi";
-import { Service } from "../types/Service";
+import { fetchAPiGet  } from "../utils/fetchApi";
+import { Service } from "../types/ApiReturn";
+// import { Service } from "../types/Service";
 import { BookTime } from "../types/AppointmentTimes";
 
 const AppointmentTimes = () => {
@@ -31,11 +32,11 @@ const AppointmentTimes = () => {
   // Função para buscar os horários já agendados
   const getBookedTimes = async (date: string | null) => {
     const response = await fetchAPiGet(date);
-    return response.map((item: any) => {
+    return response.map((item) => {
       // Calcula a duração total de todos os serviços para este horário
       const totalDuration = item.services.reduce(
         (total: number, service: Service) => {
-          return total + service.duration;
+          return total + Number(service.duration);
         },
         0
       );
@@ -57,7 +58,8 @@ const AppointmentTimes = () => {
     const dayOfWeek = dayjs(selectedDate).format("dddd");
     const totalDuration = getTotalDuration(servicesSelected);
     const times = generateTimes(dayOfWeek, totalDuration);
-
+    console.log(bookedTimes);
+    
     // Remove os horários já agendados da lista de horários disponíveis
     const availableTimes = times.filter((time) => {
       const proposedStartTime = moment(selectedDate + " " + time);

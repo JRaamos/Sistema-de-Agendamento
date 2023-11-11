@@ -39,7 +39,7 @@ function Agendamentos() {
     setValues,
     values,
     availableTimes,
-  }: any = useContext(AgendamentosContext);
+  } = useContext(AgendamentosContext);
   const [buttomMeusAgendamentos, setButtomMeusAgendamentos] = useState(false);
 
   useEffect(() => {
