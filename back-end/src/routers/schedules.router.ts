@@ -5,6 +5,13 @@ import validateJWT from '../middlewares/validateJWT';
 const routerSchedules = Router();
 
 routerSchedules.get(
+  '/schedules',
+  validateJWT,
+  scheduleController.findAllSchedulesFromNow,
+);
+
+
+routerSchedules.get(
   '/schedules/count/future',
   validateJWT,
   scheduleController.countFutureSchedules,

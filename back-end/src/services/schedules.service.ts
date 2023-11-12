@@ -1,9 +1,8 @@
-import sequelize, { Op } from 'sequelize';
+import  { Op } from 'sequelize';
 import ScheduleModel, { ScheduleInputtableTypes } from '../database/models/schedules.model';
 import ServiceModel from '../database/models/service.model';
 import { Schedule } from '../types/schedules';
 import moment from 'moment-timezone';
-import userService from './user.service';
 import UserModel from '../database/models/user.model';
 
 const createSchedule = async (schedule: ScheduleInputtableTypes):
@@ -25,16 +24,59 @@ const finaAllSchedulesDate = async (date: string) => {
         through: { attributes: [] },
       },
       {
-        model: UserModel, 
+        model: UserModel,
         as: 'user',
-        attributes: ['name', 'phone'], 
+        attributes: ['name', 'phone'],
       },
     ],
   });
 
-  return schedulesWithServicesAndUsers; 
+  return schedulesWithServicesAndUsers;
 };
 
+const findAllSchedulesFromNow = async () => {
+  const now = moment.tz('America/Sao_Paulo');
+  const currentDate = now.format('YYYY-MM-DD');
+  const currentTime = now.format('HH:mm:ss');
+
+  const schedules = await ScheduleModel.findAll({
+    where: {
+      [Op.and]: [
+        { date: { [Op.gt]: currentDate } },
+        {
+          [Op.or]: [
+            {
+              [Op.and]: [
+                { date: currentDate },
+                { hour: { [Op.gte]: currentTime } },
+              ],
+            },
+            { date: { [Op.gt]: currentDate }, },
+          ],
+        },
+      ],
+    },
+    include: [
+      {
+        model: ServiceModel,
+        as: 'services',
+        attributes: ['service', 'price', 'duration'],
+        through: { attributes: [] },
+      },
+      {
+        model: UserModel,
+        as: 'user',
+        attributes: ['name', 'phone'],
+      },
+    ],
+    order: [
+      ['date', 'ASC'],
+      ['hour', 'ASC'], 
+    ],
+  });
+
+  return schedules;
+};
 
 const findByScheduleDateId = async (date: string, hour: string) => {
 
@@ -48,7 +90,7 @@ const findByScheduleDateId = async (date: string, hour: string) => {
     },
 
   });
-  
+
   return schedulesWithServices;
 };
 
@@ -62,28 +104,28 @@ const countSchedules = async (rangeDays: number) => {
   const endTime = now.format('HH:mm:ss');
 
   let startDate = now.clone().subtract(rangeDays, 'days').format('YYYY-MM-DD');
-  
+
 
   if (rangeDays <= 0) {
-    startDate = "1970-01-01"; 
+    startDate = "1970-01-01";
   }
 
   const result = await ScheduleModel.count({
     where: {
       [Op.and]: [
-        { date: { [Op.gte]: startDate } }, // Data igual ou posterior a 'startDate'.
-        { date: { [Op.lte]: endDate } },   // Data igual ou anterior a 'endDate'.
+        { date: { [Op.gte]: startDate } },
+        { date: { [Op.lte]: endDate } },
         {
           [Op.or]: [
             {
               date: {
-                [Op.lt]: endDate, // Data anterior a 'endDate'.
+                [Op.lt]: endDate,
               },
             },
             {
               [Op.and]: [
                 { date: endDate },
-                { hour: { [Op.lte]: endTime } }, // Hora menor ou igual a 'endTime' se for o mesmo 'endDate'.
+                { hour: { [Op.lte]: endTime } },
               ],
             },
           ],
@@ -135,4 +177,5 @@ export default {
   findByScheduleDateId,
   deleteSchedule,
   countSchedules,
+  findAllSchedulesFromNow,
 };
