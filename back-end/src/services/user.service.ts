@@ -1,4 +1,4 @@
-import UserModel, { UserInputtableTypes } from '../database/models/user.model';
+import UserModel, { UserInputtableTypes, UserSequelizeModel } from '../database/models/user.model';
 
 const createUserService = async (user: UserInputtableTypes):
 Promise<number > => {
@@ -9,5 +9,8 @@ Promise<number > => {
   const { userId } = userResult.dataValues;
   return userId;
 };
-
-export default { createUserService };
+const getUserService = async (userId: number): Promise<UserSequelizeModel> => {
+  const user = await UserModel.findByPk(userId);
+  return user as UserSequelizeModel;
+}
+export default { createUserService, getUserService };

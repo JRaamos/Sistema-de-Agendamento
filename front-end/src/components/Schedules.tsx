@@ -1,5 +1,6 @@
 import React from "react";
 import CalendarGrid from "./CalendarGrid";
+import ScheduleCard from "./ScheduleCard";
 
 function Schedules() {
   return (
@@ -10,6 +11,9 @@ function Schedules() {
       </button>
       <div className="barber-schedule">
         <CalendarGrid />
+      </div>
+      <div>
+        <ScheduleCard />
       </div>
     </div>
   );

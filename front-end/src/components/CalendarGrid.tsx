@@ -38,8 +38,8 @@ const CalendarGrid = () => {
     );
 
     if (offDays.some((offDay) => offDay.selectedDate === dateString)) {
-      prepareCancellation(day); // Aqui você pode chamar diretamente a função prepareCancellation.
-      setCancellationCandidate(dateString); // Defina o cancellationCandidate para a data clicada.
+      prepareCancellation(day); 
+      setCancellationCandidate(dateString); 
     }
     setSelectedDate(dateString);
     // Se isOffDay for verdadeiro e um novo dia for selecionado, limpe o estado anterior

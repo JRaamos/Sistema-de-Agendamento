@@ -3,7 +3,8 @@ import ScheduleModel, { ScheduleInputtableTypes } from '../database/models/sched
 import ServiceModel from '../database/models/service.model';
 import { Schedule } from '../types/schedules';
 import moment from 'moment-timezone';
-
+import userService from './user.service';
+import UserModel from '../database/models/user.model';
 
 const createSchedule = async (schedule: ScheduleInputtableTypes):
   Promise<Schedule> => {
@@ -14,20 +15,29 @@ const createSchedule = async (schedule: ScheduleInputtableTypes):
 };
 
 const finaAllSchedulesDate = async (date: string) => {
-  const schedulesWithServices = await ScheduleModel.findAll({
+  const schedulesWithServicesAndUsers = await ScheduleModel.findAll({
     where: { date },
-    include: {
-      model: ServiceModel,
-      as: 'services',
-      attributes: ['service', 'price', 'duration'],
-      through: { attributes: [] },
-    },
+    include: [
+      {
+        model: ServiceModel,
+        as: 'services',
+        attributes: ['service', 'price', 'duration'],
+        through: { attributes: [] },
+      },
+      {
+        model: UserModel, 
+        as: 'user',
+        attributes: ['name', 'phone'], 
+      },
+    ],
   });
 
-  return schedulesWithServices;
+  return schedulesWithServicesAndUsers; 
 };
 
+
 const findByScheduleDateId = async (date: string, hour: string) => {
+
   const schedulesWithServices = await ScheduleModel.findOne({
     where: { date, hour },
     include: {
@@ -36,8 +46,9 @@ const findByScheduleDateId = async (date: string, hour: string) => {
       attributes: ['service', 'price', 'duration'],
       through: { attributes: [] },
     },
-  });
 
+  });
+  
   return schedulesWithServices;
 };
 

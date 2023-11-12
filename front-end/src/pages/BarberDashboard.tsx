@@ -3,7 +3,6 @@ import "../styles/barberDashboard.css";
 import DashboardScheduleChart from "../components/DashboardScheduleChart";
 import BarberDashboardUser from "../components/BarberDashboardUser";
 import { useNavigate } from "react-router-dom";
-import { OffDay } from "../types/dashboard";
 import AgendamentosContext from "../context/AgendamentosContext";
 import Schedules from "../components/Schedules";
 
@@ -12,12 +11,12 @@ function BarberDashboard() {
   const [activeTab, setActiveTab] = useState("Informações");
 
   const {
-    isOffDay,
     setIsOffDay,
     setSelectedOffDays,
     selectedOffDay,
     setSelectedOffDay,
     setConfirmOffDay,
+    setSelectedDay,
     setIsRecurrentClient,
   } = useContext(AgendamentosContext);
   const navigate = useNavigate();
@@ -80,13 +79,22 @@ function BarberDashboard() {
                     setConfirmOffDay(false);
                     setIsOffDay(true);
                     setIsRecurrentClient(false);
+                     setSelectedDay(null);
                   }}
                 >
                   Agendar folga
                 </li>
                 <li
                   className={activeTab === "Agendamentos" ? "active" : ""}
-                  onClick={() => changeTab("Agendamentos")}
+                  onClick={() => {
+                    changeTab("Agendamentos");
+                    setSelectedOffDays({});
+                    selectedOffDay.length > 0 && setSelectedOffDay([]);
+                    setConfirmOffDay(false);
+                    setIsOffDay(true);
+                    setIsRecurrentClient(false);
+                     setSelectedDay(null);
+                  }}
                 >
                   Agendamentos
                 </li>
