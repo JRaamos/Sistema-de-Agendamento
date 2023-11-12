@@ -48,6 +48,7 @@ const AppointmentTimes = () => {
     });
   };
 
+  //verifica condições para disponibilizar os horários
   const calculateAvailableTimes = async () => {
     if (servicesSelected.length === 0 || !selectedDate) {
       setAvailableTimes([]);
