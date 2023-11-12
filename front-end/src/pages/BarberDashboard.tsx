@@ -5,6 +5,7 @@ import BarberDashboardUser from "../components/BarberDashboardUser";
 import { useNavigate } from "react-router-dom";
 import { OffDay } from "../types/dashboard";
 import AgendamentosContext from "../context/AgendamentosContext";
+import Schedules from "../components/Schedules";
 
 function BarberDashboard() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -101,6 +102,7 @@ function BarberDashboard() {
         {(activeTab === "Agendar cliente" || activeTab === "Agendar folga") && (
           <BarberDashboardUser />
         )}
+        {activeTab === "Agendamentos" && <Schedules />}
       </main>
     </div>
   );
