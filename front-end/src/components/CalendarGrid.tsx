@@ -2,34 +2,74 @@
 import React, { useContext } from "react";
 import dayjs from "dayjs";
 import { DayOff } from "../types/AgendamentosProvider";
+import CalendarNavigation from "./CalendarNavigation";
+import AgendamentosContext from "../context/AgendamentosContext";
 
-interface CalendarGridProps {
-  currentYear: number;
-  currentMonth: number;
-  offDays: DayOff[];
-  selectedOffDays: {
-    [key: string]: string;
+const CalendarGrid = () => {
+  const {
+    currentYear,
+    currentMonth,
+    offDays,
+    selectedOffDays,
+    setSelectedOffDays,
+    setSelectedDate,
+    isOffDay,
+    selectedDay,
+    setSelectedDay,
+    setSelectedOffDay,
+    setTypeOffDay,
+    setTypeOffDaySelected,
+    setCancellationCandidate,
+    setConfirmOffDay,
+    isRecurrentClient,
+    setIsOffDaySelected,
+  } = useContext(AgendamentosContext);
+
+ const prepareCancellation = (day: number) => {
+   const dateString = dayjs(new Date(currentYear, currentMonth, day)).format(
+     "MM/DD/YYYY"
+   );
+   setCancellationCandidate(dateString);
+ };
+  // Função para alternar o estado de um dia selecionado
+  const toggleOffDay = (day: number) => {
+    const dateString = dayjs(new Date(currentYear, currentMonth, day)).format(
+      "MM/DD/YYYY"
+    );
+
+    if (offDays.some((offDay) => offDay.selectedDate === dateString)) {
+      prepareCancellation(day); // Aqui você pode chamar diretamente a função prepareCancellation.
+      setCancellationCandidate(dateString); // Defina o cancellationCandidate para a data clicada.
+    }
+    setSelectedDate(dateString);
+    // Se isOffDay for verdadeiro e um novo dia for selecionado, limpe o estado anterior
+    if (isOffDay) {
+      if (selectedDay !== day) {
+        // Verifica se um novo dia foi clicado
+        setSelectedOffDay([]);
+        setSelectedDay(day); // Atualize o dia selecionado
+        setTypeOffDay(false); // Reseta o estado para que um novo tipo possa ser definido
+        setTypeOffDaySelected(""); // Limpa a seleção de tipo de dia de folga anterior
+        // Agora defina os estados apenas para o novo dia selecionado
+        setSelectedOffDays({ [dateString]: "selected" });
+      } else {
+        // Se o mesmo dia for clicado novamente, você pode optar por manter ou limpar os estados
+        // Isso depende se você quer que um clique duplo em um dia desmarque ou não
+      }
+    } else {
+      // Lógica para seleção múltipla se isOffDay for falso
+      setSelectedOffDays((prevSelectedDays) => {
+        const newSelectedDays = { ...prevSelectedDays };
+        if (newSelectedDays[dateString]) {
+          delete newSelectedDays[dateString]; // Desmarque se já estiver selecionado
+        } else {
+          newSelectedDays[dateString] = "selected"; // Selecione se não estiver
+        }
+        return newSelectedDays;
+      });
+    }
   };
-  toggleOffDay: (day: number) => void;
-  setCancellationCandidate: (date: null | string) => void;
-  setSelectedOffDays: (selectedOffDays: { [key: string]: string }) => void;
-  setIsOffDaySelected: (isOffDaySelected: boolean) => void;
-  isRecurrentClient: boolean;
-  setConfirmOffDay: (confirmOffDay: boolean) => void;
-}
-
-const CalendarGrid = ({
-  currentYear,
-  currentMonth,
-  offDays,
-  selectedOffDays,
-  toggleOffDay,
-  setCancellationCandidate,
-  setSelectedOffDays,
-  setIsOffDaySelected,
-  isRecurrentClient,
-  setConfirmOffDay,
-}: CalendarGridProps) => {
+  
   const handleCancelationsConditions = (isOffDay: boolean) => {
     if (!isOffDay) {
       setCancellationCandidate(null);
@@ -95,6 +135,7 @@ const CalendarGrid = ({
 
   return (
     <div className="calendar-contain fade-in">
+      <CalendarNavigation />
       <div className="calendar-header">
         <div>Dom</div>
         <div>Seg</div>

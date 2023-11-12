@@ -1,21 +1,24 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "../styles/barberDashboard.css";
 import DashboardScheduleChart from "../components/DashboardScheduleChart";
 import BarberDashboardUser from "../components/BarberDashboardUser";
 import { useNavigate } from "react-router-dom";
 import { OffDay } from "../types/dashboard";
+import AgendamentosContext from "../context/AgendamentosContext";
 
 function BarberDashboard() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("Informações");
-  const [isOffDay, setIsOffDay] = useState<boolean>(false);
-  const [isRecurrentClient, setIsRecurrentClient] = useState<boolean>(false);
-  const [selectedOffDays, setSelectedOffDays] = useState<{
-    [key: string]: string;
-  }>({});
-  const [confirmOffDay, setConfirmOffDay] = useState(false);
-  const [selectedOffDay, setSelectedOffDay] = useState<OffDay[]>([]);
 
+  const {
+    isOffDay,
+    setIsOffDay,
+    setSelectedOffDays,
+    selectedOffDay,
+    setSelectedOffDay,
+    setConfirmOffDay,
+    setIsRecurrentClient,
+  } = useContext(AgendamentosContext);
   const navigate = useNavigate();
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -96,16 +99,7 @@ function BarberDashboard() {
       <main className="content">
         {activeTab === "Informações" && <DashboardScheduleChart />}
         {(activeTab === "Agendar cliente" || activeTab === "Agendar folga") && (
-          <BarberDashboardUser
-            isOffDay={isOffDay}
-            isRecurrentClient={isRecurrentClient}
-            selectedOffDays={selectedOffDays}
-            setSelectedOffDays={setSelectedOffDays}
-            confirmOffDay={confirmOffDay}
-            setConfirmOffDay={setConfirmOffDay}
-            selectedOffDay={selectedOffDay}
-            setSelectedOffDay={setSelectedOffDay}
-          />
+          <BarberDashboardUser />
         )}
       </main>
     </div>

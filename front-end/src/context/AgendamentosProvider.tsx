@@ -6,9 +6,27 @@ import {
   Values,
 } from "../types/AgendamentosProvider";
 import dayjs from "dayjs";
+import { OffDay } from "../types/dashboard";
 
 function AgendamentosProvider({ children }: AgendamentosProviderProps) {
   const [servicesSelected, setServicesSelected] = useState<string[]>([]);
+  const [currentYear, setCurrentYear] = useState(dayjs().year());
+  const [currentMonth, setCurrentMonth] = useState(dayjs().month());
+  const [offDays, setOffDays] = useState<OffDay[]>([]);
+ const [selectedOffDays, setSelectedOffDays] = useState<{
+   [key: string]: string;
+ }>({});
+  const [isOffDay, setIsOffDay] = useState<boolean>(false);
+  const [selectedDay, setSelectedDay] = useState<number | null>(null);
+  const [selectedOffDay, setSelectedOffDay] = useState<OffDay[]>([]);
+  const [typeOffDay, setTypeOffDay] = useState(false);
+  const [isOffDaySelected, setIsOffDaySelected] = useState<boolean>(false);
+  const [typeOffDaySelected, setTypeOffDaySelected] = useState("");
+  const [cancellationCandidate, setCancellationCandidate] = useState<
+    string | null
+  >(null);
+  const [confirmOffDay, setConfirmOffDay] = useState(false);
+  const [isRecurrentClient, setIsRecurrentClient] = useState<boolean>(false);
 
   const [isServices, setIsServices] = useState(false);
   const [disableButton, setDisableButton] = useState(true);
@@ -95,6 +113,32 @@ function AgendamentosProvider({ children }: AgendamentosProviderProps) {
   return (
     <AgendamentosContext.Provider
       value={{
+        isRecurrentClient,
+        setIsRecurrentClient,
+        confirmOffDay,
+        setConfirmOffDay,
+        cancellationCandidate,
+        setCancellationCandidate,
+        typeOffDaySelected,
+        setTypeOffDaySelected,
+        isOffDaySelected,
+        setIsOffDaySelected,
+        typeOffDay,
+        setTypeOffDay,
+        selectedOffDay,
+        setSelectedOffDay,
+        selectedDay,
+        setSelectedDay,
+        isOffDay,
+        setIsOffDay,
+        selectedOffDays,
+        setSelectedOffDays,
+        offDays,
+        setOffDays,
+        currentMonth,
+        setCurrentMonth,
+        currentYear,
+        setCurrentYear,
         values,
         phone,
         setPhone,

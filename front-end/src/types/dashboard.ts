@@ -6,14 +6,6 @@ export interface ButtonOffDayCalendarProps {
   handleAddOffDay: (type: "morning" | "afternoon" | "full-day") => void;
   confirmSelectedOffDays: () => void;
   cancelOffDay: () => void;
-  cancellationCandidate: string | null;
-  selectedOffDays: { [key: string]: string };
-  typeOffDay: boolean;
-  setTypeOffDay: (value: boolean) => void;
-  typeOffDaySelected: string;
-  setTypeOffDaySelected: (value: string) => void;
-  confirmOffDay: boolean;
-  selectedOffDay: OffDay[];
   deleteOffDay: string;
   loading: boolean;
 }

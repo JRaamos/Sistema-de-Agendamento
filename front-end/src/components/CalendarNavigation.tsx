@@ -1,16 +1,24 @@
 // CalendarNavigation.js
-import React from "react";
+import React, { useContext } from "react";
 import dayjs from "dayjs";
-import { CalendarNavigationProps } from "../types/dashboard";
+import AgendamentosContext from "../context/AgendamentosContext";
 
+const CalendarNavigation = () => {
+  const { currentYear, currentMonth, setCurrentMonth, setCurrentYear } =
+    useContext(AgendamentosContext);
+  const goToPreviousMonth = () => {
+    setCurrentMonth((prevMonth) => (prevMonth === 0 ? 11 : prevMonth - 1));
+    if (currentMonth === 0) {
+      setCurrentYear((prevYear) => prevYear - 1);
+    }
+  };
 
-
-const CalendarNavigation = ({
-  currentYear,
-  currentMonth,
-  goToPreviousMonth,
-  goToNextMonth,
-}: CalendarNavigationProps) => {
+  const goToNextMonth = () => {
+    setCurrentMonth((prevMonth) => (prevMonth === 11 ? 0 : prevMonth + 1));
+    if (currentMonth === 11) {
+      setCurrentYear((prevYear) => prevYear + 1);
+    }
+  };
   const monthName = dayjs(new Date(currentYear, currentMonth)).format("MMMM");
   const yearName = dayjs(new Date(currentYear, currentMonth)).format("YYYY");
 

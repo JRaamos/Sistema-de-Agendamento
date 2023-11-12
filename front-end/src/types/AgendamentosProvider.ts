@@ -1,4 +1,5 @@
 import { Dispatch, ReactNode, SetStateAction } from "react";
+import { OffDay } from "./dashboard";
 
 export type Values = {
   name: string;
@@ -72,7 +73,32 @@ export type AgendamentosContextType = {
   setBookedTimes: Dispatch<SetStateAction<string[]>>;
   barberUnavailability: DayOff[];
   setBarberUnavailability: Dispatch<SetStateAction<DayOff[]>>;
-  
+  currentYear: number;
+  setCurrentYear: Dispatch<SetStateAction<number>>;
+  currentMonth: number;
+  setCurrentMonth: Dispatch<SetStateAction<number>>;
+  offDays: OffDay[];
+  setOffDays: Dispatch<SetStateAction<OffDay[]>>;
+  selectedOffDays: { [key: string]: string };
+  setSelectedOffDays: Dispatch<SetStateAction<{ [key: string]: string }>>;
+  isOffDay: boolean;
+  setIsOffDay: Dispatch<SetStateAction<boolean>>;
+  selectedDay: number | null;
+  setSelectedDay: Dispatch<SetStateAction<number | null>>;
+  selectedOffDay: OffDay[];
+  setSelectedOffDay: Dispatch<SetStateAction<OffDay[]>>;
+  typeOffDay: boolean;
+  setTypeOffDay: Dispatch<SetStateAction<boolean>>;
+  isOffDaySelected: boolean;
+  setIsOffDaySelected: Dispatch<SetStateAction<boolean>>;
+  typeOffDaySelected: string;
+  setTypeOffDaySelected: Dispatch<SetStateAction<string>>;
+  cancellationCandidate: string | null;
+  setCancellationCandidate: Dispatch<SetStateAction<string | null>>;
+  confirmOffDay: boolean;
+  setConfirmOffDay: Dispatch<SetStateAction<boolean>>;
+  isRecurrentClient: boolean;
+  setIsRecurrentClient: Dispatch<SetStateAction<boolean>>;
 };
 export type DayOff = {
   selectedDate: string;

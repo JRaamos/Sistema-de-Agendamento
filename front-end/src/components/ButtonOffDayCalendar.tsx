@@ -1,26 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../styles/buttonOffDayCalendar.css";
 import Loading from "./Loading";
 import { ButtonOffDayCalendarProps, OffDay } from "../types/dashboard";
+import AgendamentosContext from "../context/AgendamentosContext";
+import { de } from "date-fns/locale";
 
 
 function ButtonOffDayCalendar({
   handleAddOffDay,
   confirmSelectedOffDays,
   cancelOffDay,
-  cancellationCandidate,
-  selectedOffDays,
-  typeOffDay,
-  setTypeOffDay,
-  typeOffDaySelected,
-  setTypeOffDaySelected,
-  confirmOffDay,
-  selectedOffDay,
   deleteOffDay,
   loading,
 }: ButtonOffDayCalendarProps) {
   const [isOffDaySelected, setIsOffDaySelected] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
+  const {
+    selectedOffDays,
+    selectedOffDay,
+    cancellationCandidate,
+    typeOffDay,
+    typeOffDaySelected,
+    confirmOffDay,
+    setTypeOffDaySelected,
+    setTypeOffDay,
+  } = useContext(AgendamentosContext);
   useEffect(() => {
     function convertDateFormat() {
       if (Object.keys(selectedOffDay).length > 0) {
@@ -36,6 +40,7 @@ function ButtonOffDayCalendar({
     }
     convertDateFormat();
   }, [selectedOffDay, cancellationCandidate]);
+console.log(deleteOffDay);
 
   return (
     <div className="off-day-contain fade-in">
@@ -133,7 +138,7 @@ function ButtonOffDayCalendar({
             <div>
               <div className="cancel-option fade-in">
                 <p className="paragraph ">
-                  Deseja cancelar a folga do dia: {selectedDate} 
+                  Deseja cancelar a folga do dia: {selectedDate}
                 </p>
               </div>
               <button
