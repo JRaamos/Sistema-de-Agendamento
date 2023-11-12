@@ -76,6 +76,18 @@ function Agendamentos() {
       }
     }
   }, []);
+    useEffect(() => {
+      requestNotificationPermission();
+    }, []);
+    function requestNotificationPermission() {
+      Notification.requestPermission()
+        .then(function (status) {
+          console.log("Notification permission status:", status);
+        })
+        .catch(function (error) {
+          console.error("Notification permission request error:", error);
+        });
+    }
   return (
     <div className="container-agendamentos" ref={containerRef}>
       {buttomMeusAgendamentos && (
