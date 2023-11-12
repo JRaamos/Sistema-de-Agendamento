@@ -7,6 +7,7 @@ import {
 } from "../types/AgendamentosProvider";
 import dayjs from "dayjs";
 import { OffDay } from "../types/dashboard";
+import { FetchAPiGet } from "../types/ApiReturn";
 
 function AgendamentosProvider({ children }: AgendamentosProviderProps) {
   const [servicesSelected, setServicesSelected] = useState<string[]>([]);
@@ -27,6 +28,7 @@ function AgendamentosProvider({ children }: AgendamentosProviderProps) {
   >(null);
   const [confirmOffDay, setConfirmOffDay] = useState(false);
   const [isRecurrentClient, setIsRecurrentClient] = useState<boolean>(false);
+  const [schedules, setSchedules] = useState<FetchAPiGet[] | undefined>();
 
   const [isServices, setIsServices] = useState(false);
   const [disableButton, setDisableButton] = useState(true);
@@ -113,6 +115,8 @@ function AgendamentosProvider({ children }: AgendamentosProviderProps) {
   return (
     <AgendamentosContext.Provider
       value={{
+        schedules,
+        setSchedules,
         isRecurrentClient,
         setIsRecurrentClient,
         confirmOffDay,

@@ -1,5 +1,6 @@
 import { Dispatch, ReactNode, SetStateAction } from "react";
 import { OffDay } from "./dashboard";
+import { FetchAPiGet } from "./ApiReturn";
 
 export type Values = {
   name: string;
@@ -99,6 +100,8 @@ export type AgendamentosContextType = {
   setConfirmOffDay: Dispatch<SetStateAction<boolean>>;
   isRecurrentClient: boolean;
   setIsRecurrentClient: Dispatch<SetStateAction<boolean>>;
+  schedules: FetchAPiGet[] | undefined;
+  setSchedules: Dispatch<SetStateAction<FetchAPiGet[] | undefined>>;
 };
 export type DayOff = {
   selectedDate: string;

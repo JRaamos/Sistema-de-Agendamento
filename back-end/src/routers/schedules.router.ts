@@ -6,7 +6,6 @@ const routerSchedules = Router();
 
 routerSchedules.get(
   '/schedules',
-  validateJWT,
   scheduleController.findAllSchedulesFromNow,
 );
 

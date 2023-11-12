@@ -8,8 +8,8 @@ import dayjs from "dayjs";
 import Loading from "./Loading";
 
 function ScheduleCard() {
-  const { selectedOffDays } = useContext(AgendamentosContext);
-  const [schedules, setSchedules] = useState<FetchAPiGet[]>();
+  const { selectedOffDays, schedules, setSchedules } =
+    useContext(AgendamentosContext);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     const handleApi = async () => {
