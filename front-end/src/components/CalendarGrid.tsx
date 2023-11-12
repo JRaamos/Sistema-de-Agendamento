@@ -25,12 +25,12 @@ const CalendarGrid = () => {
     setIsOffDaySelected,
   } = useContext(AgendamentosContext);
 
- const prepareCancellation = (day: number) => {
-   const dateString = dayjs(new Date(currentYear, currentMonth, day)).format(
-     "MM/DD/YYYY"
-   );
-   setCancellationCandidate(dateString);
- };
+  const prepareCancellation = (day: number) => {
+    const dateString = dayjs(new Date(currentYear, currentMonth, day)).format(
+      "MM/DD/YYYY"
+    );
+    setCancellationCandidate(dateString);
+  };
   // Função para alternar o estado de um dia selecionado
   const toggleOffDay = (day: number) => {
     const dateString = dayjs(new Date(currentYear, currentMonth, day)).format(
@@ -38,8 +38,8 @@ const CalendarGrid = () => {
     );
 
     if (offDays.some((offDay) => offDay.selectedDate === dateString)) {
-      prepareCancellation(day); // Aqui você pode chamar diretamente a função prepareCancellation.
-      setCancellationCandidate(dateString); // Defina o cancellationCandidate para a data clicada.
+      prepareCancellation(day);
+      setCancellationCandidate(dateString);
     }
     setSelectedDate(dateString);
     // Se isOffDay for verdadeiro e um novo dia for selecionado, limpe o estado anterior
@@ -69,7 +69,7 @@ const CalendarGrid = () => {
       });
     }
   };
-  
+
   const handleCancelationsConditions = (isOffDay: boolean) => {
     if (!isOffDay) {
       setCancellationCandidate(null);
@@ -91,23 +91,28 @@ const CalendarGrid = () => {
     }
 
     for (let i = 1; i <= daysInMonth; i++) {
-      const dateString = dayjs(new Date(currentYear, currentMonth, i)).format(
-        "MM/DD/YYYY"
-      );
+      const currentDay = new Date(currentYear, currentMonth, i);
+      const dateString = dayjs(currentDay).format("MM/DD/YYYY");
+      const isToday = dayjs().isSame(dayjs(currentDay), "day");
+      // const dateString = dayjs(new Date(currentYear, currentMonth, i)).format(
+      //   "MM/DD/YYYY"
+      // );
       const isOffDay = offDays.some(
         (offDay: DayOff) => offDay.selectedDate === dateString
       ); // Verifica se a data está em offDays
       const isSelected = selectedOffDays[dateString] === "selected"; // Verifica se a data está em selectedOffDays como 'selected'
 
-      const offDayClass = isOffDay
+      const dayClass = isOffDay
         ? "selected off-day"
         : isSelected
         ? "selected"
+        : isToday
+        ? "current-day"
         : "day-on";
       days.push(
         <div
           key={`day-${i}`}
-          className={`calendar-day ${offDayClass}`}
+          className={`calendar-day ${dayClass}`}
           onClick={() => {
             toggleOffDay(i);
             setConfirmOffDay(true);
@@ -134,19 +139,26 @@ const CalendarGrid = () => {
   };
 
   return (
-    <div className="calendar-contain fade-in">
-      <CalendarNavigation />
-      <div className="calendar-header">
-        <div>Dom</div>
-        <div>Seg</div>
-        <div>Ter</div>
-        <div>Qua</div>
-        <div>Qui</div>
-        <div>Sex</div>
-        <div>Sáb</div>
+    <>
+      <div className="calendar-contain fade-in barber-schedule">
+        <CalendarNavigation />
+        <div className="calendar-header">
+          <div>Dom</div>
+          <div>Seg</div>
+          <div>Ter</div>
+          <div>Qua</div>
+          <div>Qui</div>
+          <div>Sex</div>
+          <div>Sáb</div>
+        </div>
+        <div className="calendar-grid fade-in ">{renderCalendarDays()}</div>
       </div>
-      <div className="calendar-grid fade-in">{renderCalendarDays()}</div>
-    </div>
+      <div className="calendar-legend">
+        <span className="legend-description folga">Dia de folga</span>
+        <span className="legend-description selected">Selecionado</span>
+        <span className="legend-description atual">Dia atual</span>
+      </div>
+    </>
   );
 };
 

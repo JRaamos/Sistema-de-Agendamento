@@ -48,6 +48,18 @@ export const fetchAPiGet = async (date: string | null): Promise<FetchAPiGet[]> =
   return data
 }
 
+export const fetchAPiGetAll = async (): Promise<FetchAPiGet[]> => {
+  const response = (await fetch(`${BASEURL}/schedules`, {
+    method: 'get',
+    headers: { 'Content-Type': 'application/json'},
+  }
+  ));
+
+  const data = await response.json();
+
+  return data
+}
+
 export const fetchAPiGetId = async (date: string | null, hour: string | number) => {
   const formattedDate = date?.replace(/\//g, '-');
 

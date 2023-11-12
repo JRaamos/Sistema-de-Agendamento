@@ -1,30 +1,39 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "../styles/barberDashboard.css";
 import DashboardScheduleChart from "../components/DashboardScheduleChart";
 import BarberDashboardUser from "../components/BarberDashboardUser";
 import { useNavigate } from "react-router-dom";
-import { OffDay } from "../types/dashboard";
 import AgendamentosContext from "../context/AgendamentosContext";
 import Schedules from "../components/Schedules";
+import { fetchApiGetDayOff } from "../utils/fetchApi";
 
 function BarberDashboard() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("Informações");
 
   const {
-    isOffDay,
     setIsOffDay,
     setSelectedOffDays,
     selectedOffDay,
     setSelectedOffDay,
     setConfirmOffDay,
+    setOffDays,
+    setSelectedDay,
     setIsRecurrentClient,
   } = useContext(AgendamentosContext);
   const navigate = useNavigate();
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-
+ useEffect(() => {
+   const handleOffDays = async () => {
+     const data = await fetchApiGetDayOff();
+     if (data) {
+       setOffDays(data);
+     }
+   };
+   handleOffDays();
+ }, []);
   const changeTab = (option: string) => {
     setActiveTab(option);
     setIsMenuOpen(false);
@@ -80,13 +89,22 @@ function BarberDashboard() {
                     setConfirmOffDay(false);
                     setIsOffDay(true);
                     setIsRecurrentClient(false);
+                     setSelectedDay(null);
                   }}
                 >
                   Agendar folga
                 </li>
                 <li
                   className={activeTab === "Agendamentos" ? "active" : ""}
-                  onClick={() => changeTab("Agendamentos")}
+                  onClick={() => {
+                    changeTab("Agendamentos");
+                    setSelectedOffDays({});
+                    selectedOffDay.length > 0 && setSelectedOffDay([]);
+                    setConfirmOffDay(false);
+                    setIsOffDay(true);
+                    setIsRecurrentClient(false);
+                     setSelectedDay(null);
+                  }}
                 >
                   Agendamentos
                 </li>

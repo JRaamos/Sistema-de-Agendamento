@@ -13,8 +13,39 @@
   justify-content: space-around;
 }
 
+.current-day {
+  background-color: rgba(47, 0, 255, 0.836);
+}
+
 .button-typed-off-day {
   width: 160px;
+}
+
+.calendar-legend {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 600px;
+
+}
+
+.legend-description {
+  border-radius: 5px;
+  margin: 5px 10px;
+  padding: 2px 3px;
+  text-align: center;
+}
+
+.folga {
+  background-color: rgba(68, 151, 12, 0.63);
+}
+
+.selected {
+  background-color: rgba(61, 178, 224, 0.5);
+}
+
+.atual {
+  background-color: rgba(47, 0, 255, 0.836);
 }
 
 .button-OffDay {
@@ -27,6 +58,7 @@
   margin-top: 10px;
   max-width: 600px;
 }
+
 
 .button-confirm-off-day {
   background-color: #4e030d;
