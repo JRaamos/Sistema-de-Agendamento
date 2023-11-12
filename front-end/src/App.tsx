@@ -5,11 +5,21 @@ import AgendamentosProvider from "./context/AgendamentosProvider";
 import MeusAgendamentos from "./pages/MeusAgendamentos";
 import Login from "./pages/Login";
 import BarberDashboard from "./pages/BarberDashboard";
+import { useEffect } from "react";
 
 function App() {
-  // useEffect(() => {
-  //   document.title = "Stylu's!";
-  // }, []);
+  useEffect(() => {
+    requestNotificationPermission();
+  }, []);
+function requestNotificationPermission() {
+  Notification.requestPermission()
+    .then(function (status) {
+      console.log("Notification permission status:", status);
+    })
+    .catch(function (error) {
+      console.error("Notification permission request error:", error);
+    });
+}
   return (
     <div>
       <AgendamentosProvider>
