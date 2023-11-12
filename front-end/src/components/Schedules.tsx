@@ -8,15 +8,13 @@ function Schedules() {
   const {  setSchedules } =
     useContext(AgendamentosContext);
   const handleFindAllSchedule = async () => {
-    const response = await fetchAPiGetAll();
+    const response = await fetchAPiGetAll();;
     setSchedules(response);
   };
   return (
     <div className="container-card">
       <p className="paragraph">Escolha o dia para ver os agendamentos</p>
-      <div className="barber-schedule">
         <CalendarGrid />
-      </div>
       <button
         type="button"
         onClick={handleFindAllSchedule}

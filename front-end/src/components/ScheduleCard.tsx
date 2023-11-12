@@ -16,6 +16,8 @@ function ScheduleCard() {
       const dates = Object.keys(selectedOffDays);
       const data = dates.map(async (date) => {
         const response = await fetchAPiGet(date);
+        console.log(response);
+        
         return response;
       });
       const schedulesAll = await Promise.all(data);
@@ -38,7 +40,7 @@ function ScheduleCard() {
   const cancelSchedule = async (date: string, hour: string) => {
     const day = dayjs(date).format("YYYY-MM-DD");
     setLoading(true);
-    const response = await fetchAPiCancel(day, hour);
+    const response = await fetchAPiCancel(day, hour);    
     setLoading(false);
   };
   return (
@@ -49,6 +51,9 @@ function ScheduleCard() {
           <Loading />
         ) : (
           <>
+          {
+            schedules?.length === 0 && <p>Não há agendamentos para esse dia</p>
+          }
             {schedules?.map((schedule) => {
               return (
                 <div

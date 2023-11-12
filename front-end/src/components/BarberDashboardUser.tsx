@@ -154,9 +154,7 @@ function BarberDashboardUser() {
             </p>
           )}
         </div>
-        <div className="barber-schedule">
           <CalendarGrid />
-        </div>
       </div>
       <div>
         {isOffDay && (
