@@ -106,7 +106,6 @@ export const fetchAPiCountCancel = async (days: number, token: string | null) =>
   ));
 
   const data = await response.json();
-  console.log(data);
 
   return data;
 }

@@ -8,12 +8,7 @@ import Loading from "./Loading";
 import "../styles/schendulesDashboard.css";
 import arrow from "../images/arrow-1.svg";
 
-function SchedulesDashboard({
-  isOffDaySelected,
-  setIsOffDaySelected,
-  selectedOffDays,
-  setSelectedOffDays,
-}: any) {
+function SchedulesDashboard() {
   const {
     values,
     phoneNumber,
@@ -21,6 +16,10 @@ function SchedulesDashboard({
     servicesSelected,
     setBarberUnavailability,
     setServicesSelected,
+    isOffDaySelected,
+    setIsOffDaySelected,
+    selectedOffDays,
+    setSelectedOffDays,
   } = useContext(AgendamentosContext);
   const [name, setName] = useState("");
   const [inputName, setInputName] = useState(true);
@@ -75,7 +74,7 @@ function SchedulesDashboard({
     setServicesSelected([]);
     setTimeout(() => {
       setSucesso(false);
-    }, 10000);
+    }, 5000);
   };
   const handlePhoneButton = () => {
     if (phoneNumber?.length === 15) {
