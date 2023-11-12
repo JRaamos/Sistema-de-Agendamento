@@ -5,9 +5,11 @@ import {
   DayOff,
   Values,
 } from "../types/AgendamentosProvider";
+import dayjs from "dayjs";
 
 function AgendamentosProvider({ children }: AgendamentosProviderProps) {
   const [servicesSelected, setServicesSelected] = useState<string[]>([]);
+
   const [isServices, setIsServices] = useState(false);
   const [disableButton, setDisableButton] = useState(true);
   const [isServicesSelected, setIsServicesSelected] = useState(false);
@@ -34,7 +36,6 @@ function AgendamentosProvider({ children }: AgendamentosProviderProps) {
   const [msgServices, setMsgServices] = useState(false);
   const [bookedTimes, setBookedTimes] = useState<string[]>([]);
   const [barberUnavailability, setBarberUnavailability] = useState<DayOff[]>([]);
-
   const [values, setValues] = useState<Values>({
     name: "",
     phone: undefined,
@@ -44,7 +45,6 @@ function AgendamentosProvider({ children }: AgendamentosProviderProps) {
     eventId: "",
     agendamentos: "",
   });
-
   const [availableTimes, setAvailableTimes] = useState<string[]>([]);
 
   const handleLocalStorange = () => {

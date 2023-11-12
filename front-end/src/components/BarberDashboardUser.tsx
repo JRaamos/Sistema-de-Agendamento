@@ -13,31 +13,35 @@ import CalendarGrid from "./CalendarGrid";
 import SchedulesDashboard from "./schedulesDashboard";
 import { AgendamentosContextType } from "../types/AgendamentosProvider";
 import AgendamentosContext from "../context/AgendamentosContext";
+import { BarberDashboardUserProps, OffDay } from "../types/dashboard";
 
 dayjs.locale("pt-br");
-type OffDay = {
-  selectedDate: string;
-  timeOff: "morning" | "afternoon" | "full-day";
-};
 
-function BarberDashboardUser() {
+
+
+function BarberDashboardUser({
+  isOffDay,
+  isRecurrentClient,
+  selectedOffDays,
+  setSelectedOffDays,
+  confirmOffDay,
+  setConfirmOffDay,
+  selectedOffDay,
+  setSelectedOffDay,
+}: BarberDashboardUserProps) {
+  const {} = useContext(AgendamentosContext);
   const [currentMonth, setCurrentMonth] = useState(dayjs().month());
   const [currentYear, setCurrentYear] = useState(dayjs().year());
   const [offDays, setOffDays] = useState<OffDay[]>([]);
-  const [selectedOffDay, setSelectedOffDay] = useState<OffDay[]>([]);
+
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
-  const [selectedOffDays, setSelectedOffDays] = useState<{
-    [key: string]: string;
-  }>({});
+
   const [cancellationCandidate, setCancellationCandidate] = useState<
     string | null
   >(null);
-  const [isOffDay, setIsOffDay] = useState<boolean>(false);
-  const [isRecurrentClient, setIsRecurrentClient] = useState<boolean>(false);
   const [isOffDaySelected, setIsOffDaySelected] = useState<boolean>(false);
   const [typeOffDay, setTypeOffDay] = useState(false);
   const [typeOffDaySelected, setTypeOffDaySelected] = useState("");
-  const [confirmOffDay, setConfirmOffDay] = useState(false);
   const [deleteOffDay, setDeleteOffDay] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -75,7 +79,7 @@ function BarberDashboardUser() {
         if (data) {
           setDeleteOffDay("");
         }
-      }, 10000);
+      }, 50000);
     }
   };
   // Função para alternar o estado de um dia selecionado
@@ -83,6 +87,8 @@ function BarberDashboardUser() {
     const dateString = dayjs(new Date(currentYear, currentMonth, day)).format(
       "MM/DD/YYYY"
     );
+    console.log(dateString);
+    
     if (offDays.some((offDay) => offDay.selectedDate === dateString)) {
       prepareCancellation(day); // Aqui você pode chamar diretamente a função prepareCancellation.
       setCancellationCandidate(dateString); // Defina o cancellationCandidate para a data clicada.
@@ -94,7 +100,6 @@ function BarberDashboardUser() {
         // Verifica se um novo dia foi clicado
         setSelectedOffDay([]);
         setSelectedDay(day); // Atualize o dia selecionado
-        setCancellationCandidate(dateString); // Limpa a candidata a cancelamento
         setTypeOffDay(false); // Reseta o estado para que um novo tipo possa ser definido
         setTypeOffDaySelected(""); // Limpa a seleção de tipo de dia de folga anterior
         // Agora defina os estados apenas para o novo dia selecionado
@@ -177,7 +182,7 @@ function BarberDashboardUser() {
       if (data) {
         setDeleteOffDay("");
       }
-    }, 10000);
+    }, 50000);
   };
 
   const handleAddOffDay = (
@@ -220,7 +225,7 @@ function BarberDashboardUser() {
       setCurrentYear((prevYear) => prevYear + 1);
     }
   };
-  
+
   useEffect(() => {
     const handleOffDays = async () => {
       const data = await fetchApiGetDayOff();
@@ -233,45 +238,6 @@ function BarberDashboardUser() {
 
   return (
     <>
-      <h2 className="title">O que você quer fazer? </h2>
-      <div className="button-options">
-        <button
-          className={
-            isOffDay ? "button-calendar actived text" : "button-calendar text"
-          }
-          onClick={() => {
-            setSelectedOffDays({});
-            setSelectedDay(null);
-            setSelectedOffDay([]);
-            setIsOffDay(!isOffDay);
-            setIsRecurrentClient(false);
-            setCancellationCandidate(null);
-            setIsOffDaySelected(false);
-            setConfirmOffDay(false);
-          }}
-        >
-          Definir folga
-        </button>
-        <button
-          className={
-            isRecurrentClient
-              ? "button-calendar actived text"
-              : "button-calendar text"
-          }
-          onClick={() => {
-            setSelectedOffDays({});
-            setSelectedDay(null);
-            setSelectedOffDay([]);
-            setIsOffDay(false);
-            setIsRecurrentClient(!isRecurrentClient);
-            if (isOffDaySelected) {
-              setIsOffDaySelected(false);
-            }
-          }}
-        >
-          Agendar cliente
-        </button>
-      </div>
       <div className="title-contain">
         <div className="option-one">
           {isOffDay && <p className="paragraph">Selecione o dia de folga: </p>}
@@ -297,8 +263,6 @@ function BarberDashboardUser() {
             setCancellationCandidate={setCancellationCandidate}
             setSelectedOffDays={setSelectedOffDays}
             setConfirmOffDay={setConfirmOffDay}
-            cancellationCandidate={cancellationCandidate}
-            isOffDay={isOffDay}
             isRecurrentClient={isRecurrentClient}
             setIsOffDaySelected={setIsOffDaySelected}
           />
@@ -312,7 +276,6 @@ function BarberDashboardUser() {
             cancelOffDay={cancelOffDay}
             cancellationCandidate={cancellationCandidate}
             selectedOffDays={selectedOffDays}
-            toggleOffDay={toggleOffDay}
             typeOffDay={typeOffDay}
             setTypeOffDay={setTypeOffDay}
             typeOffDaySelected={typeOffDaySelected}

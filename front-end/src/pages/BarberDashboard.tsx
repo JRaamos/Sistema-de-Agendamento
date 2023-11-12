@@ -3,10 +3,19 @@ import "../styles/barberDashboard.css";
 import DashboardScheduleChart from "../components/DashboardScheduleChart";
 import BarberDashboardUser from "../components/BarberDashboardUser";
 import { useNavigate } from "react-router-dom";
+import { OffDay } from "../types/dashboard";
 
 function BarberDashboard() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState("agendamentos");
+  const [activeTab, setActiveTab] = useState("Informações");
+  const [isOffDay, setIsOffDay] = useState<boolean>(false);
+  const [isRecurrentClient, setIsRecurrentClient] = useState<boolean>(false);
+  const [selectedOffDays, setSelectedOffDays] = useState<{
+    [key: string]: string;
+  }>({});
+  const [confirmOffDay, setConfirmOffDay] = useState(false);
+  const [selectedOffDay, setSelectedOffDay] = useState<OffDay[]>([]);
+
   const navigate = useNavigate();
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -37,30 +46,67 @@ function BarberDashboard() {
       <aside className={`sidebar ${isMenuOpen ? "active" : ""}`}>
         <nav>
           <ul>
-            <li
-              className="button-menu"
-              onClick={() => changeTab("agendamentos")}
-            >
-              Agendamentos
-            </li>
-            <li
-              className={activeTab === "barbeiro" ? "active" : ""}
-              onClick={() => changeTab("barbeiro")}
-            >
-              Barbeiro
-            </li>
+            <div className="options-menu">
+              <div>
+                <li
+                  className={activeTab === "Informações" ? "active" : ""}
+                  onClick={() => changeTab("Informações")}
+                >
+                  Informações
+                </li>
+                <li
+                  className={activeTab === "Agendar cliente" ? "active" : ""}
+                  onClick={() => {
+                    changeTab("Agendar cliente");
+                    setSelectedOffDays({});
+                    selectedOffDay.length > 0 && setSelectedOffDay([]);
+                    setConfirmOffDay(false);
+                    setIsRecurrentClient(true);
+                    setIsOffDay(false);
+                  }}
+                >
+                  Agendar cliente
+                </li>
+                <li
+                  className={activeTab === "Agendar folga" ? "active" : ""}
+                  onClick={() => {
+                    changeTab("Agendar folga");
+                    setSelectedOffDays({});
+                    selectedOffDay.length > 0 && setSelectedOffDay([]);
+                    setConfirmOffDay(false);
+                    setIsOffDay(true);
+                    setIsRecurrentClient(false);
+                  }}
+                >
+                  Agendar folga
+                </li>
+                <li
+                  className={activeTab === "Agendamentos" ? "active" : ""}
+                  onClick={() => changeTab("Agendamentos")}
+                >
+                  Agendamentos
+                </li>
+              </div>
+
+              <li onClick={logout}>Sair</li>
+            </div>
           </ul>
-          <button
-            className={activeTab === "barbeiro" ? "active" : ""}
-            onClick={logout}
-          >
-            Sair
-          </button>
         </nav>
       </aside>
       <main className="content">
-        {activeTab === "agendamentos" && <DashboardScheduleChart />}
-        {activeTab === "barbeiro" && <BarberDashboardUser />}
+        {activeTab === "Informações" && <DashboardScheduleChart />}
+        {(activeTab === "Agendar cliente" || activeTab === "Agendar folga") && (
+          <BarberDashboardUser
+            isOffDay={isOffDay}
+            isRecurrentClient={isRecurrentClient}
+            selectedOffDays={selectedOffDays}
+            setSelectedOffDays={setSelectedOffDays}
+            confirmOffDay={confirmOffDay}
+            setConfirmOffDay={setConfirmOffDay}
+            selectedOffDay={selectedOffDay}
+            setSelectedOffDay={setSelectedOffDay}
+          />
+        )}
       </main>
     </div>
   );

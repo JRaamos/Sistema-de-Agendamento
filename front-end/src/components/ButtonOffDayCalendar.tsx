@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "../styles/buttonOffDayCalendar.css";
 import Loading from "./Loading";
-import { format, parse } from "date-fns";
-import { da } from "date-fns/locale";
+import { ButtonOffDayCalendarProps, OffDay } from "../types/dashboard";
+
 
 function ButtonOffDayCalendar({
   handleAddOffDay,
@@ -18,7 +18,7 @@ function ButtonOffDayCalendar({
   selectedOffDay,
   deleteOffDay,
   loading,
-}: any) {
+}: ButtonOffDayCalendarProps) {
   const [isOffDaySelected, setIsOffDaySelected] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
   useEffect(() => {

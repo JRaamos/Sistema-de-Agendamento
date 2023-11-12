@@ -3,26 +3,34 @@ import React, { useContext } from "react";
 import dayjs from "dayjs";
 import { DayOff } from "../types/AgendamentosProvider";
 
+interface CalendarGridProps {
+  currentYear: number;
+  currentMonth: number;
+  offDays: DayOff[];
+  selectedOffDays: {
+    [key: string]: string;
+  };
+  toggleOffDay: (day: number) => void;
+  setCancellationCandidate: (date: null | string) => void;
+  setSelectedOffDays: (selectedOffDays: { [key: string]: string }) => void;
+  setIsOffDaySelected: (isOffDaySelected: boolean) => void;
+  isRecurrentClient: boolean;
+  setConfirmOffDay: (confirmOffDay: boolean) => void;
+}
+
 const CalendarGrid = ({
   currentYear,
   currentMonth,
   offDays,
   selectedOffDays,
   toggleOffDay,
-  cancellationCandidate,
   setCancellationCandidate,
   setSelectedOffDays,
   setIsOffDaySelected,
   isRecurrentClient,
   setConfirmOffDay,
-}: any) => {
-  const handleCancelationsConditions = (
-    dateString: string,
-    isOffDay: boolean
-  ) => {
-    if (cancellationCandidate === dateString) {
-      setCancellationCandidate(null);
-    }
+}: CalendarGridProps) => {
+  const handleCancelationsConditions = (isOffDay: boolean) => {
     if (!isOffDay) {
       setCancellationCandidate(null);
     } else {
@@ -64,7 +72,7 @@ const CalendarGrid = ({
             toggleOffDay(i);
             setConfirmOffDay(true);
             if (isOffDay) {
-              handleCancelationsConditions(dateString, isOffDay);
+              handleCancelationsConditions(isOffDay);
             }
             if (isRecurrentClient) {
               setIsOffDaySelected(true);

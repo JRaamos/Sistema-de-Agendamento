@@ -1,13 +1,16 @@
 // CalendarNavigation.js
 import React from "react";
 import dayjs from "dayjs";
+import { CalendarNavigationProps } from "../types/dashboard";
+
+
 
 const CalendarNavigation = ({
   currentYear,
   currentMonth,
   goToPreviousMonth,
   goToNextMonth,
-}: any) => {
+}: CalendarNavigationProps) => {
   const monthName = dayjs(new Date(currentYear, currentMonth)).format("MMMM");
   const yearName = dayjs(new Date(currentYear, currentMonth)).format("YYYY");
 
