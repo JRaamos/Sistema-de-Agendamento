@@ -145,7 +145,7 @@ const CalendarGrid = () => {
         <div>Sex</div>
         <div>Sáb</div>
       </div>
-      <div className="calendar-grid fade-in">{renderCalendarDays()}</div>
+      <div className="calendar-grid fade-in ">{renderCalendarDays()}</div>
     </div>
   );
 };

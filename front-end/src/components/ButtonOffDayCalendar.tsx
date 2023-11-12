@@ -40,7 +40,6 @@ function ButtonOffDayCalendar({
     }
     convertDateFormat();
   }, [selectedOffDay, cancellationCandidate]);
-console.log(deleteOffDay);
 
   return (
     <div className="off-day-contain fade-in">

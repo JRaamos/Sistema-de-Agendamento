@@ -5,7 +5,6 @@ import "../styles/barberDashboardCalendar.css";
 import {
   fetchApiCreateDayOff,
   fetchApiDeleteDayOff,
-  fetchApiGetDayOff,
 } from "../utils/fetchApi";
 import ButtonOffDayCalendar from "./ButtonOffDayCalendar";
 import CalendarGrid from "./CalendarGrid";
@@ -105,8 +104,8 @@ function BarberDashboardUser() {
       JSON.stringify([...offDays, ...selectedOffDay])
     );
     setSelectedOffDays({});
-    setSelectedDay(null); // Limpa o dia selecionado atualmente
-    setSelectedOffDay([]); // Limpa os dias selecionados
+    setSelectedDay(null);
+    setSelectedOffDay([]);
     setIsOffDaySelected(false);
     setConfirmOffDay(false);
     setDeleteOffDay(data);
@@ -143,15 +142,6 @@ function BarberDashboardUser() {
     }
   };
 
-  useEffect(() => {
-    const handleOffDays = async () => {
-      const data = await fetchApiGetDayOff();
-      if (data) {
-        setOffDays(data);
-      }
-    };
-    handleOffDays();
-  }, []);
 
   return (
     <>

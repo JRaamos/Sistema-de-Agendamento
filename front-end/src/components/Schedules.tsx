@@ -4,17 +4,17 @@ import ScheduleCard from "./ScheduleCard";
 
 function Schedules() {
   return (
-    <div>
+    <div className="container-card">
       <p className="paragraph">Escolha o dia para ver os agendamentos</p>
-      <button className="button-calendar button-typed-off-day fade-button1">
-        Ver Todos
-      </button>
       <div className="barber-schedule">
         <CalendarGrid />
       </div>
-      <div>
+      <button className="button-calendar button-typed-off-day fade-button1 button-card">
+        Ver Todos
+      </button>
+      <>
         <ScheduleCard />
-      </div>
+      </>
     </div>
   );
 }
