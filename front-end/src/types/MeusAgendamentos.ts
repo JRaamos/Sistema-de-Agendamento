@@ -6,3 +6,9 @@ export type Agendamentos = {
   agendamentos: string;
   price?: number;
 }
+export interface AgendamentosCardProps {
+  agendamentos: Agendamentos[];
+  setCancelar: (value: boolean) => void;
+  setHour: (value: string | number) => void;
+  setDate: (value: string | number) => void;
+}

@@ -1,12 +1,7 @@
 import React from 'react'
-import { Agendamentos } from '../types/MeusAgendamentos';
+import { Agendamentos, AgendamentosCardProps } from '../types/MeusAgendamentos';
 
-interface AgendamentosCardProps {
-  agendamentos: Agendamentos[];
-  setCancelar: (value: boolean) => void;
-  setHour: (value: string | number) => void;
-  setDate: (value: string | number) => void;
-}
+
 function AgendamentosCard({agendamentos, setCancelar, setHour, setDate}: AgendamentosCardProps) {
   return (
     <div>

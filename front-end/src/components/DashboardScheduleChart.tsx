@@ -19,7 +19,7 @@ function DashboardScheduleChart() {
     0
   );
   const [istoken, setIstoken] = useState(false);
-  const navigation = useNavigate(); // Para redirecionar o usuário
+  const navigation = useNavigate();
 
   const token = localStorage.getItem("token");
   useEffect(() => {

@@ -7,8 +7,6 @@ import "../styles/appointmentTimes.css";
 import AgendamentosContext from "../context/AgendamentosContext";
 import { fetchAPiGet } from "../utils/fetchApi";
 import { Service } from "../types/ApiReturn";
-// import { Service } from "../types/Service";
-import { BookTime } from "../types/AppointmentTimes";
 
 const AppointmentTimes = () => {
   const [selectedTimes, setSelectedTimes] = useState<any[]>([]);
@@ -54,7 +52,10 @@ const AppointmentTimes = () => {
       setAvailableTimes([]);
       return;
     }
-
+ if (moment(selectedDate).isBefore(moment().startOf("day"))) {
+   setAvailableTimes([]);
+   return;
+ }
     const bookedTimes = await getBookedTimes(selectedDate);
     const dayOfWeek = dayjs(selectedDate).format("dddd");
     const totalDuration = getTotalDuration(servicesSelected);
@@ -104,7 +105,7 @@ const AppointmentTimes = () => {
     setAvailableTimes(availableTimes);
   };
 
-
+// Função para calcular a duração total dos serviços selecionados
   const getTotalDuration = (selectedServices: string[]) => {
     return selectedServices.reduce((acc, servicesSelected) => {
       const serviceInfo = services.find(
@@ -117,7 +118,7 @@ const AppointmentTimes = () => {
       return acc;
     }, 0);
   };
-
+// Função para gerar os horários disponíveis
   const generateTimes = (dayOfWeek: string, totalDuration: number) => {
     const saoPauloZone = "America/Sao_Paulo";
     let startTime = moment(selectedDate)
@@ -188,7 +189,7 @@ const AppointmentTimes = () => {
     }
     return times;
   };
-
+// Função para lidar com o clique no horário
   const handleTimeClick = (time: string) => {
     if (selectedTimes.includes(time)) {
       setSelectedTimes(
@@ -202,6 +203,7 @@ const AppointmentTimes = () => {
       setButtonEnviar(true);
     }
   };
+  // Função para atualizar os horários de folga com base na indisponibilidade
   const updateDayOffTimesBasedOnUnavailability = () => {
     const unavailabilityForSelectedDate = barberUnavailability.find(
       (offDay) => offDay.selectedDate === selectedDate
@@ -232,7 +234,8 @@ const AppointmentTimes = () => {
     <div className="hours-contain">
       <p className="section-mensagem">Horários disponíveis:</p>
       <div className="hours">
-        {availableTimes[0] === "Sem horários disponíveis" ? (
+        {(availableTimes[0] === "Sem horários disponíveis" ||
+        availableTimes.length === 0) ? (
           <p className="no-hours">Sem horários disponíveis</p>
         ) : (
           availableTimes.map((time) => (

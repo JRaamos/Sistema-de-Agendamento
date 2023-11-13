@@ -15,9 +15,7 @@ function ScheduleCard() {
     const handleApi = async () => {
       const dates = Object.keys(selectedOffDays);
       const data = dates.map(async (date) => {
-        const response = await fetchAPiGet(date);
-        console.log(response);
-        
+        const response = await fetchAPiGet(date);        
         return response;
       });
       const schedulesAll = await Promise.all(data);
