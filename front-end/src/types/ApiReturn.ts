@@ -16,3 +16,18 @@ export type FetchAPiGet = {
   services: Service[]
   user: User
 }
+
+export type FetchAPi = {
+  user: number,
+  scheduleResult: {
+    scheduleId: number,
+    date: string,
+    hour: string,
+    userId: number,
+    eventId: string,
+  }
+}
+
+export type FetchAPiLogin = {
+  token: string
+}
