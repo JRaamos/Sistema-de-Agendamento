@@ -106,7 +106,6 @@ Neste projeto, as principais tecnologias e ferramentas utilizadas no desenvolvim
   ```json
   {
     "token": "your-jwt-token"
-    // outras informações do usuário
   }
   ```
 
@@ -139,23 +138,115 @@ Neste projeto, as principais tecnologias e ferramentas utilizadas no desenvolvim
   }
   ```
 
-### Schedules
+### Schedules (formato da data `YYYY-MM-DD`)
+- **Rota** GET `/schedules`
+  
+  Rota para pegar **todos os agentamentos** que ainda vão ser realizado aparti da **data e hora atual** para frente 
+#### Respostas 
+
+- `200 OK`: Retorna um **array de objetos** contendo todas as informações dos agendamentos incluido serviços e cliente 
+  
+  ```json
+  [
+    {
+      "scheduleId": 13,
+      "date": "2023-11-13",
+      "hour": "07:00",
+      "eventId": "2j0lb1c25vhrb99f8msuo987p4",
+      "userId": 13,
+      "services": [
+        {
+          "service": "Corte na máquina",
+          "price": "20",
+          "duration": "30"
+        }
+      ],
+      "user": {
+      "name": "xablau",
+      "phone": "(11) 91111-1111"
+      }
+    },
+  //... outros objetos
+  ]
 
 - **Rota:** GET `/schedules/date/:date`
 
   Rota para pegar **todos** os agendamentos realizados em uma **data especifica**,
   nessa rota é incluido todos os serviços que foram/serão realizados nessa data especifica.
 
+#### Respostas 
+
+- `200 OK`: Retorna um um array de objetos contendo as informações dos agendamentos daquele dia
+  ```json
+  [
+    {
+      "scheduleId": 13,
+      "date": "2023-11-13",
+      "hour": "07:00",
+      "eventId": "2j0lb1c25vhrb99f8msuo987p4",
+      "userId": 13,
+      "services": [
+        {
+          "service": "Corte na máquina",
+          "price": "20",
+          "duration": "30"
+        }
+      ],
+      "user": {
+      "name": "xablau",
+      "phone": "(11) 91111-1111"
+      }
+    },
+  //... outros objetos
+  ]
+
 - **Rota:** GET `/schedules/date/:date/hour/:hour`
 
   Rota para pegar **UM** agendamento em uma **data e hora especifica**, nessa rota é
   incluido todos os serviços que foram/serão realizados nesse agendamento.
 
+  #### Respostas 
+
+  - `200 OK`: Retorna um **objeto** com as informações do a gendamento especifico so com os serviços, sem o cliente.
+
+  ```json
+  {
+    "scheduleId": 13,
+    "date": "2023-11-13",
+    "hour": "07:00",
+    "eventId": "2j0lb1c25vhrb99f8msuo987p4",
+    "userId": 13,
+    "services": [
+      {
+        "service": "Corte na máquina",
+        "price": "20",
+        "duration": "30"
+      }
+    ],
+  }
+
+- **Rota** GET `/schedules/count/future`
+
+  Rota para contar quantos agendamentos ainda serão realizados a parti da data e hora atual. 
+
+#### Respostas 
+
+ - `200 OK`: Restorna um **objeto** com a quantidade de agendamentos futuros. 
+    ```json 
+    {
+      "result": 8
+    } 
 - **Rota:** GET `/schedules/count/:intervalDays`
 
   Rota para contar quantos agendamentos foram realizados de acordo com o intervalo de dias que é passado.
 
+#### Respostas 
 
+- `200 OK`: Restona um **objeto** com a quantidade e de agendamentos ja realizados.
+  ```json
+  {
+  "result": 1
+  }
 ### Cancellations
 
 - **Rota:** POST `/cancellation`

@@ -9,13 +9,6 @@ routerSchedules.get(
   scheduleController.findAllSchedulesFromNow,
 );
 
-
-routerSchedules.get(
-  '/schedules/count/future',
-  validateJWT,
-  scheduleController.countFutureSchedules,
-);
-
 routerSchedules.get(
   '/schedules/date/:date',
   scheduleController.finaAllSchedulesDate,
@@ -24,6 +17,11 @@ routerSchedules.get(
 routerSchedules.get(
   '/schedules/date/:date/hour/:hour',
   scheduleController.findByScheduleDateId,
+);
+routerSchedules.get(
+  '/schedules/count/future',
+  validateJWT,
+  scheduleController.countFutureSchedules,
 );
 
 routerSchedules.get(
