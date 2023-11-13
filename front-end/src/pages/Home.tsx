@@ -23,9 +23,9 @@ function Home() {
         className={`menu-hamburguer ${isMenuOpen ? "active" : ""}`}
         onClick={toggleMenu}
       >
-        <span></span>
-        <span></span>
-        <span></span>
+        <span className="border"></span>
+        <span className="border"></span>
+        <span className="border"></span>
       </div>
       <div className="container-logo-button">
         <section className="section-logo">

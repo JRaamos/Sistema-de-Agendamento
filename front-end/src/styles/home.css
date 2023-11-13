@@ -60,7 +60,6 @@
 }
 
 .menu-hamburguer {
-  background: transparent;
   border: none;
   box-sizing: border-box;
   cursor: pointer;
@@ -73,10 +72,12 @@
   right: 1rem;
   width: 1.8rem;
   z-index: 10;
+
 }
 
+
 .menu-hamburguer span {
-  background: white;
+  background-color: white;
   border-radius: 10px;
   display: block;
   height: 0.2rem;
@@ -87,16 +88,21 @@
 }
 
 .menu-hamburguer.active span:nth-child( 1 ) {
-  transform: rotate(45deg);
-}
+  transform: rotate(45deg) translate(5px, -5px);
+  transform-origin: 21% ;}
 
 .menu-hamburguer.active span:nth-child( 2 ) {
   opacity: 0;
+
+  /* Esconde a barra do meio com transparência e translação */
   transform: translateX(20px);
 }
 
 .menu-hamburguer.active span:nth-child( 3 ) {
-  transform: rotate(-45deg);
+
+  /* Ajuste de posição e rotação para alinhamento */
+  transform: rotate(-45deg) translate(5px, 5px);
+  transform-origin: 6% ;
 }
 
 .menu {
