@@ -18,12 +18,12 @@ export default {
         field: 'barber_id',
       },
       dayOff: {
-        type: DataTypes.DATEONLY, // Mudar para DATEONLY se for armazenar apenas datas
+        type: DataTypes.DATEONLY, 
         allowNull: false,
         field: 'day_off',
       },
       time: {
-        type: DataTypes.STRING(50), // Se for usar string, certifique-se de que o nome do campo seja o mesmo no modelo e na migração
+        type: DataTypes.STRING(50),
         allowNull: false,
 
       },

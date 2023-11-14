@@ -5,7 +5,6 @@ import AgendamentosProvider from "./context/AgendamentosProvider";
 import MeusAgendamentos from "./pages/MeusAgendamentos";
 import Login from "./pages/Login";
 import BarberDashboard from "./pages/BarberDashboard";
-import { useEffect } from "react";
 
 function App() {
 

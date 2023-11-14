@@ -84,6 +84,13 @@ Neste projeto, as principais tecnologias e ferramentas utilizadas no desenvolvim
   - `name` (Nome do barbeiro)
   - `email` (E-mail de login do barbeiro)
   - `password` (Senha de login do barbeiro)
+
+- **Tabela de dias de folga**
+  - `Npme da tablea`: **'day_off'**
+  - `day_off_id` (Chave Primária) 
+  - `barber_id` (Id do barbeiro)
+  - `day_off` (Data da folga)
+  - `time` (Periodo da folga)
   </details>
 
 ## Rotas e métodos de acesso
@@ -99,7 +106,7 @@ Neste projeto, as principais tecnologias e ferramentas utilizadas no desenvolvim
 - `email` (string): E-mail do barbeiro.
 - `password` (string): Senha do barbeiro.
 
-#### Respostas
+  #### Respostas
 
 - `200 OK`: Retorna um objeto contendo o token JWT e outras informações relacionadas ao usuário.
 
@@ -142,7 +149,7 @@ Neste projeto, as principais tecnologias e ferramentas utilizadas no desenvolvim
 - **Rota** GET `/schedules`
   
   Rota para pegar **todos os agentamentos** que ainda vão ser realizado aparti da **data e hora atual** para frente 
-#### Respostas 
+  #### Respostas 
 
 - `200 OK`: Retorna um **array de objetos** contendo todas as informações dos agendamentos incluido serviços e cliente 
   
@@ -168,13 +175,14 @@ Neste projeto, as principais tecnologias e ferramentas utilizadas no desenvolvim
     },
   //... outros objetos
   ]
+  ```
 
 - **Rota:** GET `/schedules/date/:date`
 
   Rota para pegar **todos** os agendamentos realizados em uma **data especifica**,
   nessa rota é incluido todos os serviços que foram/serão realizados nessa data especifica.
 
-#### Respostas 
+    #### Respostas 
 
 - `200 OK`: Retorna um um array de objetos contendo as informações dos agendamentos daquele dia
   ```json
@@ -199,6 +207,7 @@ Neste projeto, as principais tecnologias e ferramentas utilizadas no desenvolvim
     },
   //... outros objetos
   ]
+  ```
 
 - **Rota:** GET `/schedules/date/:date/hour/:hour`
 
@@ -207,7 +216,7 @@ Neste projeto, as principais tecnologias e ferramentas utilizadas no desenvolvim
 
   #### Respostas 
 
-  - `200 OK`: Retorna um **objeto** com as informações do a gendamento especifico so com os serviços, sem o cliente.
+- `200 OK`: Retorna um **objeto** com as informações do a gendamento especifico so com os serviços, sem o cliente.
 
   ```json
   {
@@ -224,29 +233,34 @@ Neste projeto, as principais tecnologias e ferramentas utilizadas no desenvolvim
       }
     ],
   }
+  ```
+
 
 - **Rota** GET `/schedules/count/future`
 
   Rota para contar quantos agendamentos ainda serão realizados a parti da data e hora atual. 
 
-#### Respostas 
+  #### Respostas 
 
  - `200 OK`: Restorna um **objeto** com a quantidade de agendamentos futuros. 
     ```json 
     {
       "result": 8
     } 
+    ```
+
 - **Rota:** GET `/schedules/count/:intervalDays`
 
   Rota para contar quantos agendamentos foram realizados de acordo com o intervalo de dias que é passado.
 
-#### Respostas 
+  #### Respostas 
 
 - `200 OK`: Restona um **objeto** com a quantidade e de agendamentos ja realizados.
   ```json
   {
   "result": 1
   }
+  ```
 ### Cancellations
 
 - **Rota:** POST `/cancellation`
@@ -266,6 +280,18 @@ Neste projeto, as principais tecnologias e ferramentas utilizadas no desenvolvim
   ```json
   "Schedule not found"
   ```
+- **Rota** GET `/cancellation/:intervalDays`
+  Conta quantos cancelamentos ja tiveram de acordo com a quantidade de dias passado, para retorna todos os cancelamentos o parametro tem de ser **0**.
+
+#### Respostas 
+
+- `200 OK`: Retorna um objeto contendo a quatidade de cancelamentos.
+
+  ```json
+  {
+    "result": 6
+  }
+  ``` 
 
 ### Google Calendar
 
@@ -297,11 +323,8 @@ Cria um novo evento de agendamento no Google Calendar utilizando os dados de age
 
 - **Rota:** DELETE `/googleEvent/:eventId`
 
-Deleta um evento existente no Google Calendar.
+  Deleta um evento existente no Google Calendar.
 
-#### Parâmetros de Rota (Route Parameters)
-
-- `eventId` (string): ID do evento no Google Calendar que será deletado.
 
 #### Respostas
 
@@ -313,5 +336,59 @@ Deleta um evento existente no Google Calendar.
     "event": {
       // detalhes do evento deletado
     }
+  }
+  ```
+
+### dayOff
+- **Rota** GET `/dayOff`
+
+  Verifica quais são os dias de folga e qual tipo de folga, sendo somente pela manhã, somente pela tarde, ou o dia todo.
+
+#### Respostas
+
+- `200 OK`: retorna um **array de objetos** com os dias de folga e o tipo e qual barbeiro esta de folga.
+  
+  ```json
+  [
+    {
+      "dayOffId": 22,
+      "barberId": 1,
+      "dayOff": "2024-04-02",
+      "time": "full-day"
+    },
+    //... outros objetos
+  ]
+  ```
+
+- **Rota** POST `dayOff`
+  
+   Cria dia de folga
+
+#### Parâmetros do Corpo (Body Parameters)
+
+  - `selectedDate` (string): Data da folga no formato YYYY-MM-DD.
+  - `timeOff` (strinf): Tipo de folga,sendo full-day,morning,afternoon 
+
+#### Respostas
+
+- `200 OK`: Retorna mensangem de sucesso na criação de um agendamento.
+
+  ```json
+  {
+    "message": "Folga Criada com Sucesso"
+  }
+  ```
+
+- **Rota** DELETE `/dayOff/:date`
+
+  Deleta dia de folga
+
+#### Respostas 
+
+- `200 OK`: Retorna mensagem de sucesso ao deletar dia de folga
+  
+  ```json
+  {
+     "message": "Folga deletada com Sucesso" 
   }
   ```
