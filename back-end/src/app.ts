@@ -10,12 +10,12 @@ import routerDayOff from './routers/dayOff.routers';
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-app.use(cors());
 app.use(routerRegistre);
 app.use(routerSchedules);
 app.use(routerCancellation);

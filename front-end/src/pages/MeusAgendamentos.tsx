@@ -27,7 +27,7 @@ function MeusAgendamentos() {
   const [agendamentos, setAgendamentos] = useState<Agendamentos[]>([]);
   const [cancelar, setCancelar] = useState(false);
   const [hour, setHour] = useState<string | number>(0);
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState<string >("");
 
   useEffect(() => {
     const currentDateTime = new Date(); // Obtem a data e hora atual

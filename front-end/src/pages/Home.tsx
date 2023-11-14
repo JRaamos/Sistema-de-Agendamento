@@ -5,7 +5,7 @@ import { useContext, useState } from "react";
 import AgendamentosContext from "../context/AgendamentosContext";
 
 function Home() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { resetStates } = useContext(AgendamentosContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -33,15 +33,16 @@ function Home() {
         </section>
         <section>
           <p className="p-text">Escolha seu Barbeiro</p>
+          <Link to="/agendamentos">
           <button
             className="barbeiro"
             onClick={() => {
               resetStates();
-              navigate("/agendamentos");
             }}
           >
             Barbeiro Cleberson Silva (CHUCA)
           </button>
+          </Link>
         </section>
       </div>
       <footer className="footer">
