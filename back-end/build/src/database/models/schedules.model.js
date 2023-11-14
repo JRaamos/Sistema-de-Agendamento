@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
 const index_1 = __importDefault(require("./index"));
+const user_model_1 = __importDefault(require("./user.model"));
 const ScheduleModel = index_1.default.define('Schedule', {
     scheduleId: {
         type: sequelize_1.DataTypes.INTEGER,
@@ -28,10 +29,16 @@ const ScheduleModel = index_1.default.define('Schedule', {
     userId: {
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: false,
+        references: {
+            model: user_model_1.default,
+            key: 'user_id',
+        }
     },
 }, {
     tableName: 'schedules',
     timestamps: false,
     underscored: true,
 });
+ScheduleModel.belongsTo(user_model_1.default, { foreignKey: 'userId', as: 'user' });
+user_model_1.default.hasMany(ScheduleModel, { foreignKey: 'userId', as: 'schedules' });
 exports.default = ScheduleModel;

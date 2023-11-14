@@ -10,4 +10,8 @@ const createUserService = async (user) => {
     const { userId } = userResult.dataValues;
     return userId;
 };
-exports.default = { createUserService };
+const getUserService = async (userId) => {
+    const user = await user_model_1.default.findByPk(userId);
+    return user;
+};
+exports.default = { createUserService, getUserService };

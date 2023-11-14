@@ -5,7 +5,7 @@ import { FetchAPiGet } from "./ApiReturn";
 export type Values = {
   name: string;
   phone: string | undefined;
-  date: string | null;
+  date: string | number  ;
   hour: string;
   services: string[];
   eventId: string;

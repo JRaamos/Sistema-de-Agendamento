@@ -13,10 +13,10 @@ const googleEvent_routers_1 = __importDefault(require("./routers/googleEvent.rou
 const dayOff_routers_1 = __importDefault(require("./routers/dayOff.routers"));
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
+app.use((0, cors_1.default)());
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
-app.use((0, cors_1.default)());
 app.use(registres_routers_1.default);
 app.use(schedules_router_1.default);
 app.use(cancellation_routers_1.default);
