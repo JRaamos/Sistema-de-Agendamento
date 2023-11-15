@@ -10,29 +10,16 @@ Aqui, você encontrará os detalhes de como todo o back-end do projeto Sistema d
 
 Neste projeto, as principais tecnologias e ferramentas utilizadas no desenvolvimento e testes são:
 
-### Linguagem de Programação
+- **`TypeScript`**: Como linguagem de programação para adicionar tipagem estática.
+- **`MySQL`**: Para o gerenciamento do banco de dados.
+- **`Express.js`**: Como framework para criar a aplicação server-side.
+- **`Sequelize`**: Como ORM para facilitar a interação com o banco de dados.
+- **`JSON Web Tokens`**: Para autenticação e gerenciamento de sessões.
+- **`Bcryptjs`**: Para a criptografia de senhas.
+- **`Mocha`**: Para a realização de testes.
+- **`Google Calendar API`**: Para integração com o Google Calendar.
+- **`Node.js`**: Como ambiente de execução.
 
-- **TypeScript**
-
-### Banco de Dados
-
-- **MySQL**
-
-### Principais Bibliotecas
-
-- **Express.js**
-- **Sequelize**
-- **JSON Web Tokens**
-- **Bcryptjs**
-- **Mocha**
-
-### APIs Externas
-
-- **Google Calendar API**
-
-### Ambiente de execução
-
-- **Node.js**
 
 ## Normalização do Banco de Dados
 
