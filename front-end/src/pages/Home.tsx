@@ -13,11 +13,12 @@ function Home() {
     setIsMenuOpen(!isMenuOpen);
   };
   return (
-    <div className="container-home" onClick={() => isMenuOpen && setIsMenuOpen(false)}>
+    <div
+      className="container-home"
+      onClick={() => isMenuOpen && setIsMenuOpen(false)}
+    >
       <nav className={`menu ${isMenuOpen ? "active" : ""}`}>
-        <Link to='/login'>
-          Login
-        </Link>
+        <Link to="/login">Login</Link>
       </nav>
       <div
         className={`menu-hamburguer ${isMenuOpen ? "active" : ""}`}
@@ -33,15 +34,14 @@ function Home() {
         </section>
         <section>
           <p className="p-text">Escolha seu Barbeiro</p>
-          <Link to="/agendamentos">
-          <button
+          <Link
+            to="/agendamentos"
             className="barbeiro"
             onClick={() => {
               resetStates();
             }}
           >
             Barbeiro Cleberson Silva (CHUCA)
-          </button>
           </Link>
         </section>
       </div>

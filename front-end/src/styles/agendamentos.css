@@ -5,7 +5,7 @@
   font-size: 18px;
   height: 98vh;
   margin: 0 auto;
-  overflow-y: scroll;
+  overflow-y: auto;
   padding-top: env(safe-area-inset-top);
   scroll-behavior: smooth;
   text-align: center;
