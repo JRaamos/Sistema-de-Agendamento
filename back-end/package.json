@@ -65,6 +65,7 @@
     "joi": "17.6.0",
     "jsonwebtoken": "9.0.0",
     "mysql2": "^2.3.0",
+    "onesignal-node": "^3.4.0",
     "sequelize": "6.25.5",
     "sequelize-cli": "6.4.1"
   }
