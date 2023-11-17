@@ -78,18 +78,20 @@ function Agendamentos() {
     }
   }, []);
 
-    useEffect(() => {
-      OneSignal.init({
-        appId: "0e7089e8-60f2-480b-bafa-1173e57cac11",
-      });
 
-      OneSignal.User.PushSubscription.addEventListener(
-        "change",
-        (changeEvent) => {
-          setValues({ ...values, deviceId: changeEvent.current.id });
-        }
-      );
-    }, []);
+ useEffect(() => {
+   OneSignal.init({
+     appId: "0e7089e8-60f2-480b-bafa-1173e57cac11",
+   }).then(() => {
+     OneSignal.User.PushSubscription.addEventListener(
+       "change",
+       (changeEvent) => {
+         setValues({ ...values, deviceId: changeEvent.current.id });
+       }
+     );
+   });
+ }, []);
+
     
   return (
     <div className="container-agendamentos" ref={containerRef}>
