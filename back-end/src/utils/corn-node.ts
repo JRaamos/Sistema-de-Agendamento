@@ -5,11 +5,11 @@ import schedulesService from '../services/schedules.service';
 const sendNotification = async (deviceIds: (string | null | undefined)[] , message: string) => {
   const headers = {
     "Content-Type": "application/json; charset=utf-8",
-    "Authorization": `Basic M2MyNWY0MWYtNzMyZS00MThkLWIzOTUtYmEyNWQwMDI5ODE0`
+    "Authorization": `Basic NzAzNTI5YmEtYjY4MC00NDZmLWEwOGItNGFjNGI4NWI1MjIz`
   };
 
   const data = {
-    app_id: "0e7089e8-60f2-480b-bafa-1173e57cac11",
+    app_id: "2f865a87-c988-43e8-a60c-2138cc52199b",
     include_player_ids: deviceIds,
     contents: { en: message }
   };
