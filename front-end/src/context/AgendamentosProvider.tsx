@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {  useRef, useState } from "react";
 import AgendamentosContext from "./AgendamentosContext";
 import {
   AgendamentosProviderProps,
@@ -59,11 +59,12 @@ function AgendamentosProvider({ children }: AgendamentosProviderProps) {
   const [values, setValues] = useState<Values>({
     name: "",
     phone: undefined,
-    date: "" ,
+    date: "",
     hour: "",
     services: [],
     eventId: "",
     agendamentos: "",
+    deviceId: "",
   });
   const [availableTimes, setAvailableTimes] = useState<string[]>([]);
 
@@ -103,6 +104,7 @@ function AgendamentosProvider({ children }: AgendamentosProviderProps) {
       services: [],
       eventId: "",
       agendamentos: "",
+      deviceId: "",
     });
     setDisableButton(true);
     setServicesSelected([]);

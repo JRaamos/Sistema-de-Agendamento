@@ -205,3 +205,19 @@ export const fetchApiDeleteDayOff = async (date: string, token: string | null) =
   return data.message;
 }
 
+// const sendPushNotification = async (deviceIds, message) => {
+//   const response = await fetch("https://onesignal.com/api/v1/notifications", {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//       "Authorization": "Basic SUA_CHAVE_API_ONESIGNAL"
+//     },
+//     body: JSON.stringify({
+//       app_id: "SEU_APP_ID_ONESIGNAL",
+//       include_player_ids: deviceIds,
+//       contents: { en: message }
+//     })
+//   });
+
+//   return response.json();
+// };

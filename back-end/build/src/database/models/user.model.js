@@ -20,6 +20,11 @@ const UserModel = _1.default.define('User', {
         type: sequelize_1.DataTypes.STRING(128),
         allowNull: false,
     },
+    deviceId: {
+        type: sequelize_1.DataTypes.STRING(128),
+        allowNull: true,
+        field: 'device_id',
+    },
 }, {
     tableName: 'users',
     timestamps: false,

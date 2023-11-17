@@ -13,6 +13,7 @@ import FormsButton from "../components/FormsButton";
 import Introduction from "../components/Introduction";
 import FormsInput from "../components/FormsInput";
 import { useNavigate } from "react-router-dom";
+import OneSignal from "react-onesignal";
 
 function Agendamentos() {
   const navigate = useNavigate();
@@ -76,18 +77,20 @@ function Agendamentos() {
       }
     }
   }, []);
-    // useEffect(() => {
-    //   requestNotificationPermission();
-    // }, []);
-    // function requestNotificationPermission() {
-    //   Notification.requestPermission()
-    //     .then(function (status) {
-    //       console.log("Notification permission status:", status);
-    //     })
-    //     .catch(function (error) {
-    //       console.error("Notification permission request error:", error);
-    //     });
-    // }
+  
+    useEffect(() => {
+      OneSignal.init({
+        appId: "0e7089e8-60f2-480b-bafa-1173e57cac11",
+      });
+
+      OneSignal.User.PushSubscription.addEventListener(
+        "change",
+        (changeEvent) => {
+      setValues({ ...values, deviceId: changeEvent.current.id});
+        }
+      );
+    }, []);
+
   return (
     <div className="container-agendamentos" ref={containerRef}>
       {buttomMeusAgendamentos && (
