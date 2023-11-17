@@ -77,30 +77,9 @@ function Agendamentos() {
       }
     }
   }, []);
-  // useEffect(() => {
-    
-  //   OneSignal.init({
-  //     appId: "2f865a87-c988-43e8-a60c-2138cc52199b",
-  //   });
-  //   OneSignal.User.PushSubscription.addEventListener(
-  //     "change",
-  //     (changeEvent) => {
-  //       setValues({ ...values, deviceId: changeEvent.current.id });
-  //     }
-  //     );
-  //     requestNotificationPermission();
-  // }, []);
 
 
-  //   function requestNotificationPermission() {
-  //     Notification.requestPermission()
-  //       .then(function (status) {
-  //         console.log("Notification permission status:", status);
-  //       })
-  //       .catch(function (error) {
-  //         console.error("Notification permission request error:", error);
-  //       });
-  // }
+
   return (
     <div className="container-agendamentos" ref={containerRef}>
       {buttomMeusAgendamentos && (
