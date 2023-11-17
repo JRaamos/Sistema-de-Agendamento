@@ -48,6 +48,7 @@ Neste projeto, as principais tecnologias e ferramentas utilizadas no desenvolvim
   - `user_id` (Chave Estrangeira referenciando a tabela de Usuários)
   - `date` (Data do agendamento)
   - `hour` (Hora do agendamento)
+  - `device_id` (id para notificação push)
 
 - **Tabela de Agendamentos_Serviços (Tabela de Junção)**
 

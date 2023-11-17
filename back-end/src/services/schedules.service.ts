@@ -26,7 +26,7 @@ const finaAllSchedulesDate = async (date: string) => {
       {
         model: UserModel,
         as: 'user',
-        attributes: ['name', 'phone'],
+        attributes: ['name', 'phone', 'deviceId'],
       },
     ],
   });
@@ -66,7 +66,7 @@ const findAllSchedulesFromNow = async () => {
       {
         model: UserModel,
         as: 'user',
-        attributes: ['name', 'phone'],
+        attributes: ['name', 'phone', 'deviceId'],
       },
     ],
     order: [

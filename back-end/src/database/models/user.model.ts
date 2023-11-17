@@ -21,6 +21,11 @@ const UserModel: UserSequelizeModelCreator = db.define('User', {
     type: DataTypes.STRING(128),
     allowNull: false,
   },
+  deviceId: {
+    type: DataTypes.STRING(128),
+    allowNull: true,
+    field: 'device_id',
+  },
 }, {
   tableName: 'users',
   timestamps: false,

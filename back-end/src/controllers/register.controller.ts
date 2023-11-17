@@ -5,9 +5,9 @@ import servicesAll from '../services/service.service';
 import scheduleService from '../services/scheduleService.service';
 
 const CreateRegister = async (req: Request, res: Response) => {
-  const { name, phone, date, hour, services, eventId } = req.body;
+  const { name, phone, date, hour, services, eventId, deviceId } = req.body;
 
-  const user = await userService.createUserService({ name, phone });
+  const user = await userService.createUserService({ name, phone , deviceId });
   const servicesIds = await servicesAll.findAllService(services);
 
   const scheduleData = {

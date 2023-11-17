@@ -19,6 +19,11 @@ exports.default = {
                 type: sequelize_1.DataTypes.STRING(255),
                 allowNull: false,
             },
+            deviceId: {
+                type: sequelize_1.DataTypes.STRING(255),
+                allowNull: true,
+                field: 'device_id',
+            },
         });
     },
     down(queryInterface) {

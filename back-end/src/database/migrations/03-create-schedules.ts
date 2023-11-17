@@ -33,6 +33,7 @@ export default {
           key: 'user_id',
         },
       },
+  
     });
   },
   down(queryInterface: QueryInterface) {
