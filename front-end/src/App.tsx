@@ -5,19 +5,10 @@ import AgendamentosProvider from "./context/AgendamentosProvider";
 import MeusAgendamentos from "./pages/MeusAgendamentos";
 import Login from "./pages/Login";
 import BarberDashboard from "./pages/BarberDashboard";
-import OneSignal from "react-onesignal";
 import { useEffect } from "react";
 
 function App() {
 
-  useEffect(() => {
-    OneSignal.init({
-      appId: "0e7089e8-60f2-480b-bafa-1173e57cac11",
-      notifyButton: {
-        enable: true,
-      },
-    });
-  }, []);
 
   return (
     <div>

@@ -1,7 +1,7 @@
 import  { Op } from 'sequelize';
 import ScheduleModel, { ScheduleInputtableTypes } from '../database/models/schedules.model';
 import ServiceModel from '../database/models/service.model';
-import { Schedule } from '../types/schedules';
+import { Schedule, ScheduleAllUser } from '../types/schedules';
 import moment from 'moment-timezone';
 import UserModel from '../database/models/user.model';
 
@@ -13,7 +13,7 @@ const createSchedule = async (schedule: ScheduleInputtableTypes):
   return scheduleResult.dataValues as Schedule;
 };
 
-const finaAllSchedulesDate = async (date: string) => {
+const finaAllSchedulesDate = async (date: string): Promise<ScheduleAllUser[]> => {
   const schedulesWithServicesAndUsers = await ScheduleModel.findAll({
     where: { date },
     include: [
@@ -31,7 +31,7 @@ const finaAllSchedulesDate = async (date: string) => {
     ],
   });
 
-  return schedulesWithServicesAndUsers;
+  return schedulesWithServicesAndUsers as unknown as ScheduleAllUser[];
 };
 
 const findAllSchedulesFromNow = async () => {

@@ -26,6 +26,8 @@
     "@types/jsonwebtoken": "8.5.8",
     "@types/mocha": "10.0.1",
     "@types/node": "16.11.31",
+    "@types/node-cron": "^3.0.11",
+    "@types/node-fetch": "^2.6.9",
     "@types/shelljs": "0.8.12",
     "@types/sinon": "10.0.11",
     "@types/sinon-chai": "3.2.9",
@@ -64,7 +66,9 @@
     "googleapis": "^128.0.0",
     "joi": "17.6.0",
     "jsonwebtoken": "9.0.0",
+    "moment-timezone": "^0.5.43",
     "mysql2": "^2.3.0",
+    "node-cron": "^3.0.3",
     "onesignal-node": "^3.4.0",
     "sequelize": "6.25.5",
     "sequelize-cli": "6.4.1"

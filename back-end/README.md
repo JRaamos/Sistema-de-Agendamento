@@ -32,6 +32,7 @@ Neste projeto, as principais tecnologias e ferramentas utilizadas no desenvolvim
   - `user_id` (Chave Primária)
   - `name` (Nome do usuário)
   - `phone` (Número de telefone)
+  - `device_id` (id para notificação push)
 
 - **Tabela de Serviços**
 
@@ -48,7 +49,6 @@ Neste projeto, as principais tecnologias e ferramentas utilizadas no desenvolvim
   - `user_id` (Chave Estrangeira referenciando a tabela de Usuários)
   - `date` (Data do agendamento)
   - `hour` (Hora do agendamento)
-  - `device_id` (id para notificação push)
 
 - **Tabela de Agendamentos_Serviços (Tabela de Junção)**
 
@@ -117,6 +117,8 @@ Neste projeto, as principais tecnologias e ferramentas utilizadas no desenvolvim
 - `date` (string): Data do agendamento.
 - `hour` (string): Hora do agendamento.
 - `services` (array): Lista dos serviços solicitados.
+- `device_id` (id para notificação push)
+
 
 #### Respostas
 
@@ -158,7 +160,8 @@ Neste projeto, as principais tecnologias e ferramentas utilizadas no desenvolvim
       ],
       "user": {
       "name": "xablau",
-      "phone": "(11) 91111-1111"
+      "phone": "(11) 91111-1111",
+      "deviceId": "00000000-111111asdasd-sadwasdkmasd-ksj32"
       }
     },
   //... outros objetos
@@ -188,9 +191,10 @@ Neste projeto, as principais tecnologias e ferramentas utilizadas no desenvolvim
           "duration": "30"
         }
       ],
-      "user": {
+     "user": {
       "name": "xablau",
-      "phone": "(11) 91111-1111"
+      "phone": "(11) 91111-1111",
+      "deviceId": "00000000-111111asdasd-sadwasdkmasd-ksj32"
       }
     },
   //... outros objetos

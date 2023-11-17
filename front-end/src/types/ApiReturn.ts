@@ -6,6 +6,7 @@ export type Service = {
 export type User = {
   name: string,
   phone: string,
+  deviceId: string,
 }
 export type FetchAPiGet = {
   scheduleId: number,

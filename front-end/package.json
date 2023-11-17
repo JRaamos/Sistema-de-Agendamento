@@ -16,6 +16,8 @@
     "@fullcalendar/interaction": "^6.1.9",
     "@fullcalendar/react": "^6.1.9",
     "@fullcalendar/timegrid": "^6.1.9",
+    "@onesignal/node-onesignal": "^2.0.1-beta2",
+    "api": "^6.1.1",
     "chart.js": "^4.4.0",
     "date-fns": "^2.30.0",
     "date-fns-tz": "^2.0.0",
