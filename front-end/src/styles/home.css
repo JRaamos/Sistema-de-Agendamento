@@ -90,7 +90,7 @@
 
 .menu-hamburguer.active span:nth-child( 1 ) {
   transform: rotate(45deg) translate(5px, -5px);
-  transform-origin: 21% ;}
+  transform-origin: 21%;}
 
 .menu-hamburguer.active span:nth-child( 2 ) {
   opacity: 0;
@@ -103,7 +103,7 @@
 
   /* Ajuste de posição e rotação para alinhamento */
   transform: rotate(-45deg) translate(5px, 5px);
-  transform-origin: 6% ;
+  transform-origin: 6%;
 }
 
 .menu {
