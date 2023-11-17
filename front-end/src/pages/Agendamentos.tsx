@@ -12,11 +12,19 @@ import MensageConclusão from '../components/MensageConclusão';
 import FormsButton from '../components/FormsButton';
 import Introduction from '../components/Introduction';
 import FormsInput from '../components/FormsInput';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import MenuHamburguer from '../components/MenuHamburguer';
 
 function Agendamentos() {
   const navigate = useNavigate();
   const [name, setName] = useState('');
+  const [buttomMeusAgendamentos, setButtomMeusAgendamentos] = useState(false);
+  // MenuHamburguer
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   const {
     isServices,
     isDate,
@@ -40,11 +48,11 @@ function Agendamentos() {
     values,
     availableTimes,
   } = useContext(AgendamentosContext);
-  const [buttomMeusAgendamentos, setButtomMeusAgendamentos] = useState(false);
 
   useEffect(() => {
     resetStates();
   }, [location]);
+
   useEffect(() => {
     if (containerRef.current) {
       const container = containerRef.current;
@@ -104,13 +112,15 @@ function Agendamentos() {
         <div
           className='button-meus-agendamentos-header'
           style={{ display: buttomMeusAgendamentos ? 'block' : 'none' }}
+          onClick={() => console.log('xana')}
         >
-          <button onClick={() => navigate('/meus-agendamentos')}>
-            Meus agendamento
-          </button>
+          <MenuHamburguer isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
+          <nav className={`menu ${isMenuOpen ? 'active' : ''}`}>
+            <Link to='/meus-agendamentos'>Meus agendamentos</Link>
+          </nav>
         </div>
       </div>
-      {!name && <div style={{marginTop: '30px'}}>{<Introduction />}</div>}
+      {!name && <div style={{ marginTop: '30px' }}>{<Introduction />}</div>}
 
       <div>
         {isName && <div>{<Welcome />}</div>}
@@ -202,7 +212,7 @@ function Agendamentos() {
           {<MensageConclusão />}
         </div>
       )}
-      {!isMyAgendamentos && <FormsInput />}
+      {!isMyAgendamentos && !isMenuOpen && <FormsInput />}
       {canRender && <FormsButton />}
     </div>
   );

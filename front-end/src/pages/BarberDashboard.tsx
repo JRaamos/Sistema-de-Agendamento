@@ -1,15 +1,18 @@
-import React, { useContext, useEffect, useState } from "react";
-import "../styles/barberDashboard.css";
-import DashboardScheduleChart from "../components/DashboardScheduleChart";
-import BarberDashboardUser from "../components/BarberDashboardUser";
-import { useNavigate } from "react-router-dom";
-import AgendamentosContext from "../context/AgendamentosContext";
-import Schedules from "../components/Schedules";
-import { fetchApiGetDayOff } from "../utils/fetchApi";
+import React, { useContext, useEffect, useState } from 'react';
+import '../styles/barberDashboard.css';
+import DashboardScheduleChart from '../components/DashboardScheduleChart';
+import BarberDashboardUser from '../components/BarberDashboardUser';
+import { useNavigate } from 'react-router-dom';
+import AgendamentosContext from '../context/AgendamentosContext';
+import Schedules from '../components/Schedules';
+import { fetchApiGetDayOff } from '../utils/fetchApi';
+import MenuHamburguer from '../components/MenuHamburguer';
 
 function BarberDashboard() {
+  const navigate = useNavigate();
+  // MenuHamburguer
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState("Informações");
+  const [activeTab, setActiveTab] = useState('Informações');
 
   const {
     setIsOffDay,
@@ -21,56 +24,53 @@ function BarberDashboard() {
     setSelectedDay,
     setIsRecurrentClient,
   } = useContext(AgendamentosContext);
-  const navigate = useNavigate();
+
+  // MenuHamburguer
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
- useEffect(() => {
-   const handleOffDays = async () => {
-     const data = await fetchApiGetDayOff();
-     if (data) {
-       setOffDays(data);
-     }
-   };
-   handleOffDays();
- }, []);
+
   const changeTab = (option: string) => {
     setActiveTab(option);
     setIsMenuOpen(false);
   };
 
   const logout = () => {
-    localStorage.removeItem("token");
-    navigate("/login");
+    localStorage.removeItem('token');
+    navigate('/login');
   };
+
+  useEffect(() => {
+    const handleOffDays = async () => {
+      const data = await fetchApiGetDayOff();
+      if (data) {
+        setOffDays(data);
+      }
+    };
+    handleOffDays();
+  }, []);
+
   return (
     <div
-      className="dashboard-container"
+      className='dashboard-container'
       onClick={() => isMenuOpen && setIsMenuOpen(false)}
     >
-      <div
-        className={`menu-hamburguer ${isMenuOpen ? "open" : ""}`}
-        onClick={toggleMenu}
-      >
-        <div className="bar"></div>
-        <div className="bar"></div>
-        <div className="bar"></div>
-      </div>
-      <aside className={`sidebar ${isMenuOpen ? "active" : ""}`}>
+      <MenuHamburguer isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
+      <aside className={`sidebar ${isMenuOpen ? 'active' : ''}`}>
         <nav>
           <ul>
-            <div className="options-menu">
+            <div className='options-menu'>
               <div>
                 <li
-                  className={activeTab === "Informações" ? "active" : ""}
-                  onClick={() => changeTab("Informações")}
+                  className={activeTab === 'Informações' ? 'active' : ''}
+                  onClick={() => changeTab('Informações')}
                 >
                   Informações
                 </li>
                 <li
-                  className={activeTab === "Agendar cliente" ? "active" : ""}
+                  className={activeTab === 'Agendar cliente' ? 'active' : ''}
                   onClick={() => {
-                    changeTab("Agendar cliente");
+                    changeTab('Agendar cliente');
                     setSelectedOffDays({});
                     selectedOffDay.length > 0 && setSelectedOffDay([]);
                     setConfirmOffDay(false);
@@ -81,29 +81,29 @@ function BarberDashboard() {
                   Agendar cliente
                 </li>
                 <li
-                  className={activeTab === "Agendar folga" ? "active" : ""}
+                  className={activeTab === 'Agendar folga' ? 'active' : ''}
                   onClick={() => {
-                    changeTab("Agendar folga");
+                    changeTab('Agendar folga');
                     setSelectedOffDays({});
                     selectedOffDay.length > 0 && setSelectedOffDay([]);
                     setConfirmOffDay(false);
                     setIsOffDay(true);
                     setIsRecurrentClient(false);
-                     setSelectedDay(null);
+                    setSelectedDay(null);
                   }}
                 >
                   Agendar folga
                 </li>
                 <li
-                  className={activeTab === "Agendamentos" ? "active" : ""}
+                  className={activeTab === 'Agendamentos' ? 'active' : ''}
                   onClick={() => {
-                    changeTab("Agendamentos");
+                    changeTab('Agendamentos');
                     setSelectedOffDays({});
                     selectedOffDay.length > 0 && setSelectedOffDay([]);
                     setConfirmOffDay(false);
                     setIsOffDay(true);
                     setIsRecurrentClient(false);
-                     setSelectedDay(null);
+                    setSelectedDay(null);
                   }}
                 >
                   Agendamentos
@@ -115,12 +115,12 @@ function BarberDashboard() {
           </ul>
         </nav>
       </aside>
-      <main className="content">
-        {activeTab === "Informações" && <DashboardScheduleChart />}
-        {(activeTab === "Agendar cliente" || activeTab === "Agendar folga") && (
+      <main className='content'>
+        {activeTab === 'Informações' && <DashboardScheduleChart />}
+        {(activeTab === 'Agendar cliente' || activeTab === 'Agendar folga') && (
           <BarberDashboardUser />
         )}
-        {activeTab === "Agendamentos" && <Schedules />}
+        {activeTab === 'Agendamentos' && <Schedules />}
       </main>
     </div>
   );
