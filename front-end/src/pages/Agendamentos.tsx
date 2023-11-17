@@ -80,7 +80,7 @@ function Agendamentos() {
   
     useEffect(() => {
       OneSignal.init({
-        appId: "0e7089e8-60f2-480b-bafa-1173e57cac11",
+        appId: "dd8d9c1d-7da4-4aa3-800e-bd5ebe075063",
       });
 
       OneSignal.User.PushSubscription.addEventListener(
