@@ -5,23 +5,11 @@ import AgendamentosProvider from "./context/AgendamentosProvider";
 import MeusAgendamentos from "./pages/MeusAgendamentos";
 import Login from "./pages/Login";
 import BarberDashboard from "./pages/BarberDashboard";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import OneSignal from "react-onesignal";
-import AgendamentosContext from "./context/AgendamentosContext";
 
 function App() {
-  const { setValues, values } = useContext(AgendamentosContext);
-  useEffect(() => {
-    OneSignal.init({
-      appId: "2f865a87-c988-43e8-a60c-2138cc52199b",
-    });
-    OneSignal.User.PushSubscription.addEventListener(
-      "change",
-      (changeEvent) => {
-        setValues({ ...values, deviceId: changeEvent.current.id });
-      }
-    );
-  }, []);
+  
 
   return (
     <div>
