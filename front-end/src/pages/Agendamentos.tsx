@@ -81,10 +81,9 @@ function Agendamentos() {
     OneSignal.init({
       appId: "0e7089e8-60f2-480b-bafa-1173e57cac11",
       notifyButton: {
-        enable: true,
+        enable: false,
       },
     });
-    OneSignal.Slidedown.promptPush();
     OneSignal.User.PushSubscription.addEventListener(
       "change",
       (changeEvent) => {
