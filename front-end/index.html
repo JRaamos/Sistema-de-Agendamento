@@ -7,7 +7,15 @@
     <title>Stylu's</title>
     <link rel="icon" type="image/svg+xml" href="/logo-1.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
+    <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+    <script>
+      window.OneSignalDeferred = window.OneSignalDeferred || [];
+      OneSignalDeferred.push(function (OneSignal) {
+        OneSignal.init({
+          appId: "2f865a87-c988-43e8-a60c-2138cc52199b",
+        });
+      });
+    </script>
   </head>
   <body>
     <div id="root"></div>
