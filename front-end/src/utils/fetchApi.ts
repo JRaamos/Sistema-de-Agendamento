@@ -1,5 +1,7 @@
 import { DayOff, Values } from "../types/AgendamentosProvider";
 import { FetchAPi, FetchAPiGet, FetchAPiLogin } from "../types/ApiReturn";
+// const BASEURL = 'https://sistema-de-agendamento-production.up.railway.app';
+//const BASEURL = 'http://localhost:3001';
 const BASEURL = 'https://sistema-de-agendamento-production.up.railway.app';
 // const BASEURL = 'http://localhost:3001';
 

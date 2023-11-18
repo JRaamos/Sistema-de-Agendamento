@@ -22,6 +22,7 @@
 
 .button-usuario {
   background: #5b5d74;
+  border: none;
   border-radius: 15px;
   cursor: pointer;
   font-size: 18px;
