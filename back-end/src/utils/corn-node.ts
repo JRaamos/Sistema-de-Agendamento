@@ -34,7 +34,7 @@ export const checkForUpcomingAppointments = async () => {
   schedules.forEach(schedule => {
     const scheduleDateTimeSaoPaulo = moment.tz(`${schedule.date}T${schedule.hour}`, 'America/Sao_Paulo').toDate();
     const diffInMilliseconds = scheduleDateTimeSaoPaulo.getTime() - nowSaoPaulo.getTime();
-    const diffInMinutes = diffInMilliseconds / 60000; // Arredondado para baixo
+    const diffInMinutes = Math.round(diffInMilliseconds / 60000); // Arredondado para cima
     console.log(diffInMinutes);
     
     const message = `Lembrete de agendamento para ${schedule.date} às ${schedule.hour}`;
