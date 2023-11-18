@@ -83,12 +83,14 @@ function Agendamentos() {
     OneSignal.init({
       appId: "2f865a87-c988-43e8-a60c-2138cc52199b",
     });
-    OneSignal.User.PushSubscription.addEventListener(
-      "change",
-      (changeEvent) => {
-        setValues({ ...values, deviceId: changeEvent.current.id });
-      }
-      );
+    if (OneSignal.User.PushSubscription && OneSignal.User.PushSubscription.id) {
+      const userId = OneSignal.User.PushSubscription.id;
+      console.log("OneSignal User ID:", userId);
+      setValues({ ...values, deviceId: userId });
+    } else {
+      console.log("Usuário não está inscrito para notificações.");
+    }
+
   }, []);
 
 
