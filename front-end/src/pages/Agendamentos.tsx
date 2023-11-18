@@ -14,6 +14,7 @@ import Introduction from '../components/Introduction';
 import FormsInput from '../components/FormsInput';
 import { Link, useNavigate } from 'react-router-dom';
 import MenuHamburguer from '../components/MenuHamburguer';
+import OneSignal from "react-onesignal";
 
 function Agendamentos() {
   const navigate = useNavigate();
@@ -84,18 +85,38 @@ function Agendamentos() {
       }
     }
   }, []);
-  // useEffect(() => {
-  //   requestNotificationPermission();
-  // }, []);
-  // function requestNotificationPermission() {
-  //   Notification.requestPermission()
-  //     .then(function (status) {
-  //       console.log("Notification permission status:", status);
-  //     })
-  //     .catch(function (error) {
-  //       console.error("Notification permission request error:", error);
-  //     });
-  // }
+
+useEffect(() => {
+  OneSignal.init({
+    appId: "2f865a87-c988-43e8-a60c-2138cc52199b",
+  });
+
+  const handleSubscriptionChange = (changeEvent) => {
+    if (changeEvent.current && changeEvent.current.id) {
+      console.log("OneSignal User ID:", changeEvent.current.id);
+      setValues({ ...values, deviceId: changeEvent.current.id });
+    }
+  };
+
+  if (OneSignal.User.PushSubscription) {
+    OneSignal.User.PushSubscription.addEventListener(
+      "change",
+      handleSubscriptionChange
+    );
+  }
+
+  return () => {
+    if (OneSignal.User.PushSubscription) {
+      OneSignal.User.PushSubscription.removeEventListener(
+        "change",
+        handleSubscriptionChange
+      );
+    }
+  };
+}, []);
+
+
+
   return (
     <div className='container-agendamentos' ref={containerRef}>
       <div className='button-meus-agendamentos-contain'>

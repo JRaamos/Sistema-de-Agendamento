@@ -26,7 +26,7 @@ const finaAllSchedulesDate = async (date) => {
             {
                 model: user_model_1.default,
                 as: 'user',
-                attributes: ['name', 'phone'],
+                attributes: ['name', 'phone', 'deviceId'],
             },
         ],
     });
@@ -63,7 +63,7 @@ const findAllSchedulesFromNow = async () => {
             {
                 model: user_model_1.default,
                 as: 'user',
-                attributes: ['name', 'phone'],
+                attributes: ['name', 'phone', 'deviceId'],
             },
         ],
         order: [

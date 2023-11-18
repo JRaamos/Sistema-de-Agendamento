@@ -24,7 +24,7 @@
   "include": [
     "src",
     "global.d.ts"
-  ],
+, "public/OneSignalSDKWorker.js"  ],
   "references": [
     {
       "path": "./tsconfig.node.json"

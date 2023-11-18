@@ -8,8 +8,8 @@ const schedules_service_1 = __importDefault(require("../services/schedules.servi
 const service_service_1 = __importDefault(require("../services/service.service"));
 const scheduleService_service_1 = __importDefault(require("../services/scheduleService.service"));
 const CreateRegister = async (req, res) => {
-    const { name, phone, date, hour, services, eventId } = req.body;
-    const user = await user_service_1.default.createUserService({ name, phone });
+    const { name, phone, date, hour, services, eventId, deviceId } = req.body;
+    const user = await user_service_1.default.createUserService({ name, phone, deviceId });
     const servicesIds = await service_service_1.default.findAllService(services);
     const scheduleData = {
         date,
