@@ -9,10 +9,10 @@ const schedules_service_1 = __importDefault(require("../services/schedules.servi
 const sendNotification = async (deviceIds, message) => {
     const headers = {
         "Content-Type": "application/json; charset=utf-8",
-        "Authorization": `Basic M2MyNWY0MWYtNzMyZS00MThkLWIzOTUtYmEyNWQwMDI5ODE0`
+        "Authorization": `Basic OTMyOTFjZjctYWI3MS00YmU5LWJhOWEtY2IxMjgzY2JiNDlh`
     };
     const data = {
-        app_id: "0e7089e8-60f2-480b-bafa-1173e57cac11",
+        app_id: "dd8d9c1d-7da4-4aa3-800e-bd5ebe075063",
         include_player_ids: deviceIds,
         contents: { en: message }
     };
@@ -35,8 +35,7 @@ const checkForUpcomingAppointments = async () => {
         const diffInMinutes = Math.floor(diffInMilliseconds / 60000); // Arredondado para baixo
         console.log(diffInMinutes);
         const message = `Lembrete de agendamento para ${schedule.date} às ${schedule.hour}`;
-        if (diffInMinutes < 30) {
-            // Enviar a notificação real
+        if (diffInMinutes === 30) {
             sendNotification([schedule.user.deviceId], message);
             console.log(`Notificação enviada para ${schedule.user.name} (Device ID: ${schedule.user.deviceId}) - Mensagem: "${message}"`);
         }

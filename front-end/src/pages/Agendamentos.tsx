@@ -1,24 +1,25 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
-import '../styles/agendamentos.css';
-import Services from '../components/Services';
-import arrow from '../images/arrow-1.svg';
-import Welcome from '../components/Welcome';
-import AgendamentosContext from '../context/AgendamentosContext';
-import MensagemDate from '../components/MensagemDate';
-import Calendar from '../components/Calendar';
-import AppointmentTimes from '../components/AppointmentTimes';
-import MensagemPhone from '../components/MensagemPhone';
-import MensageConclusão from '../components/MensageConclusão';
-import FormsButton from '../components/FormsButton';
-import Introduction from '../components/Introduction';
-import FormsInput from '../components/FormsInput';
-import { Link, useNavigate } from 'react-router-dom';
-import MenuHamburguer from '../components/MenuHamburguer';
+import React, { useContext, useEffect, useRef, useState } from "react";
+import "../styles/agendamentos.css";
+import Services from "../components/Services";
+import arrow from "../images/arrow-1.svg";
+import Welcome from "../components/Welcome";
+import AgendamentosContext from "../context/AgendamentosContext";
+import MensagemDate from "../components/MensagemDate";
+import Calendar from "../components/Calendar";
+import AppointmentTimes from "../components/AppointmentTimes";
+import MensagemPhone from "../components/MensagemPhone";
+import MensageConclusão from "../components/MensageConclusão";
+import FormsButton from "../components/FormsButton";
+import Introduction from "../components/Introduction";
+import FormsInput from "../components/FormsInput";
+import { Link, useNavigate } from "react-router-dom";
+import MenuHamburguer from "../components/MenuHamburguer";
 import OneSignal from "react-onesignal";
+import { ChangeEvent } from "../types/notification";
 
 function Agendamentos() {
   const navigate = useNavigate();
-  const [name, setName] = useState('');
+  const [name, setName] = useState("");
   const [buttomMeusAgendamentos, setButtomMeusAgendamentos] = useState(false);
   // MenuHamburguer
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -74,7 +75,7 @@ function Agendamentos() {
   ]);
 
   useEffect(() => {
-    const usuario = localStorage.getItem('name');
+    const usuario = localStorage.getItem("name");
     if (usuario) {
       const result = JSON.parse(usuario);
       setName(result);
@@ -86,69 +87,78 @@ function Agendamentos() {
     }
   }, []);
 
-useEffect(() => {
-  OneSignal.init({
-    appId: "2f865a87-c988-43e8-a60c-2138cc52199b",
-  });
+  useEffect(() => {
+    //localHost
+    // OneSignal.init({
+    //   appId: "dd8d9c1d-7da4-4aa3-800e-bd5ebe075063",
+    // });
 
-  const handleSubscriptionChange = (changeEvent) => {
-    if (changeEvent.current && changeEvent.current.id) {
-      console.log("OneSignal User ID:", changeEvent.current.id);
-      setValues({ ...values, deviceId: changeEvent.current.id });
-    }
-  };
+    //produção
+    OneSignal.init({
+      appId: "2f865a87-c988-43e8-a60c-2138cc52199b",
+    });
+    const handleSubscriptionChange = (changeEvent: ChangeEvent) => {
+      if (changeEvent.current && changeEvent.current.id) {
+        console.log("OneSignal User ID:", changeEvent.current.id);
+        localStorage.setItem("deviceId", changeEvent.current.id);
+      }
+    };
 
-  if (OneSignal.User.PushSubscription) {
-    OneSignal.User.PushSubscription.addEventListener(
-      "change",
-      handleSubscriptionChange
-    );
-  }
-
-  return () => {
     if (OneSignal.User.PushSubscription) {
-      OneSignal.User.PushSubscription.removeEventListener(
+      OneSignal.User.PushSubscription.addEventListener(
         "change",
         handleSubscriptionChange
       );
     }
-  };
-}, []);
 
+    if (OneSignal.Slidedown) {
+      OneSignal.Slidedown.promptPush({
+        force: true,
+      });
+    }
 
+    return () => {
+      if (OneSignal.User.PushSubscription) {
+        OneSignal.User.PushSubscription.removeEventListener(
+          "change",
+          handleSubscriptionChange
+        );
+      }
+    };
+  }, []);
 
   return (
-    <div className='container-agendamentos' ref={containerRef}>
-      <div className='button-meus-agendamentos-contain'>
+    <div className="container-agendamentos" ref={containerRef}>
+      <div className="button-meus-agendamentos-contain">
         <button
           onClick={() => {
             resetStates();
-            navigate('/');
+            navigate("/");
           }}
-          className='custom-button'
+          className="custom-button"
         >
-          <img src={arrow} alt='arrow' className='button-image' />
+          <img src={arrow} alt="arrow" className="button-image" />
         </button>
 
         <div
-          className='button-meus-agendamentos-header'
-          style={{ display: buttomMeusAgendamentos ? 'block' : 'none' }}
-          onClick={() => console.log('xana')}
+          className="button-meus-agendamentos-header"
+          style={{ display: buttomMeusAgendamentos ? "block" : "none" }}
+          onClick={() => console.log("xana")}
         >
           <MenuHamburguer isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
-          <nav className={`menu ${isMenuOpen ? 'active' : ''}`}>
-            <Link to='/meus-agendamentos'>Meus agendamentos</Link>
+          <nav className={`menu ${isMenuOpen ? "active" : ""}`}>
+            <Link to="/meus-agendamentos">Meus agendamentos</Link>
           </nav>
         </div>
       </div>
-      {!name && <div style={{ marginTop: '30px' }}>{<Introduction />}</div>}
+      {!name && <div style={{ marginTop: "30px" }}>{<Introduction />}</div>}
 
       <div>
         {isName && <div>{<Welcome />}</div>}
         {isServices && (
           <section
             className={
-              msgServices ? 'section-mensagem ' : 'section-mensagem msg-bottom'
+              msgServices ? "section-mensagem " : "section-mensagem msg-bottom"
             }
           >
             <section>{<Services />}</section>
@@ -158,16 +168,16 @@ useEffect(() => {
       {isServicesSelected && msgServices && (
         <div>
           {servicesSelected && (
-            <div className='section-mensagem-usuario'>
+            <div className="section-mensagem-usuario">
               <section
                 className={
                   isDate
-                    ? 'section-name msg-selected'
-                    : 'section-name msg-selected msg-bottom'
+                    ? "section-name msg-selected"
+                    : "section-name msg-selected msg-bottom"
                 }
               >
                 {servicesSelected.map((service: any) => (
-                  <p key={service} className='services-selected'>
+                  <p key={service} className="services-selected">
                     {service}
                   </p>
                 ))}
@@ -178,7 +188,7 @@ useEffect(() => {
       )}
       {isDate && (
         <div>
-          <section className='section-mensagem '>
+          <section className="section-mensagem ">
             <section>{<MensagemDate />}</section>
           </section>
         </div>
@@ -186,13 +196,13 @@ useEffect(() => {
       {!isAgendamentos && (
         <div>
           {isDates && (
-            <section className={selectedDate ? '' : 'msg-bottom'}>
+            <section className={selectedDate ? "" : "msg-bottom"}>
               {<Calendar />}
             </section>
           )}
           {selectedDate && (
-            <div className='hours'>
-              <section className={isAgendamentos ? '' : 'msg-bottom'}>
+            <div className="hours">
+              <section className={isAgendamentos ? "" : "msg-bottom"}>
                 {<AppointmentTimes />}
               </section>
             </div>
@@ -200,9 +210,9 @@ useEffect(() => {
         </div>
       )}
       {isAgendamentos && (
-        <div className='section-mensagem-usuario'>
+        <div className="section-mensagem-usuario">
           <section
-            className={isPhone ? 'section-name' : 'section-name msg-bottom '}
+            className={isPhone ? "section-name" : "section-name msg-bottom "}
           >
             {agendamentos}
           </section>
@@ -212,7 +222,7 @@ useEffect(() => {
         <div>
           <section
             className={
-              phoneBottom ? 'section-mensagem' : 'section-mensagem msg-bottom'
+              phoneBottom ? "section-mensagem" : "section-mensagem msg-bottom"
             }
           >
             {<MensagemPhone />}
@@ -220,16 +230,16 @@ useEffect(() => {
         </div>
       )}
       {phone && (
-        <div className={phoneBottom ? '' : 'msg-bottom'}>
-          <section className='section-mensagem-usuario'>
-            <section className='section-name' style={{ padding: 0 }}>
+        <div className={phoneBottom ? "" : "msg-bottom"}>
+          <section className="section-mensagem-usuario">
+            <section className="section-name" style={{ padding: 0 }}>
               <p>{phone}</p>
             </section>
           </section>
         </div>
       )}
       {phone && (
-        <div className={isMyAgendamentos ? '' : 'msg-bottom'}>
+        <div className={isMyAgendamentos ? "" : "msg-bottom"}>
           {<MensageConclusão />}
         </div>
       )}
