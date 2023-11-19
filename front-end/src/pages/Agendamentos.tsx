@@ -12,12 +12,21 @@ import MensageConclusão from "../components/MensageConclusão";
 import FormsButton from "../components/FormsButton";
 import Introduction from "../components/Introduction";
 import FormsInput from "../components/FormsInput";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import MenuHamburguer from "../components/MenuHamburguer";
 import OneSignal from "react-onesignal";
+import { ChangeEvent } from "../types/notification";
 
 function Agendamentos() {
   const navigate = useNavigate();
   const [name, setName] = useState("");
+  const [buttomMeusAgendamentos, setButtomMeusAgendamentos] = useState(false);
+  // MenuHamburguer
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   const {
     isServices,
     isDate,
@@ -41,11 +50,11 @@ function Agendamentos() {
     values,
     availableTimes,
   } = useContext(AgendamentosContext);
-  const [buttomMeusAgendamentos, setButtomMeusAgendamentos] = useState(false);
 
   useEffect(() => {
     resetStates();
   }, [location]);
+
   useEffect(() => {
     if (containerRef.current) {
       const container = containerRef.current;
@@ -77,42 +86,72 @@ function Agendamentos() {
       }
     }
   }, []);
-  
-    useEffect(() => {
-      OneSignal.init({
-        appId: "dd8d9c1d-7da4-4aa3-800e-bd5ebe075063",
-      });
 
+  useEffect(() => {
+    //localHost
+    // OneSignal.init({
+    //   appId: "dd8d9c1d-7da4-4aa3-800e-bd5ebe075063",
+    // });
+
+    //produção
+    OneSignal.init({
+      appId: "2f865a87-c988-43e8-a60c-2138cc52199b",
+    });
+    const handleSubscriptionChange = (changeEvent: ChangeEvent) => {
+      if (changeEvent.current && changeEvent.current.id) {
+        console.log("OneSignal User ID:", changeEvent.current.id);
+        localStorage.setItem("deviceId", changeEvent.current.id);
+      }
+    };
+
+    if (OneSignal.User.PushSubscription) {
       OneSignal.User.PushSubscription.addEventListener(
         "change",
-        (changeEvent) => {
-      setValues({ ...values, deviceId: changeEvent.current.id});
-        }
+        handleSubscriptionChange
       );
-    }, []);
+    }
+
+    if (OneSignal.Slidedown) {
+      OneSignal.Slidedown.promptPush({
+        force: true,
+      });
+    }
+
+    return () => {
+      if (OneSignal.User.PushSubscription) {
+        OneSignal.User.PushSubscription.removeEventListener(
+          "change",
+          handleSubscriptionChange
+        );
+      }
+    };
+  }, []);
 
   return (
     <div className="container-agendamentos" ref={containerRef}>
-      {buttomMeusAgendamentos && (
-        <div className="button-meus-agendamentos-contain">
-          <button
-            onClick={() => {
-              resetStates();
-              navigate("/");
-            }}
-            className="custom-button"
-          >
-            <img src={arrow} alt="arrow" className="button-image" />
-          </button>
-          <button
-            className="button-meus-agendamentos-header"
-            onClick={() => navigate("/meus-agendamentos")}
-          >
-            Meus agendamento
-          </button>
+      <div className="button-meus-agendamentos-contain">
+        <button
+          onClick={() => {
+            resetStates();
+            navigate("/");
+          }}
+          className="custom-button"
+        >
+          <img src={arrow} alt="arrow" className="button-image" />
+        </button>
+
+        <div
+          className="button-meus-agendamentos-header"
+          style={{ display: buttomMeusAgendamentos ? "block" : "none" }}
+          onClick={() => console.log("xana")}
+        >
+          <MenuHamburguer isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
+          <nav className={`menu ${isMenuOpen ? "active" : ""}`}>
+            <Link to="/meus-agendamentos">Meus agendamentos</Link>
+          </nav>
         </div>
-      )}
-      {!name && <div>{<Introduction />}</div>}
+      </div>
+      {!name && <div style={{ marginTop: "30px" }}>{<Introduction />}</div>}
 
       <div>
         {isName && <div>{<Welcome />}</div>}
@@ -204,7 +243,7 @@ function Agendamentos() {
           {<MensageConclusão />}
         </div>
       )}
-      {!isMyAgendamentos && <FormsInput />}
+      {!isMyAgendamentos && !isMenuOpen && <FormsInput />}
       {canRender && <FormsButton />}
     </div>
   );

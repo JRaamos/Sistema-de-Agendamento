@@ -6,9 +6,10 @@ import MeusAgendamentos from "./pages/MeusAgendamentos";
 import Login from "./pages/Login";
 import BarberDashboard from "./pages/BarberDashboard";
 import { useEffect } from "react";
+import OneSignal from "react-onesignal";
 
 function App() {
-
+  
 
   return (
     <div>

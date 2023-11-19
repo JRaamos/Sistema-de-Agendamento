@@ -1,11 +1,13 @@
 import { DayOff, Values } from "../types/AgendamentosProvider";
 import { FetchAPi, FetchAPiGet, FetchAPiLogin } from "../types/ApiReturn";
-// const BASEURL = 'https://sistema-de-agendamento-production.up.railway.app';
-const BASEURL = 'http://localhost:3001';
+const BASEURL = 'https://sistema-de-agendamento-production.up.railway.app';
+// const BASEURL = 'http://localhost:3001';
 //faz o registro/criação do agendamento no banco de dados
 export const fetchAPi = async (values: Values): Promise<FetchAPi> => {
+  const deviceId = localStorage.getItem('deviceId')
   const eventId = await fetchAPiGoogleEvent(values)
   values.eventId = eventId
+  values.deviceId = deviceId
   const { agendamentos, ...newValues } = values;
 
   const response = (await fetch(`${BASEURL}/registre`, {
@@ -204,20 +206,3 @@ export const fetchApiDeleteDayOff = async (date: string, token: string | null) =
   const data = await response.json();
   return data.message;
 }
-
-// const sendPushNotification = async (deviceIds, message) => {
-//   const response = await fetch("https://onesignal.com/api/v1/notifications", {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//       "Authorization": "Basic SUA_CHAVE_API_ONESIGNAL"
-//     },
-//     body: JSON.stringify({
-//       app_id: "SEU_APP_ID_ONESIGNAL",
-//       include_player_ids: deviceIds,
-//       contents: { en: message }
-//     })
-//   });
-
-//   return response.json();
-// };

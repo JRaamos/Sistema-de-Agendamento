@@ -1,15 +1,24 @@
 import moment from 'moment-timezone';
 import cron from 'node-cron';
 import schedulesService from '../services/schedules.service';
+import { convertDateFormat } from './functions';
 
 const sendNotification = async (deviceIds: (string | null | undefined)[], message: string) => {
   const headers = {
     "Content-Type": "application/json; charset=utf-8",
-    "Authorization": `Basic OTMyOTFjZjctYWI3MS00YmU5LWJhOWEtY2IxMjgzY2JiNDlh`
+    //localHost
+    //"Authorization": `Basic OTMyOTFjZjctYWI3MS00YmU5LWJhOWEtY2IxMjgzY2JiNDlh`
+    //produção
+    "Authorization": `Basic NzAzNTI5YmEtYjY4MC00NDZmLWEwOGItNGFjNGI4NWI1MjIz`
+
   };
 
-  const data = {
-    app_id: "dd8d9c1d-7da4-4aa3-800e-bd5ebe075063",
+    
+    const data = {
+      //produção
+      app_id: "2f865a87-c988-43e8-a60c-2138cc52199b",
+      //localHost
+      //   app_id: "dd8d9c1d-7da4-4aa3-800e-bd5ebe075063",
     include_player_ids: deviceIds,
     contents: { en: message }
   };
@@ -34,10 +43,11 @@ export const checkForUpcomingAppointments = async () => {
   schedules.forEach(schedule => {
     const scheduleDateTimeSaoPaulo = moment.tz(`${schedule.date}T${schedule.hour}`, 'America/Sao_Paulo').toDate();
     const diffInMilliseconds = scheduleDateTimeSaoPaulo.getTime() - nowSaoPaulo.getTime();
-    const diffInMinutes = Math.floor(diffInMilliseconds / 60000); // Arredondado para baixo
+    const diffInMinutes = Math.round(diffInMilliseconds / 60000); // Arredondado para cima
     console.log(diffInMinutes);
-
-    const message = `Lembrete de agendamento para ${schedule.date} às ${schedule.hour}`;
+    // const newdate = convertDateFormat(schedule.date);
+    const message = `Lembrete de agendamento: Sr(a) ${schedule.user.name},
+    Não se esqueça do seu agendamento daqui a pouco ás ${schedule.hour}`;
     if (diffInMinutes === 30) {
       sendNotification([schedule.user.deviceId], message);
       console.log(`Notificação enviada para ${schedule.user.name} (Device ID: ${schedule.user.deviceId}) - Mensagem: "${message}"`);
