@@ -7,8 +7,6 @@
     "start": "ts-node src/server.ts",
     "dev": "nodemon --watch \"./src/**\" --ext \"ts,js\" --ignore \"src/**/*.spec.ts,src/**/*.json\" --exec \"ts-node src/server.ts\"",
     "build": "tsc",
-  "production": "node ./build/src/server.js",
-  "postinstall": "tsc",
     "test": "mocha -r ts-node/register ./src/tests/integration/*$NAME*.{test,spec}.ts -t 10000 --exit",
     "test:coverage": "nyc npm run test",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
