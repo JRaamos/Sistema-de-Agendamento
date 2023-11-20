@@ -9,9 +9,9 @@ const corn_node_1 = require("./utils/corn-node");
 // import sendDailyNotifications from './utils/corn-node';
 const PORT = process.env.PORT || 3001;
 const server = app_1.default.listen(PORT, () => console.log(`Server is running on PORT: ${PORT}`));
-node_cron_1.default.schedule('* * * *', () => {
+node_cron_1.default.schedule('*/10 6-19 * * *', () => {
     (0, corn_node_1.checkForUpcomingAppointments)();
-    console.log('Verificando novos agendamentos a cada 1 minutos durante o dia...');
+    console.log('Verificando novos agendamentos a cada 10 minutos durante o dia...');
 }, {
     timezone: "America/Sao_Paulo"
 });

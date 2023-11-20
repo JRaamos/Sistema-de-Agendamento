@@ -4,15 +4,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const user_model_1 = __importDefault(require("../database/models/user.model"));
-const userExists = async (phone, name) => {
+const userExists = async (phone, name, deviceId) => {
     const user = await user_model_1.default.findOne({ where: { phone, name } });
     if (!user)
         return false;
+    user_model_1.default.update({ deviceId }, { where: { phone, name } });
     return user.dataValues.userId;
 };
 const createUserService = async (user) => {
     const { name, phone, deviceId } = user;
-    const userExistsResult = await userExists(phone, name);
+    const userExistsResult = await userExists(phone, name, deviceId);
     if (userExistsResult)
         return userExistsResult;
     const userResult = await user_model_1.default.create({ name, phone, deviceId });
