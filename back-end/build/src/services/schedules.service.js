@@ -76,12 +76,18 @@ const findAllSchedulesFromNow = async () => {
 const findByScheduleDateId = async (date, hour) => {
     const schedulesWithServices = await schedules_model_1.default.findOne({
         where: { date, hour },
-        include: {
-            model: service_model_1.default,
-            as: 'services',
-            attributes: ['service', 'price', 'duration'],
-            through: { attributes: [] },
-        },
+        include: [{
+                model: service_model_1.default,
+                as: 'services',
+                attributes: ['service', 'price', 'duration'],
+                through: { attributes: [] },
+            },
+            {
+                model: user_model_1.default,
+                as: 'user',
+                attributes: ['name', 'phone', 'deviceId'],
+            },
+        ],
     });
     return schedulesWithServices;
 };

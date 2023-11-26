@@ -1,4 +1,4 @@
-import  { Op } from 'sequelize';
+import { Op } from 'sequelize';
 import ScheduleModel, { ScheduleInputtableTypes } from '../database/models/schedules.model';
 import ServiceModel from '../database/models/service.model';
 import { Schedule, ScheduleAllUser } from '../types/schedules';
@@ -71,7 +71,7 @@ const findAllSchedulesFromNow = async () => {
     ],
     order: [
       ['date', 'ASC'],
-      ['hour', 'ASC'], 
+      ['hour', 'ASC'],
     ],
   });
 
@@ -82,13 +82,18 @@ const findByScheduleDateId = async (date: string, hour: string) => {
 
   const schedulesWithServices = await ScheduleModel.findOne({
     where: { date, hour },
-    include: {
+    include: [{
       model: ServiceModel,
       as: 'services',
       attributes: ['service', 'price', 'duration'],
       through: { attributes: [] },
     },
-
+    {
+      model: UserModel,
+      as: 'user',
+      attributes: ['name', 'phone', 'deviceId'],
+    },
+    ],
   });
 
   return schedulesWithServices;

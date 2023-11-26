@@ -7,6 +7,7 @@ export type Schedule = {
   hour: string;
   userId: number;
   eventId: string;
+  user?: User;
 };
 
 export type ScheduleService = Schedule & {

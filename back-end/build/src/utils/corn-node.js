@@ -3,22 +3,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.checkForUpcomingAppointments = void 0;
+exports.scheduleCancelation = exports.checkForUpcomingAppointments = void 0;
 const moment_timezone_1 = __importDefault(require("moment-timezone"));
 const schedules_service_1 = __importDefault(require("../services/schedules.service"));
 const sendNotification = async (deviceIds, message) => {
     const headers = {
         "Content-Type": "application/json; charset=utf-8",
         //localHost
-        //"Authorization": `Basic OTMyOTFjZjctYWI3MS00YmU5LWJhOWEtY2IxMjgzY2JiNDlh`
+        "Authorization": `Basic OTMyOTFjZjctYWI3MS00YmU5LWJhOWEtY2IxMjgzY2JiNDlh`
         //produção
-        "Authorization": `Basic NzAzNTI5YmEtYjY4MC00NDZmLWEwOGItNGFjNGI4NWI1MjIz`
+        // "Authorization": `Basic NzAzNTI5YmEtYjY4MC00NDZmLWEwOGItNGFjNGI4NWI1MjIz`
     };
     const data = {
         //produção
-        app_id: "2f865a87-c988-43e8-a60c-2138cc52199b",
+        // app_id: "2f865a87-c988-43e8-a60c-2138cc52199b",
         //localHost
-        //   app_id: "dd8d9c1d-7da4-4aa3-800e-bd5ebe075063",
+        app_id: "dd8d9c1d-7da4-4aa3-800e-bd5ebe075063",
         include_player_ids: deviceIds,
         contents: { en: message }
     };
@@ -50,3 +50,9 @@ const checkForUpcomingAppointments = async () => {
     });
 };
 exports.checkForUpcomingAppointments = checkForUpcomingAppointments;
+const scheduleCancelation = async (name, date, hour, deviceId) => {
+    const scheduleDateTimeSaoPaulo = moment_timezone_1.default.tz(`${date}T${hour}`, 'America/Sao_Paulo').toDate();
+    const message = `Prezado(a) ${name}, lamentamos informar que seu agendamento para ${scheduleDateTimeSaoPaulo} foi cancelado. Estamos à disposição para reagendar conforme sua conveniência. Pedimos desculpas pelo inconveniente e agradecemos sua compreensão.`;
+    sendNotification([deviceId], message);
+};
+exports.scheduleCancelation = scheduleCancelation;

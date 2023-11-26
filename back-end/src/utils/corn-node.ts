@@ -7,18 +7,18 @@ const sendNotification = async (deviceIds: (string | null | undefined)[], messag
   const headers = {
     "Content-Type": "application/json; charset=utf-8",
     //localHost
-    //"Authorization": `Basic OTMyOTFjZjctYWI3MS00YmU5LWJhOWEtY2IxMjgzY2JiNDlh`
+    "Authorization": `Basic OTMyOTFjZjctYWI3MS00YmU5LWJhOWEtY2IxMjgzY2JiNDlh`
     //produção
-    "Authorization": `Basic NzAzNTI5YmEtYjY4MC00NDZmLWEwOGItNGFjNGI4NWI1MjIz`
+    // "Authorization": `Basic NzAzNTI5YmEtYjY4MC00NDZmLWEwOGItNGFjNGI4NWI1MjIz`
 
   };
 
-    
-    const data = {
-      //produção
-      app_id: "2f865a87-c988-43e8-a60c-2138cc52199b",
-      //localHost
-      //   app_id: "dd8d9c1d-7da4-4aa3-800e-bd5ebe075063",
+
+  const data = {
+    //produção
+    // app_id: "2f865a87-c988-43e8-a60c-2138cc52199b",
+    //localHost
+      app_id: "dd8d9c1d-7da4-4aa3-800e-bd5ebe075063",
     include_player_ids: deviceIds,
     contents: { en: message }
   };
@@ -53,4 +53,10 @@ export const checkForUpcomingAppointments = async () => {
       console.log(`Notificação enviada para ${schedule.user.name} (Device ID: ${schedule.user.deviceId}) - Mensagem: "${message}"`);
     }
   });
+};
+
+export const scheduleCancelation = async (name: string, date: string, hour: string, deviceId: string | null | undefined ) => {
+  const newdate = convertDateFormat(date);
+  const message = `Prezado(a) ${name}, lamentamos informar que seu agendamento para ${newdate} as ${hour} foi cancelado. Estamos à disposição para reagendar conforme sua conveniência. Pedimos desculpas pelo inconveniente e agradecemos sua compreensão.`
+  sendNotification([deviceId], message);
 };

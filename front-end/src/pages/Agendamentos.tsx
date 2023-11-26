@@ -89,14 +89,14 @@ function Agendamentos() {
 
   useEffect(() => {
     //localHost
-    // OneSignal.init({
-    //   appId: "dd8d9c1d-7da4-4aa3-800e-bd5ebe075063",
-    // });
+    OneSignal.init({
+      appId: "dd8d9c1d-7da4-4aa3-800e-bd5ebe075063",
+    });
 
     //produção
-    OneSignal.init({
-      appId: "2f865a87-c988-43e8-a60c-2138cc52199b",
-    });
+    // OneSignal.init({
+    //   appId: "2f865a87-c988-43e8-a60c-2138cc52199b",
+    // });
     const handleSubscriptionChange = (changeEvent: ChangeEvent) => {
       if (changeEvent.current && changeEvent.current.id) {
         console.log("OneSignal User ID:", changeEvent.current.id);

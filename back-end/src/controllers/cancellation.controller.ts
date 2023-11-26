@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import schedulesService from '../services/schedules.service';
 import cancellationService from '../services/cancellation.service';
+import { scheduleCancelation } from '../utils/corn-node';
 
 const createCancellation = async (req: Request, res: Response) => {
   const { dateonly, hour } = req.body;
@@ -13,7 +14,7 @@ const createCancellation = async (req: Request, res: Response) => {
   if (!scheduleResult) {
     return res.status(404).send('Schedule not found');
   }
-  const { scheduleId, date, userId } = scheduleResult.dataValues;
+  const { scheduleId, date, userId, user } = scheduleResult.dataValues;
   const newCancellation = {
     dateSchedule: date,
     dateCancellation: brasiliaTime,
@@ -21,6 +22,9 @@ const createCancellation = async (req: Request, res: Response) => {
   };
 
   await cancellationService.createCancellation(newCancellation);
+  if (user){
+    await scheduleCancelation(user.name, date, hour, user.deviceId);
+  }
   await schedulesService.deleteSchedule(scheduleId);
 
   return res.status(200).end();
