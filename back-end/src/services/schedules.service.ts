@@ -1,12 +1,16 @@
+/* eslint-disable max-lines-per-function */
 import { Op } from 'sequelize';
+import moment from 'moment-timezone';
 import ScheduleModel, { ScheduleInputtableTypes } from '../database/models/schedules.model';
 import ServiceModel from '../database/models/service.model';
 import { Schedule, ScheduleAllUser } from '../types/schedules';
-import moment from 'moment-timezone';
 import UserModel from '../database/models/user.model';
 
+const now = moment.tz('America/Sao_Paulo');
+const currentDate = now.format('YYYY-MM-DD');
+
 const createSchedule = async (schedule: ScheduleInputtableTypes):
-  Promise<Schedule> => {
+Promise<Schedule> => {
   const { date, hour, userId, eventId } = schedule;
 
   const scheduleResult = await ScheduleModel.create({ date, hour, userId, eventId });
@@ -35,8 +39,6 @@ const finaAllSchedulesDate = async (date: string): Promise<ScheduleAllUser[]> =>
 };
 
 const findAllSchedulesFromNow = async () => {
-  const now = moment.tz('America/Sao_Paulo');
-  const currentDate = now.format('YYYY-MM-DD');
   const currentTime = now.format('HH:mm:ss');
 
   const schedules = await ScheduleModel.findAll({
@@ -44,34 +46,28 @@ const findAllSchedulesFromNow = async () => {
       [Op.and]: [
         { date: { [Op.gt]: currentDate } },
         {
-          [Op.or]: [
-            {
-              [Op.and]: [
-                { date: currentDate },
-                { hour: { [Op.gte]: currentTime } },
-              ],
-            },
-            { date: { [Op.gt]: currentDate }, },
+          [Op.or]: [{
+            [Op.and]: [
+              { date: currentDate },
+              { hour: { [Op.gte]: currentTime } },
+            ],
+          },
+          { date: { [Op.gt]: currentDate } },
           ],
-        },
-      ],
+        }],
     },
-    include: [
-      {
-        model: ServiceModel,
-        as: 'services',
-        attributes: ['service', 'price', 'duration'],
-        through: { attributes: [] },
-      },
-      {
-        model: UserModel,
-        as: 'user',
-        attributes: ['name', 'phone', 'deviceId'],
-      },
-    ],
-    order: [
-      ['date', 'ASC'],
-      ['hour', 'ASC'],
+    include: [{
+      model: ServiceModel,
+      as: 'services',
+      attributes: ['service', 'price', 'duration'],
+      through: { attributes: [] },
+    },
+    {
+      model: UserModel,
+      as: 'user',
+      attributes: ['name', 'phone', 'deviceId'],
+    }],
+    order: [['date', 'ASC'], ['hour', 'ASC'],
     ],
   });
 
@@ -79,7 +75,6 @@ const findAllSchedulesFromNow = async () => {
 };
 
 const findByScheduleDateId = async (date: string, hour: string) => {
-
   const schedulesWithServices = await ScheduleModel.findOne({
     where: { date, hour },
     include: [{
@@ -104,32 +99,29 @@ const deleteSchedule = async (scheduleId: number) => {
 };
 
 const countSchedules = async (rangeDays: number) => {
-  const now = moment.tz('America/Sao_Paulo');
-  const endDate = now.format('YYYY-MM-DD');
   const endTime = now.format('HH:mm:ss');
 
   let startDate = now.clone().subtract(rangeDays, 'days').format('YYYY-MM-DD');
 
-
   if (rangeDays <= 0) {
-    startDate = "1970-01-01";
+    startDate = '1970-01-01';
   }
 
   const result = await ScheduleModel.count({
     where: {
       [Op.and]: [
         { date: { [Op.gte]: startDate } },
-        { date: { [Op.lte]: endDate } },
+        { date: { [Op.lte]: currentDate } },
         {
           [Op.or]: [
             {
               date: {
-                [Op.lt]: endDate,
+                [Op.lt]: currentDate,
               },
             },
             {
               [Op.and]: [
-                { date: endDate },
+                { date: currentDate },
                 { hour: { [Op.lte]: endTime } },
               ],
             },
@@ -142,12 +134,7 @@ const countSchedules = async (rangeDays: number) => {
   return result;
 };
 
-
-
-
 const countFutureSchedules = async () => {
-  const now = moment.tz('America/Sao_Paulo');
-  const currentDate = now.format('YYYY-MM-DD');
   const currentTime = now.format('HH:mm:ss');
 
   const result = await ScheduleModel.count({
@@ -173,7 +160,6 @@ const countFutureSchedules = async () => {
 
   return result;
 };
-
 
 export default {
   countFutureSchedules,

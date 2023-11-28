@@ -3,4 +3,5 @@ export type Cancellation = {
   dateSchedule: string;
   dateCancellation: Date;
   userId: number;
+  eventId: string;
 };

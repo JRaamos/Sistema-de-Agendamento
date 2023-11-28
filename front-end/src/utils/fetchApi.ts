@@ -16,7 +16,7 @@ export const fetchAPi = async (values: Values): Promise<FetchAPi> => {
   }
   ));
 
-  const data = await response.json();  
+  const data = await response.json();
   return data;
 }
 
@@ -51,7 +51,7 @@ export const fetchAPiGet = async (date: string | null): Promise<FetchAPiGet[]> =
 export const fetchAPiGetAll = async (): Promise<FetchAPiGet[]> => {
   const response = (await fetch(`${BASEURL}/schedules`, {
     method: 'get',
-    headers: { 'Content-Type': 'application/json'},
+    headers: { 'Content-Type': 'application/json' },
   }
   ));
 
@@ -71,7 +71,7 @@ export const fetchAPiGetId = async (date: string | null, hour: string | number) 
 
   const data = await response.json();
 
-  return data.eventId;
+  return data;
 }
 
 //conta quantos agendamentos foram realizados de acorodo com o intervalo de dias passado, é necessario passar o token
@@ -111,7 +111,7 @@ export const fetchAPiCancel = async (dateonly: string, hour: string | number) =>
 
 //conta quantos cancelamentos foram realizados de acorodo com o intervalo de dias passado, é necessario passar o token
 export const fetchAPiCountCancel = async (days: number, token: string | null) => {
-  const response = (await fetch(`${BASEURL}/cancellation/${days}`, {
+  const response = (await fetch(`${BASEURL}/cancellation/count/${days}`, {
     method: 'get',
     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
   }
@@ -122,6 +122,20 @@ export const fetchAPiCountCancel = async (days: number, token: string | null) =>
   return data;
 }
 
+export const fetchAPiCancellDate = async (date: string) => {
+  const formattedDate = date?.replace(/\//g, '-');
+
+  const response = (await fetch(`${BASEURL}/cancellation/date/${formattedDate}`, {
+    method: 'get',
+    headers: { 'Content-Type': 'application/json' },
+  }
+  ));
+
+  const data = await response.json();
+
+  return data;
+
+}
 export const fetchAPiGoogleEvent = async (values: Values) => {
   const response = (await fetch(`${BASEURL}/googleEvent`, {
     method: 'post',
@@ -175,7 +189,7 @@ export const fetchApiGetDayOff = async () => {
     };
   });
 
-  
+
   return newData;
 }
 

@@ -31,6 +31,11 @@ const CancellationModel = index_1.default.define('Cancellation', {
             key: 'user_id',
         },
     },
+    eventId: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: false,
+        field: 'event_id',
+    },
 }, {
     tableName: 'cancellations',
     timestamps: false,

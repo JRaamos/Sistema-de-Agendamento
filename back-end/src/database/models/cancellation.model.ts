@@ -32,6 +32,11 @@ const CancellationModel: CancellationSequelizeModelCreator = db.define('Cancella
       key: 'user_id',
     },
   },
+  eventId: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    field: 'event_id',
+  },
 }, {
   tableName: 'cancellations',
   timestamps: false,

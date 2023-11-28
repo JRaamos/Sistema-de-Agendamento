@@ -30,6 +30,11 @@ export default {
           key: "user_id",
         },
       },
+      eventId: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        field: "event_id",
+      },
     });
   },
   down(queryInterface: QueryInterface) {

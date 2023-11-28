@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.scheduleCancelation = exports.checkForUpcomingAppointments = void 0;
 const moment_timezone_1 = __importDefault(require("moment-timezone"));
 const schedules_service_1 = __importDefault(require("../services/schedules.service"));
+const functions_1 = require("./functions");
 const sendNotification = async (deviceIds, message) => {
     const headers = {
         "Content-Type": "application/json; charset=utf-8",
@@ -51,8 +52,11 @@ const checkForUpcomingAppointments = async () => {
 };
 exports.checkForUpcomingAppointments = checkForUpcomingAppointments;
 const scheduleCancelation = async (name, date, hour, deviceId) => {
-    const scheduleDateTimeSaoPaulo = moment_timezone_1.default.tz(`${date}T${hour}`, 'America/Sao_Paulo').toDate();
-    const message = `Prezado(a) ${name}, lamentamos informar que seu agendamento para ${scheduleDateTimeSaoPaulo} foi cancelado. Estamos à disposição para reagendar conforme sua conveniência. Pedimos desculpas pelo inconveniente e agradecemos sua compreensão.`;
+    const newdate = (0, functions_1.convertDateFormat)(date);
+    const message = ` Prezado(a) ${name}, lamentamos informar que seu 
+  agendamento para ${newdate} as ${hour} foi cancelado. 
+  Estamos à disposição para reagendar conforme sua 
+  conveniência. Pedimos desculpas pelo inconveniente e agradecemos sua compreensão.`;
     sendNotification([deviceId], message);
 };
 exports.scheduleCancelation = scheduleCancelation;

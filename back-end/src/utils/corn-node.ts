@@ -1,5 +1,4 @@
 import moment from 'moment-timezone';
-import cron from 'node-cron';
 import schedulesService from '../services/schedules.service';
 import { convertDateFormat } from './functions';
 
@@ -57,6 +56,9 @@ export const checkForUpcomingAppointments = async () => {
 
 export const scheduleCancelation = async (name: string, date: string, hour: string, deviceId: string | null | undefined ) => {
   const newdate = convertDateFormat(date);
-  const message = `Prezado(a) ${name}, lamentamos informar que seu agendamento para ${newdate} as ${hour} foi cancelado. Estamos à disposição para reagendar conforme sua conveniência. Pedimos desculpas pelo inconveniente e agradecemos sua compreensão.`
+  const message = ` Prezado(a) ${name}, lamentamos informar que seu 
+  agendamento para ${newdate} as ${hour} foi cancelado. 
+  Estamos à disposição para reagendar conforme sua 
+  conveniência. Pedimos desculpas pelo inconveniente e agradecemos sua compreensão.`;
   sendNotification([deviceId], message);
 };

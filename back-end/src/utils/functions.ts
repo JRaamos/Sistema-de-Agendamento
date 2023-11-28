@@ -11,4 +11,3 @@ export function convertDateFormat(dateStr: string): string {
 
   return `${day}/${month}/${year}`; // Reorganiza no formato DD/MM/YYYY
 }
-
