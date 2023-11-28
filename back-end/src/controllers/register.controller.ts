@@ -9,19 +9,20 @@ const CreateRegister = async (req: Request, res: Response) => {
 
   const user = await userService.createUserService({ name, phone, deviceId });
 
-  const servicesIds = await servicesAll.findAllService(services);
-
   if (user.status === 'SUCCESSFUL') {
     const scheduleData = {
-      date,
-      hour,
-      userId: user.data,
-      eventId,
+      date, hour, userId: user.data, eventId,
     };
     const scheduleResult = await schedule.createSchedule(scheduleData);
-    servicesIds.forEach(async (serviceId) => {
-      await scheduleService.createScheduleService(scheduleResult.scheduleId, serviceId);
-    });
+
+    const servicesIds = await servicesAll.findAllService(services);
+
+    if (servicesIds.status === 'SUCCESSFUL') {
+      servicesIds.data.forEach(async (serviceId) => {
+        await scheduleService.createScheduleService(scheduleResult.scheduleId, serviceId);
+      });
+    }
+    
     return res.status(200).json({ user, scheduleResult });
   }
   return res.status(400).json(user.data);
