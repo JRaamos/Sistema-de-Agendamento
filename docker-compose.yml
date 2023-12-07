@@ -20,10 +20,10 @@ services:
       MYSQL_ADDON_USER: ${MYSQL_ADDON_USER}
       JWT_SECRET: ${JWT_SECRET}
       CALENDAR_ID: ${CALENDAR_ID}
-  database:
-    image: mysql:8.0.19
-    container_name: database
-    ports:
-      - "3306:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ADDON_PASSWORD}
+  # database:
+  #   image: mysql:8.0.19
+  #   container_name: database
+  #   ports:
+  #     - "3306:3306"
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: ${MYSQL_ADDON_PASSWORD}

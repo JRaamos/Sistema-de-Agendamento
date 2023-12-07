@@ -1,6 +1,6 @@
 import { DayOff, Values } from "../types/AgendamentosProvider";
 import { FetchAPi, FetchAPiGet, FetchAPiLogin } from "../types/ApiReturn";
-const BASEURL = 'http://localhost:3001';
+const BASEURL = 'https://sistema-de-agendamento-production.up.railway.app';
 //faz o registro/criação do agendamento no banco de dados
 export const fetchAPi = async (values: Values): Promise<FetchAPi> => {
   const deviceId = localStorage.getItem('deviceId')
@@ -44,8 +44,11 @@ export const fetchAPiGet = async (date: string | null): Promise<FetchAPiGet[]> =
   ));
 
   const data = await response.json();
-
-  return data
+  if (data.message) {
+    throw new Error(data.message)
+  }
+  
+  return data.data;
 }
 
 export const fetchAPiGetAll = async (): Promise<FetchAPiGet[]> => {
