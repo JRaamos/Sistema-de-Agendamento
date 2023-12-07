@@ -23,11 +23,16 @@ const countSchedules = async (req: Request, res: Response) => {
 const countFutureSchedules = async (req: Request, res: Response) => {
   const result = await schedulesService.countFutureSchedules();
   return res.status(200).json({ result });
-}
+};
 const findAllSchedulesFromNow = async (req: Request, res: Response) => {
   const result = await schedulesService.findAllSchedulesFromNow();
   return res.status(200).json(result);
+};
 
-}
-
-export default { finaAllSchedulesDate, findByScheduleDateId, countSchedules, countFutureSchedules,findAllSchedulesFromNow };
+export default {
+  finaAllSchedulesDate, 
+  findByScheduleDateId,
+  countSchedules,
+  countFutureSchedules,
+  findAllSchedulesFromNow, 
+};

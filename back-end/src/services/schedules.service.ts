@@ -1,23 +1,28 @@
-/* eslint-disable max-lines-per-function */
 import { Op } from 'sequelize';
 import moment from 'moment-timezone';
 import ScheduleModel, { ScheduleInputtableTypes } from '../database/models/schedules.model';
 import ServiceModel from '../database/models/service.model';
 import { Schedule, ScheduleAllUser } from '../types/schedules';
 import UserModel from '../database/models/user.model';
+import { ServiceResponse } from '../types/ServiceResponse';
 
 const now = moment.tz('America/Sao_Paulo');
 const currentDate = now.format('YYYY-MM-DD');
 
 const createSchedule = async (schedule: ScheduleInputtableTypes):
-Promise<Schedule> => {
+Promise<ServiceResponse<Schedule>> => {
   const { date, hour, userId, eventId } = schedule;
-
   const scheduleResult = await ScheduleModel.create({ date, hour, userId, eventId });
-  return scheduleResult.dataValues as Schedule;
+  if (!scheduleResult) {
+    return {
+      status: 'NOT_FOUND', data: { message: 'dados invalidos' },
+    };
+  }
+
+  return { status: 'SUCCESSFUL', data: scheduleResult.dataValues as Schedule };
 };
 
-const finaAllSchedulesDate = async (date: string): Promise<ScheduleAllUser[]> => {
+const finaAllSchedulesDate = async (date: string): Promise<ServiceResponse<ScheduleAllUser[]>> => {
   const schedulesWithServicesAndUsers = await ScheduleModel.findAll({
     where: { date },
     include: [
@@ -34,11 +39,18 @@ const finaAllSchedulesDate = async (date: string): Promise<ScheduleAllUser[]> =>
       },
     ],
   });
-
-  return schedulesWithServicesAndUsers as unknown as ScheduleAllUser[];
+  if (!schedulesWithServicesAndUsers) {
+    return {
+      status: 'NOT_FOUND', data: { message: 'Agendamento não encontrado' },
+    };
+  }
+  
+  return { status: 'SUCCESSFUL', 
+    data: schedulesWithServicesAndUsers as unknown as ScheduleAllUser[],
+  };
 };
 
-const findAllSchedulesFromNow = async () => {
+const findAllSchedulesFromNow = async (): Promise<ServiceResponse<ScheduleAllUser>> => {
   const currentTime = now.format('HH:mm:ss');
 
   const schedules = await ScheduleModel.findAll({
@@ -71,7 +83,13 @@ const findAllSchedulesFromNow = async () => {
     ],
   });
 
-  return schedules;
+  if (!schedules) {
+    return {
+      status: 'NOT_FOUND', data: { message: 'Agendamento não encontrado' },
+    };
+  }
+
+  return { status: 'SUCCESSFUL', data: schedules as unknown as ScheduleAllUser };
 };
 
 const findByScheduleDateId = async (date: string, hour: string) => {

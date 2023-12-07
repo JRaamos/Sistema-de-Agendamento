@@ -4,15 +4,20 @@ import validateJWT from '../middlewares/validateJWT';
 
 const routerDayOff = Router();
 
-routerDayOff.get('/dayOff',
-  dayOffController.getDayOffs);
+routerDayOff.get(
+  '/dayOff',
+  dayOffController.getDayOffs,
+);
 
-routerDayOff.post('/dayOff',
+routerDayOff.post(
+  '/dayOff',
   validateJWT,
-  dayOffController.createDayOff);
+  dayOffController.createDayOff,
+);
 
-routerDayOff.delete('/dayOff/:date',
-  dayOffController.deleteDayOff
+routerDayOff.delete(
+  '/dayOff/:date',
+  dayOffController.deleteDayOff,
 );
 
 export default routerDayOff;

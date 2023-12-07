@@ -33,7 +33,7 @@ const ScheduleModel: ScheduleSequelizeModelCreator = db.define('Schedule', {
     references: {
       model: UserModel,
       key: 'user_id',
-    }
+    },
   },
 }, {
   tableName: 'schedules',

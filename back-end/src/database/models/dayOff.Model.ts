@@ -2,7 +2,6 @@ import { DataTypes, Model, ModelDefined, Optional } from 'sequelize';
 import db from './index';
 
 import { DayOffDb } from '../../types/DayOff';
-import BarberUserModel from './barberUser.model';
 
 export type DayOffCreationAttributes = Optional<DayOffDb, 'dayOffId'>;
 
