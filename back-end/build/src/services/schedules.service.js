@@ -4,14 +4,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const sequelize_1 = require("sequelize");
+const moment_timezone_1 = __importDefault(require("moment-timezone"));
 const schedules_model_1 = __importDefault(require("../database/models/schedules.model"));
 const service_model_1 = __importDefault(require("../database/models/service.model"));
-const moment_timezone_1 = __importDefault(require("moment-timezone"));
 const user_model_1 = __importDefault(require("../database/models/user.model"));
+const now = moment_timezone_1.default.tz('America/Sao_Paulo');
+const currentDate = now.format('YYYY-MM-DD');
 const createSchedule = async (schedule) => {
     const { date, hour, userId, eventId } = schedule;
     const scheduleResult = await schedules_model_1.default.create({ date, hour, userId, eventId });
-    return scheduleResult.dataValues;
+    if (!scheduleResult) {
+        return {
+            status: 'NOT_FOUND', data: { message: 'dados invalidos' },
+        };
+    }
+    return { status: 'SUCCESSFUL', data: scheduleResult.dataValues };
 };
 const finaAllSchedulesDate = async (date) => {
     const schedulesWithServicesAndUsers = await schedules_model_1.default.findAll({
@@ -30,31 +37,34 @@ const finaAllSchedulesDate = async (date) => {
             },
         ],
     });
-    return schedulesWithServicesAndUsers;
+    if (!schedulesWithServicesAndUsers) {
+        return {
+            status: 'NOT_FOUND', data: { message: 'Agendamento não encontrado' },
+        };
+    }
+    return { status: 'SUCCESSFUL',
+        data: schedulesWithServicesAndUsers,
+    };
 };
 const findAllSchedulesFromNow = async () => {
-    const now = moment_timezone_1.default.tz('America/Sao_Paulo');
-    const currentDate = now.format('YYYY-MM-DD');
     const currentTime = now.format('HH:mm:ss');
     const schedules = await schedules_model_1.default.findAll({
         where: {
             [sequelize_1.Op.and]: [
                 { date: { [sequelize_1.Op.gt]: currentDate } },
                 {
-                    [sequelize_1.Op.or]: [
-                        {
+                    [sequelize_1.Op.or]: [{
                             [sequelize_1.Op.and]: [
                                 { date: currentDate },
                                 { hour: { [sequelize_1.Op.gte]: currentTime } },
                             ],
                         },
-                        { date: { [sequelize_1.Op.gt]: currentDate }, },
+                        { date: { [sequelize_1.Op.gt]: currentDate } },
                     ],
-                },
+                }
             ],
         },
-        include: [
-            {
+        include: [{
                 model: service_model_1.default,
                 as: 'services',
                 attributes: ['service', 'price', 'duration'],
@@ -64,14 +74,16 @@ const findAllSchedulesFromNow = async () => {
                 model: user_model_1.default,
                 as: 'user',
                 attributes: ['name', 'phone', 'deviceId'],
-            },
-        ],
-        order: [
-            ['date', 'ASC'],
-            ['hour', 'ASC'],
+            }],
+        order: [['date', 'ASC'], ['hour', 'ASC'],
         ],
     });
-    return schedules;
+    if (!schedules) {
+        return {
+            status: 'NOT_FOUND', data: { message: 'Agendamento não encontrado' },
+        };
+    }
+    return { status: 'SUCCESSFUL', data: schedules };
 };
 const findByScheduleDateId = async (date, hour) => {
     const schedulesWithServices = await schedules_model_1.default.findOne({
@@ -95,28 +107,26 @@ const deleteSchedule = async (scheduleId) => {
     await schedules_model_1.default.destroy({ where: { scheduleId } });
 };
 const countSchedules = async (rangeDays) => {
-    const now = moment_timezone_1.default.tz('America/Sao_Paulo');
-    const endDate = now.format('YYYY-MM-DD');
     const endTime = now.format('HH:mm:ss');
     let startDate = now.clone().subtract(rangeDays, 'days').format('YYYY-MM-DD');
     if (rangeDays <= 0) {
-        startDate = "1970-01-01";
+        startDate = '1970-01-01';
     }
     const result = await schedules_model_1.default.count({
         where: {
             [sequelize_1.Op.and]: [
                 { date: { [sequelize_1.Op.gte]: startDate } },
-                { date: { [sequelize_1.Op.lte]: endDate } },
+                { date: { [sequelize_1.Op.lte]: currentDate } },
                 {
                     [sequelize_1.Op.or]: [
                         {
                             date: {
-                                [sequelize_1.Op.lt]: endDate,
+                                [sequelize_1.Op.lt]: currentDate,
                             },
                         },
                         {
                             [sequelize_1.Op.and]: [
-                                { date: endDate },
+                                { date: currentDate },
                                 { hour: { [sequelize_1.Op.lte]: endTime } },
                             ],
                         },
@@ -128,8 +138,6 @@ const countSchedules = async (rangeDays) => {
     return result;
 };
 const countFutureSchedules = async () => {
-    const now = moment_timezone_1.default.tz('America/Sao_Paulo');
-    const currentDate = now.format('YYYY-MM-DD');
     const currentTime = now.format('HH:mm:ss');
     const result = await schedules_model_1.default.count({
         where: {

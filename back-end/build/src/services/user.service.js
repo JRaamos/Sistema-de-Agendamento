@@ -15,13 +15,20 @@ const createUserService = async (user) => {
     const { name, phone, deviceId } = user;
     const userExistsResult = await userExists(phone, name, deviceId);
     if (userExistsResult)
-        return userExistsResult;
+        return { status: 'SUCCESSFUL', data: userExistsResult };
     const userResult = await user_model_1.default.create({ name, phone, deviceId });
+    if (!userResult) {
+        return {
+            status: 'INVALID_DATA', data: { message: 'invalid data' },
+        };
+    }
     const { userId } = userResult.dataValues;
-    return userId;
+    return { status: 'SUCCESSFUL', data: userId };
 };
 const getUserService = async (userId) => {
     const user = await user_model_1.default.findByPk(userId);
-    return user;
+    if (!user)
+        return { status: 'NOT_FOUND', data: { message: 'User not found' } };
+    return { status: 'SUCCESSFUL', data: user };
 };
 exports.default = { createUserService, getUserService };

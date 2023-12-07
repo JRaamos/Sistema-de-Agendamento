@@ -8,5 +8,6 @@ const cancellation_controller_1 = __importDefault(require("../controllers/cancel
 const validateJWT_1 = __importDefault(require("../middlewares/validateJWT"));
 const routerCancellation = (0, express_1.Router)();
 routerCancellation.post('/cancellation', cancellation_controller_1.default.createCancellation);
-routerCancellation.get('/cancellation/:intervalDays', validateJWT_1.default, cancellation_controller_1.default.countCancellation);
+routerCancellation.get('/cancellation/date/:date', cancellation_controller_1.default.getByCancellationDate);
+routerCancellation.get('/cancellation/count/:intervalDays', validateJWT_1.default, cancellation_controller_1.default.countCancellation);
 exports.default = routerCancellation;

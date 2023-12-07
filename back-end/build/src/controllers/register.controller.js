@@ -10,17 +10,19 @@ const scheduleService_service_1 = __importDefault(require("../services/scheduleS
 const CreateRegister = async (req, res) => {
     const { name, phone, date, hour, services, eventId, deviceId } = req.body;
     const user = await user_service_1.default.createUserService({ name, phone, deviceId });
-    const servicesIds = await service_service_1.default.findAllService(services);
-    const scheduleData = {
-        date,
-        hour,
-        userId: user,
-        eventId,
-    };
-    const scheduleResult = await schedules_service_1.default.createSchedule(scheduleData);
-    servicesIds.forEach(async (serviceId) => {
-        await scheduleService_service_1.default.createScheduleService(scheduleResult.scheduleId, serviceId);
-    });
-    return res.status(200).json({ user, scheduleResult });
+    if (user.status === 'SUCCESSFUL') {
+        const scheduleData = { date, hour, userId: user.data, eventId };
+        const scheduleResult = await schedules_service_1.default.createSchedule(scheduleData);
+        if (scheduleResult.status === 'SUCCESSFUL') {
+            const servicesIds = await service_service_1.default.findAllService(services);
+            if (servicesIds.status === 'SUCCESSFUL') {
+                servicesIds.data.forEach(async (serviceId) => {
+                    await scheduleService_service_1.default.createScheduleService(scheduleResult.data.scheduleId, serviceId);
+                });
+            }
+        }
+        return res.status(200).json({ user, scheduleResult });
+    }
+    return res.status(400).json(user.data);
 };
 exports.default = { CreateRegister };

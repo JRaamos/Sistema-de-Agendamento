@@ -1,11 +1,10 @@
 version: '3'
 services:
   backend:
-    container_name: backend_production
+    container_name: backend_development
     tty: true
     stdin_open: true
     build: back-end
-    command: bash -c "npm install && npm run dev"
     volumes:
       - ./back-end:/app-backend
     ports:
@@ -13,18 +12,12 @@ services:
     depends_on:
       - database
     environment:
-      # MYSQL_ADDON_DB: ${MYSQL_ADDON_DB}
-      # MYSQL_ADDON_HOST: ${MYSQL_ADDON_HOST}
-      # MYSQL_ADDON_PASSWORD: ${MYSQL_ADDON_PASSWORD}
-      # MYSQL_ADDON_PORT: ${MYSQL_ADDON_PORT}
-      # MYSQL_ADDON_URI:  ${MYSQL_ADDON_URI}
-      # MYSQL_ADDON_USER: ${MYSQL_ADDON_USER}
-      # MYSQL_ADDON_VERSION: ${MYSQL_ADDON_VERSION}
-      MYSQLUSER: ${MYSQLUSER}
-      MYSQLHOST: database
-      MYSQLPASSWORD: ${MYSQLPASSWORD}
-      MYSQLDATABASE: ${MYSQLDATABASE}
-      MYSQLPORT:  ${MYSQLPORT}
+      MYSQL_ADDON_DB: ${MYSQL_ADDON_DB}
+      MYSQL_ADDON_HOST: ${MYSQL_ADDON_HOST}
+      MYSQL_ADDON_PASSWORD: ${MYSQL_ADDON_PASSWORD}
+      MYSQL_ADDON_PORT: ${MYSQL_ADDON_PORT}
+      MYSQL_ADDON_URI:  ${MYSQL_ADDON_URI}
+      MYSQL_ADDON_USER: ${MYSQL_ADDON_USER}
       JWT_SECRET: ${JWT_SECRET}
       CALENDAR_ID: ${CALENDAR_ID}
   database:
@@ -33,4 +26,4 @@ services:
     ports:
       - "3306:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQLPASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ADDON_PASSWORD}

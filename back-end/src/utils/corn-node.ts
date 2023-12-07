@@ -38,8 +38,10 @@ export const checkForUpcomingAppointments = async () => {
   const nowSaoPaulo = moment().tz('America/Sao_Paulo').toDate();
   const today = nowSaoPaulo.toISOString().split('T')[0]; // Formato YYYY-MM-DD
   const schedules = await schedulesService.finaAllSchedulesDate(today);
-
-  schedules.forEach(schedule => {
+  if (schedules.status !== 'SUCCESSFUL') {
+    return;
+  }
+  schedules.data.forEach(schedule => {
     const scheduleDateTimeSaoPaulo = moment.tz(`${schedule.date}T${schedule.hour}`, 'America/Sao_Paulo').toDate();
     const diffInMilliseconds = scheduleDateTimeSaoPaulo.getTime() - nowSaoPaulo.getTime();
     const diffInMinutes = Math.round(diffInMilliseconds / 60000); // Arredondado para cima

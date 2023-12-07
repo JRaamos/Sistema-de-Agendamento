@@ -9,7 +9,13 @@ COPY package*.json ./
 RUN npm install
 
 COPY . .
+RUN npm run build
 
-EXPOSE 3001
 
-CMD ["npm", "start"]
+# FROM node:18.18.2-alpine
+
+# WORKDIR /app-backend
+
+# COPY --from=builder /app-backend/build/src /app-backend/
+
+CMD ["node", "build/src/server.js"]

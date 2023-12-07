@@ -36,7 +36,10 @@ const checkForUpcomingAppointments = async () => {
     const nowSaoPaulo = (0, moment_timezone_1.default)().tz('America/Sao_Paulo').toDate();
     const today = nowSaoPaulo.toISOString().split('T')[0]; // Formato YYYY-MM-DD
     const schedules = await schedules_service_1.default.finaAllSchedulesDate(today);
-    schedules.forEach(schedule => {
+    if (schedules.status !== 'SUCCESSFUL') {
+        return;
+    }
+    schedules.data.forEach(schedule => {
         const scheduleDateTimeSaoPaulo = moment_timezone_1.default.tz(`${schedule.date}T${schedule.hour}`, 'America/Sao_Paulo').toDate();
         const diffInMilliseconds = scheduleDateTimeSaoPaulo.getTime() - nowSaoPaulo.getTime();
         const diffInMinutes = Math.round(diffInMilliseconds / 60000); // Arredondado para cima

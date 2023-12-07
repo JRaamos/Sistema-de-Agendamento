@@ -32,7 +32,7 @@ const ScheduleModel = index_1.default.define('Schedule', {
         references: {
             model: user_model_1.default,
             key: 'user_id',
-        }
+        },
     },
 }, {
     tableName: 'schedules',

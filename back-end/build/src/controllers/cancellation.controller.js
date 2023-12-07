@@ -32,4 +32,9 @@ const countCancellation = async (req, res) => {
     const result = await cancellation_service_1.default.countCancellation(Number(intervalDays));
     return res.status(200).json({ result });
 };
-exports.default = { createCancellation, countCancellation };
+const getByCancellationDate = async (req, res) => {
+    const { date } = req.params;
+    const result = await cancellation_service_1.default.getByCancellationDate(date);
+    return res.status(200).json({ result });
+};
+exports.default = { createCancellation, countCancellation, getByCancellationDate };
