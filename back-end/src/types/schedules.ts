@@ -15,4 +15,4 @@ export type ScheduleService = Schedule & {
 };
 export type ScheduleAllUser = Schedule & {
   user: User;
-}
+};

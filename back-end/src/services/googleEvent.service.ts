@@ -14,7 +14,6 @@ const client = new google.auth.JWT(
 
 const calendar = google.calendar({ version: 'v3', auth: client });
 
-
 const createEventService = async (eventData: GoogleEvent) => {
   await client.authorize();
   const event = await calendar.events.insert({

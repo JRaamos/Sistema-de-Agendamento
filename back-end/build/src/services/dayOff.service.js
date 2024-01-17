@@ -11,19 +11,15 @@ const createDayOff = async (dayOff) => {
             time: item.timeOff,
             barberId: 1,
         };
-        return await dayOff_Model_1.default.create(newdayOff);
+        return dayOff_Model_1.default.create(newdayOff);
     });
 };
-const getDayOffs = async () => {
-    return await dayOff_Model_1.default.findAll();
-};
-const deleteDayOff = async (date) => {
-    return await dayOff_Model_1.default.destroy({
-        where: {
-            dayOff: date,
-        }
-    });
-};
+const getDayOffs = async () => dayOff_Model_1.default.findAll();
+const deleteDayOff = async (date) => dayOff_Model_1.default.destroy({
+    where: {
+        dayOff: date,
+    },
+});
 exports.default = {
     createDayOff,
     getDayOffs,

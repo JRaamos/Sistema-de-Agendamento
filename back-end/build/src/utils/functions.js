@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.convertDateFormat = void 0;
+// eslint-disable-next-line import/prefer-default-export
 function convertDateFormat(dateStr) {
     // Separa a string de data por traço em vez de barras
     const [year, month, day] = dateStr.split('-'); // Desestruturação para pegar ano, mês e dia

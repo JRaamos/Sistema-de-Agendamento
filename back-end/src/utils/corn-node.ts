@@ -4,35 +4,33 @@ import { convertDateFormat } from './functions';
 
 const sendNotification = async (deviceIds: (string | null | undefined)[], message: string) => {
   const headers = {
-    "Content-Type": "application/json; charset=utf-8",
-    //localHost
-    "Authorization": `Basic OTMyOTFjZjctYWI3MS00YmU5LWJhOWEtY2IxMjgzY2JiNDlh`
-    //produção
-    // "Authorization": `Basic NzAzNTI5YmEtYjY4MC00NDZmLWEwOGItNGFjNGI4NWI1MjIz`
+    'Content-Type': 'application/json; charset=utf-8',
+    // localHost
+    // Authorization: 'Basic OTMyOTFjZjctYWI3MS00YmU5LWJhOWEtY2IxMjgzY2JiNDlh',
+    // produção
+    Authorization: 'Basic NzAzNTI5YmEtYjY4MC00NDZmLWEwOGItNGFjNGI4NWI1MjIz',
 
   };
-
 
   const data = {
-    //produção
-    // app_id: "2f865a87-c988-43e8-a60c-2138cc52199b",
-    //localHost
-      app_id: "dd8d9c1d-7da4-4aa3-800e-bd5ebe075063",
+    // produção
+    app_id: '2f865a87-c988-43e8-a60c-2138cc52199b',
+    // localHost
+    // app_id: 'dd8d9c1d-7da4-4aa3-800e-bd5ebe075063',
     include_player_ids: deviceIds,
-    contents: { en: message }
+    contents: { en: message },
   };
 
-  const response = await fetch("https://onesignal.com/api/v1/notifications", {
-    method: "POST",
-    headers: headers,
-    body: JSON.stringify(data)
+  const response = await fetch('https://onesignal.com/api/v1/notifications', {
+    method: 'POST',
+    headers,
+    body: JSON.stringify(data),
   });
 
   const responseData = await response.json();
-  console.log("Resposta do OneSignal:", responseData);
+  console.log('Resposta do OneSignal:', responseData);
   return responseData;
 };
-
 
 export const checkForUpcomingAppointments = async () => {
   const nowSaoPaulo = moment().tz('America/Sao_Paulo').toDate();
@@ -41,8 +39,11 @@ export const checkForUpcomingAppointments = async () => {
   if (schedules.status !== 'SUCCESSFUL') {
     return;
   }
-  schedules.data.forEach(schedule => {
-    const scheduleDateTimeSaoPaulo = moment.tz(`${schedule.date}T${schedule.hour}`, 'America/Sao_Paulo').toDate();
+  schedules.data.forEach((schedule) => {
+    const scheduleDateTimeSaoPaulo = moment.tz(
+      `${schedule.date}T${schedule.hour}`,
+      'America/Sao_Paulo',
+    ).toDate();
     const diffInMilliseconds = scheduleDateTimeSaoPaulo.getTime() - nowSaoPaulo.getTime();
     const diffInMinutes = Math.round(diffInMilliseconds / 60000); // Arredondado para cima
     console.log(diffInMinutes);
@@ -51,12 +52,18 @@ export const checkForUpcomingAppointments = async () => {
     Não se esqueça do seu agendamento daqui a pouco ás ${schedule.hour}`;
     if (diffInMinutes === 30) {
       sendNotification([schedule.user.deviceId], message);
-      console.log(`Notificação enviada para ${schedule.user.name} (Device ID: ${schedule.user.deviceId}) - Mensagem: "${message}"`);
+      console.log(`Notificação enviada para ${schedule.user.name}
+       (Device ID: ${schedule.user.deviceId}) - Mensagem: "${message}"`);
     }
   });
 };
 
-export const scheduleCancelation = async (name: string, date: string, hour: string, deviceId: string | null | undefined ) => {
+export const scheduleCancelation = async (
+  name: string, 
+  date: string, 
+  hour: string, 
+  deviceId: string | null | undefined,
+) => {
   const newdate = convertDateFormat(date);
   const message = ` Prezado(a) ${name}, lamentamos informar que seu 
   agendamento para ${newdate} as ${hour} foi cancelado. 

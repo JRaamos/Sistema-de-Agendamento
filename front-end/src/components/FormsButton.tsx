@@ -10,7 +10,7 @@ function FormsButton() {
         className="button-meus-agendamentos"
         onClick={(e) => {
           e.preventDefault();
-          navigate("/meus-agendamentos");
+          navigate("/mi-schedules");
         }}
       >
         Meus agendamentos

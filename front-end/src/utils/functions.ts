@@ -1,3 +1,6 @@
+import {  format } from "date-fns";
+import ptBR from "date-fns/locale/pt-BR";
+
 export function convertDateFormat(dateStr: string): string {
   // Separa a string de data por traço em vez de barras
   const [year, month, day] = dateStr.split('-'); // Desestruturação para pegar ano, mês e dia
@@ -13,7 +16,7 @@ export function convertDateFormat(dateStr: string): string {
 }
 
 // Função para converter a data de "yyyy/mm/dd" para "mm/dd/yyyy"
-export function convertToMMDDYYYY(dateString) {
+export function convertToMMDDYYYY(dateString: string) {
   // Primeiro verifica se a string da data está no formato esperado
   const parts = dateString.split("-");
   if (parts.length === 3) {
@@ -35,6 +38,14 @@ export const newDateConvert = () => {
   // Formata a data como 'yyyy/mm/dd'
   // Usa 'padStart' para garantir que o mês e o dia sejam sempre dois dígitos
   const formattedDate = `${year}/${month.toString().padStart(2, '0')}/${day.toString().padStart(2, '0')}`;
+
+  return formattedDate;
+}
+
+export const dateConvert = (date: Date) => {
+  const formattedDate = format(date, "dd/MM/yyy", {
+    locale: ptBR,
+  });
 
   return formattedDate;
 }

@@ -9,27 +9,27 @@ const schedules_service_1 = __importDefault(require("../services/schedules.servi
 const functions_1 = require("./functions");
 const sendNotification = async (deviceIds, message) => {
     const headers = {
-        "Content-Type": "application/json; charset=utf-8",
-        //localHost
-        "Authorization": `Basic OTMyOTFjZjctYWI3MS00YmU5LWJhOWEtY2IxMjgzY2JiNDlh`
-        //produção
+        'Content-Type': 'application/json; charset=utf-8',
+        // localHost
+        Authorization: 'Basic OTMyOTFjZjctYWI3MS00YmU5LWJhOWEtY2IxMjgzY2JiNDlh',
+        // produção
         // "Authorization": `Basic NzAzNTI5YmEtYjY4MC00NDZmLWEwOGItNGFjNGI4NWI1MjIz`
     };
     const data = {
-        //produção
+        // produção
         // app_id: "2f865a87-c988-43e8-a60c-2138cc52199b",
-        //localHost
-        app_id: "dd8d9c1d-7da4-4aa3-800e-bd5ebe075063",
+        // localHost
+        app_id: 'dd8d9c1d-7da4-4aa3-800e-bd5ebe075063',
         include_player_ids: deviceIds,
-        contents: { en: message }
+        contents: { en: message },
     };
-    const response = await fetch("https://onesignal.com/api/v1/notifications", {
-        method: "POST",
-        headers: headers,
-        body: JSON.stringify(data)
+    const response = await fetch('https://onesignal.com/api/v1/notifications', {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(data),
     });
     const responseData = await response.json();
-    console.log("Resposta do OneSignal:", responseData);
+    console.log('Resposta do OneSignal:', responseData);
     return responseData;
 };
 const checkForUpcomingAppointments = async () => {
@@ -39,7 +39,7 @@ const checkForUpcomingAppointments = async () => {
     if (schedules.status !== 'SUCCESSFUL') {
         return;
     }
-    schedules.data.forEach(schedule => {
+    schedules.data.forEach((schedule) => {
         const scheduleDateTimeSaoPaulo = moment_timezone_1.default.tz(`${schedule.date}T${schedule.hour}`, 'America/Sao_Paulo').toDate();
         const diffInMilliseconds = scheduleDateTimeSaoPaulo.getTime() - nowSaoPaulo.getTime();
         const diffInMinutes = Math.round(diffInMilliseconds / 60000); // Arredondado para cima
@@ -49,7 +49,8 @@ const checkForUpcomingAppointments = async () => {
     Não se esqueça do seu agendamento daqui a pouco ás ${schedule.hour}`;
         if (diffInMinutes === 30) {
             sendNotification([schedule.user.deviceId], message);
-            console.log(`Notificação enviada para ${schedule.user.name} (Device ID: ${schedule.user.deviceId}) - Mensagem: "${message}"`);
+            console.log(`Notificação enviada para ${schedule.user.name}
+       (Device ID: ${schedule.user.deviceId}) - Mensagem: "${message}"`);
         }
     });
 };

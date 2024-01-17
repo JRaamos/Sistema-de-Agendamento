@@ -1,12 +1,10 @@
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
-import Agendamentos from "./pages/Agendamentos";
+import Schedule from "./pages/Schedules";
 import AgendamentosProvider from "./context/AgendamentosProvider";
-import MeusAgendamentos from "./pages/MeusAgendamentos";
+import MiSchedules from "./pages/MiSchedules";
 import Login from "./pages/Login";
 import BarberDashboard from "./pages/BarberDashboard";
-import { useEffect } from "react";
-import OneSignal from "react-onesignal";
 
 function App() {
   
@@ -16,8 +14,8 @@ function App() {
       <AgendamentosProvider>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/agendamentos" element={<Agendamentos />} />
-          <Route path="/meus-agendamentos" element={<MeusAgendamentos />} />
+          <Route path="/schedules" element={<Schedule />} />
+          <Route path="/mi-schedules" element={<MiSchedules />} />
           <Route path="/login" element={<Login />} />
           <Route path="/barber-dashboard" element={<BarberDashboard />} />
         </Routes>

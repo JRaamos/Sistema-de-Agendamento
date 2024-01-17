@@ -9,8 +9,8 @@ services:
       - ./back-end:/app-backend
     ports:
       - "3001:3001"
-    depends_on:
-      - database
+    # depends_on:
+    #   - database
     environment:
       MYSQL_ADDON_DB: ${MYSQL_ADDON_DB}
       MYSQL_ADDON_HOST: ${MYSQL_ADDON_HOST}
