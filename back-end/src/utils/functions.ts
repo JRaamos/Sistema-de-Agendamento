@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/prefer-default-export
 export function convertDateFormat(dateStr: string): string {
   // Separa a string de data por traço em vez de barras
   const [year, month, day] = dateStr.split('-'); // Desestruturação para pegar ano, mês e dia

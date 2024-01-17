@@ -35,33 +35,21 @@ function MeusAgendamentos() {
   useEffect(() => {
     const handleSchedules = async () => {
       const currentDateTime = new Date(); // Obtem a data e hora atual
+  
       const values = localStorage.getItem("agendamentos");
-      const schedulesFromDB = await fetchAPiGetAll()
-      
       if (values) {
-        let result = JSON.parse(values);
-
-        // Filtra agendamentos que são antigos
-        result = result.filter((agendamento: Agendamentos) => {
-          const agendamentoDate = agendamento.date.split(" as ")[0]; // Assume que agendamento.date é uma string como "Seg, 12/04/2023 as 14:00"
-          const agendamentoHour = agendamento.hour; // "14:00" por exemplo
-          const agendamentoDateTime = new Date(
-            `${agendamentoDate} ${agendamentoHour}`
-          );
-
-          return (
-            schedulesFromDB.some(
-              (dbAgendamento) =>
-                convertToMMDDYYYY(dbAgendamento.date) === agendamentoDate &&
-                dbAgendamento.hour === agendamentoHour
-            ) && agendamentoDateTime >= currentDateTime
-          );
-        });
-        localStorage.setItem("agendamentos", JSON.stringify(result));
-
+        const result = JSON.parse(values);
+        const agendamentosAntigos = result.filter((agendamento: Agendamentos ) => {
+           const agendamentoDateTime = new Date(`${agendamento.date} ${agendamento.hour}`);
+           
+           return agendamentoDateTime > currentDateTime;
+         });
+        console.log(agendamentosAntigos);
+        
         // Mapeia para o novo formato
-        const updatedAgendamentos = result.map((agendamento: any) => {
+        const updatedAgendamentos = result.map((agendamento: Agendamentos) => {
           const inputDate = new Date(agendamento.date);
+      
           const formattedDate = format(inputDate, "EEE, dd/MM/yyy", {
             locale: ptBR,
           });
@@ -76,7 +64,7 @@ function MeusAgendamentos() {
 
           return agendamento;
         });        
-        setAgendamentos(updatedAgendamentos); // Atualiza o estado com os agendamentos atualizados
+        setAgendamentos(updatedAgendamentos); 
       }
     };
     handleSchedules();

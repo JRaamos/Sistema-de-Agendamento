@@ -1,5 +1,5 @@
-import app from './app';
 import cron from 'node-cron';
+import app from './app';
 import { checkForUpcomingAppointments } from './utils/corn-node';
 
 // import sendDailyNotifications from './utils/corn-node';
@@ -13,9 +13,7 @@ cron.schedule('*/10 6-19 * * *', () => {
   checkForUpcomingAppointments();
   console.log('Verificando novos agendamentos a cada 10 minutos durante o dia...');
 }, {
-  timezone: "America/Sao_Paulo"
+  timezone: 'America/Sao_Paulo',
 });
-
-
 
 export default server;

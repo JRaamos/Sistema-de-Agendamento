@@ -3,4 +3,4 @@ export type DayOffDb = {
   barberId: number;
   dayOff: string;
   time: string;
-} 
+}; 

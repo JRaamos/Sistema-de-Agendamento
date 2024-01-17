@@ -26,7 +26,8 @@ const countFutureSchedules = async (req: Request, res: Response) => {
 };
 const findAllSchedulesFromNow = async (req: Request, res: Response) => {
   const result = await schedulesService.findAllSchedulesFromNow();
-  return res.status(200).json(result);
+  
+  return res.status(200).json(result.data);
 };
 
 export default {
