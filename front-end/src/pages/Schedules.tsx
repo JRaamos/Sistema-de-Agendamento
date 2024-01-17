@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import "../styles/agendamentos.css";
+import "../styles/schedules.css";
 import Services from "../components/Services";
 import arrow from "../images/arrow-1.svg";
 import Welcome from "../components/Welcome";
@@ -143,7 +143,6 @@ function Schedules() {
         <div
           className="button-meus-agendamentos-header"
           style={{ display: buttomMeusAgendamentos ? "block" : "none" }}
-          onClick={() => console.log("xana")}
         >
           <MenuHamburguer isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
           <nav className={`menu ${isMenuOpen ? "active" : ""}`}>

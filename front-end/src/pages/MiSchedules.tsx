@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import arrow from "../images/arrow-1.svg";
-import "../styles/meusAgendamentos.css";
+import "../styles/miSchedules.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import servicesJson from "../utils/services.json";
 import { parse, format } from "date-fns";
@@ -9,13 +9,10 @@ import AgendamentosContext from "../context/AgendamentosContext";
 import { Agendamentos } from "../types/MeusAgendamentos";
 import {
   fetchAPiCancel,
-  fetchAPiCancellDate,
-  fetchAPiGetAll,
   fetchAPiGetId,
   fetchAPiGoogleEventDelete,
 } from "../utils/fetchApi";
 import AgendamentosCard from "../components/AgendamentosCard";
-import { convertToMMDDYYYY, newDateConvert } from "../utils/functions";
 
 function MiSchedules() {
   const location = useLocation();

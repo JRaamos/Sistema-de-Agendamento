@@ -80,36 +80,6 @@
 
 }
 
-
-.menu-hamburguer span {
-  background-color: white;
-  border-radius: 10px;
-  display: block;
-  height: 0.2rem;
-  position: relative;
-  transform-origin: 1px;
-  transition: all 0.3s linear;
-  width: 100%;
-}
-
-.menu-hamburguer.active span:nth-child( 1 ) {
-  transform: rotate(45deg) translate(5px, -5px);
-  transform-origin: 21%;}
-
-.menu-hamburguer.active span:nth-child( 2 ) {
-  opacity: 0;
-
-  /* Esconde a barra do meio com transparência e translação */
-  transform: translateX(20px);
-}
-
-.menu-hamburguer.active span:nth-child( 3 ) {
-
-  /* Ajuste de posição e rotação para alinhamento */
-  transform: rotate(-45deg) translate(5px, 5px);
-  transform-origin: 6%;
-}
-
 .menu {
 
   /* stylelint-disable-next-line max-line-length */
