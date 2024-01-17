@@ -40,7 +40,8 @@ function Home() {
         </section>
       </div>
       <footer className='footer'>
-        <p>© 2023 Jonathan Febraio. All rights reserved.</p>
+        <p>© 2023-2024 <Link to='https://jonathanfebraio.com/' target='_blank' className='link-site'>
+           Jonathan Febraio.</Link> All rights reserved.</p>
       </footer>
     </div>
   );

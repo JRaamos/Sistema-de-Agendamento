@@ -52,6 +52,10 @@
   width: 100%;
 }
 
+.link-site {
+  color: white;
+}
+
 @media screen and ( max-width : 600px ) {
 
   .container-home {
