@@ -19,56 +19,66 @@ import { convertToMMDDYYYY, newDateConvert } from "../utils/functions";
 
 function MeusAgendamentos() {
   const location = useLocation();
-
+  
   const { resetStates } = useContext(AgendamentosContext);
-
+  
   useEffect(() => {
     resetStates();
   }, [location]);
-
+  
   const navigate = useNavigate();
   const [agendamentos, setAgendamentos] = useState<Agendamentos[]>([]);
   const [cancelar, setCancelar] = useState(false);
   const [hour, setHour] = useState<string | number>(0);
   const [date, setDate] = useState<string>("");
-
-  useEffect(() => {
-    const handleSchedules = async () => {
-      const currentDateTime = new Date(); // Obtem a data e hora atual
   
-      const values = localStorage.getItem("agendamentos");
-      if (values) {
-        const result = JSON.parse(values);
-        const agendamentosAntigos = result.filter((agendamento: Agendamentos ) => {
-           const agendamentoDateTime = new Date(`${agendamento.date} ${agendamento.hour}`);
-           
-           return agendamentoDateTime > currentDateTime;
-         });
-        console.log(agendamentosAntigos);
-        
-        // Mapeia para o novo formato
-        const updatedAgendamentos = result.map((agendamento: Agendamentos) => {
-          const inputDate = new Date(agendamento.date);
-      
-          const formattedDate = format(inputDate, "EEE, dd/MM/yyy", {
-            locale: ptBR,
-          });
-          agendamento.date = `${formattedDate} as ${agendamento.hour}`;
-
-          const services = servicesJson.filter((service) =>
-            agendamento.services.includes(service.services)
-          );
-          const prices = services.map((service) => service.price);
-          const total = prices.reduce((acc, current) => acc + current, 0);
-          agendamento.price = total;
-
-          return agendamento;
-        });        
-        setAgendamentos(updatedAgendamentos); 
-      }
-    };
-    handleSchedules();
+  useEffect(() => {
+    const values = handleSchedulesOld();
+    if (values) {
+      handleUpdateSchedules(values);
+    }
   }, [cancelar]);
+
+  // Remove agendamentos antigos
+  const handleSchedulesOld = () => {
+    const currentDateTime = new Date();
+    const values = localStorage.getItem("agendamentos");
+    if (values) {
+      const result = JSON.parse(values);
+      const newSchedule = result.filter((agendamento: Agendamentos) => {
+        const schedulingDateTime = new Date(
+          `${agendamento.date} ${agendamento.hour}`
+        );
+        return schedulingDateTime > currentDateTime;
+      });
+      localStorage.setItem("agendamentos", JSON.stringify(newSchedule));
+      return newSchedule;
+    } else {
+      return [];
+    }
+  } 
+  // Atualiza agendamentos colocando o preço e a data formatada para exibição no card
+  const handleUpdateSchedules = (schedules: Agendamentos[] ) => {
+    const updatedAgendamentos = schedules.map((agendamento: Agendamentos) => {
+      const inputDate = new Date(agendamento.date);
+  
+      const formattedDate = format(inputDate, "EEE, dd/MM/yyy", {
+        locale: ptBR,
+      });
+      agendamento.date = `${formattedDate} as ${agendamento.hour}`;
+
+      const services = servicesJson.filter((service) =>
+        agendamento.services.includes(service.services)
+      );
+      const prices = services.map((service) => service.price);
+      const total = prices.reduce((acc, current) => acc + current, 0);
+      agendamento.price = total;
+
+      return agendamento;
+    });        
+    setAgendamentos(updatedAgendamentos); 
+  }
+
 
   const formatDate = (date: string) => {
     const inputDate = new Date(date);
