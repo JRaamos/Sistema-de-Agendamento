@@ -27,7 +27,7 @@
 
   /* Ajuste de posição e rotação para alinhamento */
   transform: rotate(45deg) translate(5px, -5px);
-  transform-origin: 60% 3%; /* Ponto de origem para a transformação */
+  transform-origin: 35% -50%; /* Ponto de origem para a transformação */
 }
 
 .menu-hamburguer.open .bar:nth-child( 2 ) {
@@ -42,7 +42,7 @@
 
   /* Ajuste de posição e rotação para alinhamento */
   transform: rotate(-45deg) translate(5px, 5px);
-  transform-origin: 20% 3%; /* Ponto de origem para a transformação */
+  transform-origin: -13% 5%; /* Ponto de origem para a transformação */
 }
 
 .sidebar {
@@ -110,10 +110,28 @@
   }
 
   .menu-hamburguer.open .bar:nth-child( 1 ) {
+
+    /* Ajuste de posição e rotação para alinhamento */
+
+    /* transform: rotate(45deg) translate(5px, -5px); */
     transform: rotate(45deg) translate(3px, 4px);
+    transform-origin: 60% 3%; /* Ponto de origem para a transformação */
+  }
+
+  .menu-hamburguer.open .bar:nth-child( 2 ) {
+    opacity: 0;
+
+    /* Esconde a barra do meio com transparência e translação */
+    transform: translateX(20px);
+
   }
 
   .menu-hamburguer.open .bar:nth-child( 3 ) {
+
+    /* Ajuste de posição e rotação para alinhamento */
     transform: rotate(-45deg) translate(5px, -4px);
+    transform-origin: 20% 3%; /* Ponto de origem para a transformação */
   }
+
 }
+
