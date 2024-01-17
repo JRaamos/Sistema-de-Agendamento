@@ -29,7 +29,7 @@ function Home() {
         <section>
           <p className='p-text'>Escolha seu Barbeiro</p>
           <Link
-            to='/agendamentos'
+            to='/schedules'
             className='barbeiro'
             onClick={() => {
               resetStates();

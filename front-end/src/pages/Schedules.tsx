@@ -17,7 +17,7 @@ import MenuHamburguer from "../components/MenuHamburguer";
 import OneSignal from "react-onesignal";
 import { ChangeEvent } from "../types/notification";
 
-function Agendamentos() {
+function Schedules() {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [buttomMeusAgendamentos, setButtomMeusAgendamentos] = useState(false);
@@ -147,7 +147,7 @@ function Agendamentos() {
         >
           <MenuHamburguer isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
           <nav className={`menu ${isMenuOpen ? "active" : ""}`}>
-            <Link to="/meus-agendamentos">Meus agendamentos</Link>
+            <Link to="/mi-schedules">Meus agendamentos</Link>
           </nav>
         </div>
       </div>
@@ -248,4 +248,4 @@ function Agendamentos() {
     </div>
   );
 }
-export default Agendamentos;
+export default Schedules;

@@ -17,7 +17,7 @@ import {
 import AgendamentosCard from "../components/AgendamentosCard";
 import { convertToMMDDYYYY, newDateConvert } from "../utils/functions";
 
-function MeusAgendamentos() {
+function MiSchedules() {
   const location = useLocation();
   
   const { resetStates } = useContext(AgendamentosContext);
@@ -117,7 +117,7 @@ function MeusAgendamentos() {
       <button
         onClick={() => {
           resetStates();
-          navigate("/agendamentos");
+          navigate("/schedules");
         }}
         className="custom-button"
       >
@@ -164,4 +164,4 @@ function MeusAgendamentos() {
     </div>
   );
 }
-export default MeusAgendamentos;
+export default MiSchedules;
