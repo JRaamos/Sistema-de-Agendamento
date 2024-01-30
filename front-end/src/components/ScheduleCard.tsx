@@ -3,7 +3,7 @@ import AgendamentosContext from "../context/AgendamentosContext";
 import { fetchAPiCancel, fetchAPiGet } from "../utils/fetchApi";
 import "../styles/scheduleCard.css";
 import { FetchAPiGet, Service } from "../types/ApiReturn";
-import { convertDateFormat } from "../utils/functions";
+import { convertDateFormat } from "../utils/functionsFormatDate";
 import dayjs from "dayjs";
 import Loading from "./Loading";
 
