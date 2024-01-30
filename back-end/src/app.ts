@@ -6,6 +6,7 @@ import routerCancellation from './routers/cancellation.routers';
 import routerLogin from './routers/login';
 import routerGoogleEvent from './routers/googleEvent.routers';
 import routerDayOff from './routers/dayOff.routers';
+import routerService from './routers/service.routers';
 
 const app = express();
 
@@ -22,5 +23,6 @@ app.use(routerCancellation);
 app.use(routerLogin);
 app.use(routerGoogleEvent);
 app.use(routerDayOff);
+app.use(routerService);
 
 export default app;
