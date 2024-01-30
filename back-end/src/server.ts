@@ -1,6 +1,9 @@
 import cron from 'node-cron';
+import * as dotenv from 'dotenv';
 import app from './app';
 import { checkForUpcomingAppointments } from './utils/corn-node';
+
+dotenv.config();
 
 // import sendDailyNotifications from './utils/corn-node';
 

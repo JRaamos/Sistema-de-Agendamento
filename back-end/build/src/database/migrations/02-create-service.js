@@ -16,11 +16,11 @@ exports.default = {
                 allowNull: false,
             },
             price: {
-                type: sequelize_1.DataTypes.STRING(255),
+                type: sequelize_1.DataTypes.INTEGER,
                 allowNull: false,
             },
             duration: {
-                type: sequelize_1.DataTypes.STRING(255),
+                type: sequelize_1.DataTypes.INTEGER,
                 allowNull: false,
             }
         });

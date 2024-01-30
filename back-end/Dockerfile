@@ -18,4 +18,4 @@ RUN npm run build
 
 # COPY --from=builder /app-backend/build/src /app-backend/
 
-CMD ["node", "build/src/server.js"]
+CMD ["npm", "run", "dev"]

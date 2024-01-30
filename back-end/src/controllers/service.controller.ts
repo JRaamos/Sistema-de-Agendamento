@@ -2,16 +2,18 @@ import { Request, Response } from 'express';
 import serviceService from '../services/service.service';
 import mapStatusHTTP from '../utils/mapStatusHTTP';
 
-const findBybServiceName = async (req: Request, res: Response) => {
-  const { service } = req.params;
-  const { data, status } = await serviceService.findByNameService(service);
+const getAllService = async (req: Request, res: Response) => {
+  const { data, status } = await serviceService.getAllService();
   return res.status(mapStatusHTTP(status)).json(data);
 };
 
-const updateServiceByName = async (req: Request, res: Response) => {
+const UpdatePriceServiceByName = async (req: Request, res: Response) => {
   const { name } = req.params;
-  const { newService } = req.body;
-  const { data, status } = await serviceService.updateServiceByName(name, newService);
+  const formatName = name.split('-').join(' ');  
+  const { data, status } = await serviceService.UpdatePriceServiceByName(
+    formatName,
+    req.body,
+  );
   return res.status(mapStatusHTTP(status)).json(data);
 };
-export default { findBybServiceName, updateServiceByName };
+export default { getAllService, UpdatePriceServiceByName };

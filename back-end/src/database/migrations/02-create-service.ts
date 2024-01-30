@@ -16,11 +16,11 @@ export default {
         allowNull: false,
       },
       price: {
-        type: DataTypes.STRING(255),
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       duration: {
-        type: DataTypes.STRING(255),
+        type: DataTypes.INTEGER,
         allowNull: false,
       }
     });

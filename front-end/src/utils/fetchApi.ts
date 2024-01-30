@@ -1,7 +1,8 @@
 import { DayOff, Values } from "../types/AgendamentosProvider";
 import { FetchAPi, FetchAPiGet, FetchAPiLogin } from "../types/ApiReturn";
-const BASEURL = 'https://sistema-de-agendamento-production.up.railway.app';
-// const BASEURL = 'http://localhost:3001';
+import { Service } from "../types/Service";
+// const BASEURL = 'https://sistema-de-agendamento-production.up.railway.app';
+const BASEURL = 'http://localhost:3001';
 //faz o registro/criação do agendamento no banco de dados
 export const fetchAPi = async (values: Values): Promise<FetchAPi> => {
   const deviceId = localStorage.getItem('deviceId')
@@ -219,6 +220,16 @@ export const fetchApiDeleteDayOff = async (date: string, token: string | null) =
     method: 'delete',
     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
 
+  }))
+  const data = await response.json();
+  return data.message;
+}
+
+export const fetchApiServiceUpdate = async (name: string, service: Partial<Service>, token: string | null,) => {
+  const response = (await fetch(`${BASEURL}/service/${name}`, {
+    method: 'put',
+    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+    body: JSON.stringify(service)
   }))
   const data = await response.json();
   return data.message;

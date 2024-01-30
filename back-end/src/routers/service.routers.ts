@@ -1,16 +1,20 @@
 import { Router } from 'express';
 import serviceController from '../controllers/service.controller';
+import validateJWT from '../middlewares/validateJWT';
+import servicePriceValidation from '../middlewares/service.middlewraes';
 
 const routerService = Router();
 
 routerService.get(
-  '/service/:name',
-  serviceController.findBybServiceName,
+  '/services',
+  serviceController.getAllService,
 );
 
 routerService.put(
   '/service/:name',
-  serviceController.updateServiceByName,
+  validateJWT,
+  servicePriceValidation,
+  serviceController.UpdatePriceServiceByName,
 );
 
 export default routerService;

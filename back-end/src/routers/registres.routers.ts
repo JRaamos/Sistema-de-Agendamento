@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import registerController from '../controllers/register.controller';
-import registerValidate from '../middlewares/registre.validate';
+import registerValidate from '../middlewares/registre.middlewares';
 
 const routerRegistre = Router();
 

@@ -11,12 +11,14 @@ const cancellation_routers_1 = __importDefault(require("./routers/cancellation.r
 const login_1 = __importDefault(require("./routers/login"));
 const googleEvent_routers_1 = __importDefault(require("./routers/googleEvent.routers"));
 const dayOff_routers_1 = __importDefault(require("./routers/dayOff.routers"));
+const service_routers_1 = __importDefault(require("./routers/service.routers"));
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, cors_1.default)());
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
+app.use(service_routers_1.default);
 app.use(registres_routers_1.default);
 app.use(schedules_router_1.default);
 app.use(cancellation_routers_1.default);

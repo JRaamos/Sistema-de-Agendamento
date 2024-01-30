@@ -17,11 +17,11 @@ const ServiceModel = index_1.default.define('Service', {
         allowNull: false,
     },
     price: {
-        type: sequelize_1.DataTypes.STRING(128),
+        type: sequelize_1.DataTypes.NUMBER,
         allowNull: false,
     },
     duration: {
-        type: sequelize_1.DataTypes.STRING(128),
+        type: sequelize_1.DataTypes.NUMBER,
         allowNull: false,
     },
 }, {

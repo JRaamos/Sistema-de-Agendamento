@@ -3,6 +3,7 @@ export type Service = {
   price: string,
   duration: string
 }
+
 export type User = {
   name: string,
   phone: string,

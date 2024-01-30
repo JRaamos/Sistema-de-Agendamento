@@ -17,12 +17,12 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
+app.use(routerService);
 app.use(routerRegistre);
 app.use(routerSchedules);
 app.use(routerCancellation);
 app.use(routerLogin);
 app.use(routerGoogleEvent);
 app.use(routerDayOff);
-app.use(routerService);
 
 export default app;
