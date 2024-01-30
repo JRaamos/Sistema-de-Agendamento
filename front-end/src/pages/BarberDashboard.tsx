@@ -7,6 +7,7 @@ import AgendamentosContext from '../context/AgendamentosContext';
 import Schedules from '../components/Schedules';
 import { fetchApiGetDayOff } from '../utils/fetchApi';
 import MenuHamburguer from '../components/MenuHamburguer';
+import BarberPriceService from '../components/BarberPriceService';
 
 function BarberDashboard() {
   const navigate = useNavigate();
@@ -108,6 +109,14 @@ function BarberDashboard() {
                 >
                   Agendamentos
                 </li>
+                <li
+                className={activeTab === 'Preços' ? 'active' : ''}
+                onClick={() => {
+                  changeTab('Preços')
+                }}
+                >
+                  Preços
+                </li>
               </div>
 
               <li onClick={logout}>Sair</li>
@@ -121,6 +130,7 @@ function BarberDashboard() {
           <BarberDashboardUser />
         )}
         {activeTab === 'Agendamentos' && <Schedules />}
+        {activeTab === 'Preços' && <BarberPriceService />}
       </main>
     </div>
   );
