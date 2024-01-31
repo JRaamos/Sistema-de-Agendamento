@@ -7,7 +7,7 @@ import AgendamentosContext from '../context/AgendamentosContext';
 import Schedules from '../components/Schedules';
 import { fetchApiGetDayOff } from '../utils/fetchApi';
 import MenuHamburguer from '../components/MenuHamburguer';
-import BarberPriceService from '../components/BarberPriceService';
+import BarberPriceService from '../components/BarberService';
 
 function BarberDashboard() {
   const navigate = useNavigate();
@@ -24,6 +24,7 @@ function BarberDashboard() {
     setOffDays,
     setSelectedDay,
     setIsRecurrentClient,
+    containerRef,
   } = useContext(AgendamentosContext);
 
   // MenuHamburguer
@@ -53,25 +54,25 @@ function BarberDashboard() {
 
   return (
     <div
-      className='dashboard-container'
+      className="dashboard-container"
       onClick={() => isMenuOpen && setIsMenuOpen(false)}
     >
       <MenuHamburguer isMenuOpen={isMenuOpen} toggleMenu={toggleMenu} />
-      <aside className={`sidebar ${isMenuOpen ? 'active' : ''}`}>
+      <aside className={`sidebar ${isMenuOpen ? "active" : ""}`}>
         <nav>
           <ul>
-            <div className='options-menu'>
+            <div className="options-menu">
               <div>
                 <li
-                  className={activeTab === 'Informações' ? 'active' : ''}
-                  onClick={() => changeTab('Informações')}
+                  className={activeTab === "Informações" ? "active" : ""}
+                  onClick={() => changeTab("Informações")}
                 >
                   Informações
                 </li>
                 <li
-                  className={activeTab === 'Agendar cliente' ? 'active' : ''}
+                  className={activeTab === "Agendar cliente" ? "active" : ""}
                   onClick={() => {
-                    changeTab('Agendar cliente');
+                    changeTab("Agendar cliente");
                     setSelectedOffDays({});
                     selectedOffDay.length > 0 && setSelectedOffDay([]);
                     setConfirmOffDay(false);
@@ -82,9 +83,9 @@ function BarberDashboard() {
                   Agendar cliente
                 </li>
                 <li
-                  className={activeTab === 'Agendar folga' ? 'active' : ''}
+                  className={activeTab === "Agendar folga" ? "active" : ""}
                   onClick={() => {
-                    changeTab('Agendar folga');
+                    changeTab("Agendar folga");
                     setSelectedOffDays({});
                     selectedOffDay.length > 0 && setSelectedOffDay([]);
                     setConfirmOffDay(false);
@@ -96,9 +97,9 @@ function BarberDashboard() {
                   Agendar folga
                 </li>
                 <li
-                  className={activeTab === 'Agendamentos' ? 'active' : ''}
+                  className={activeTab === "Agendamentos" ? "active" : ""}
                   onClick={() => {
-                    changeTab('Agendamentos');
+                    changeTab("Agendamentos");
                     setSelectedOffDays({});
                     selectedOffDay.length > 0 && setSelectedOffDay([]);
                     setConfirmOffDay(false);
@@ -110,10 +111,10 @@ function BarberDashboard() {
                   Agendamentos
                 </li>
                 <li
-                className={activeTab === 'Preços' ? 'active' : ''}
-                onClick={() => {
-                  changeTab('Preços')
-                }}
+                  className={activeTab === "Preços" ? "active" : ""}
+                  onClick={() => {
+                    changeTab("Preços");
+                  }}
                 >
                   Serviços
                 </li>
@@ -124,13 +125,13 @@ function BarberDashboard() {
           </ul>
         </nav>
       </aside>
-      <main className='content'>
-        {activeTab === 'Informações' && <DashboardScheduleChart />}
-        {(activeTab === 'Agendar cliente' || activeTab === 'Agendar folga') && (
+      <main className="content">
+        {activeTab === "Informações" && <DashboardScheduleChart />}
+        {(activeTab === "Agendar cliente" || activeTab === "Agendar folga") && (
           <BarberDashboardUser />
         )}
-        {activeTab === 'Agendamentos' && <Schedules />}
-        {activeTab === 'Preços' && <BarberPriceService />}
+        {activeTab === "Agendamentos" && <Schedules />}
+        {activeTab === "Preços" && <BarberPriceService />}
       </main>
     </div>
   );
