@@ -33,6 +33,7 @@ const findAllService = async (
 
 const getAllService = async (): Promise<ServiceResponse<ServiceSequelizeModel[]>> => {
   const serviceResult = await ServiceModel.findAll();
+  
   if (!serviceResult) {
     return {
       status: 'NOT_FOUND',

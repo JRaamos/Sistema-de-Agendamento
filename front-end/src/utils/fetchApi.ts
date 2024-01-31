@@ -234,3 +234,15 @@ export const fetchApiServiceUpdate = async (name: string, service: Partial<Servi
   const data = await response.json();
   return data.message;
 }
+
+export const fetchAPiGetAllServices = async (): Promise<Service[]> => {
+  const response = (await fetch(`${BASEURL}/services`, {
+    method: 'get',
+    headers: { 'Content-Type': 'application/json' },
+  }
+  ));
+
+  const data = await response.json();
+
+  return data
+}

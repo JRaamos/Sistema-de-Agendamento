@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Schedule from "./pages/Schedules";
 import AgendamentosProvider from "./context/AgendamentosProvider";
-import MiSchedules from "./pages/MiSchedules";
+import MiSchedules from "./pages/MySchedules";
 import Login from "./pages/Login";
 import BarberDashboard from "./pages/BarberDashboard";
 

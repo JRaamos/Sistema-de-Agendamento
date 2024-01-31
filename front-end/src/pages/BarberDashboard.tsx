@@ -115,7 +115,7 @@ function BarberDashboard() {
                   changeTab('Preços')
                 }}
                 >
-                  Preços
+                  Serviços
                 </li>
               </div>
 
