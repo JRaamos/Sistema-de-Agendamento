@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const googleEvent_service_1 = __importDefault(require("../services/googleEvent.service"));
 const formatGoogleEvent_1 = __importDefault(require("../utils/formatGoogleEvent"));
 const createEvent = async (req, res) => {
-    const transformsEvent = (0, formatGoogleEvent_1.default)(req.body);
+    const transformsEvent = await (0, formatGoogleEvent_1.default)(req.body);
     const event = await googleEvent_service_1.default.createEventService(transformsEvent);
     return res.status(200).json({ message: 'Evento criado com sucesso!', event });
 };

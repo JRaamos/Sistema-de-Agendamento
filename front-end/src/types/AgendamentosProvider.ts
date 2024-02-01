@@ -1,6 +1,6 @@
 import { Dispatch, ReactNode, SetStateAction } from "react";
 import { OffDay } from "./dashboard";
-import { FetchAPiGet } from "./ApiReturn";
+import { FetchAPiGet, ServiceApi } from "./ApiReturn";
 
 export type Values = {
   name: string;
@@ -103,6 +103,8 @@ export type AgendamentosContextType = {
   setIsRecurrentClient: Dispatch<SetStateAction<boolean>>;
   schedules: FetchAPiGet[] | undefined;
   setSchedules: Dispatch<SetStateAction<FetchAPiGet[] | undefined>>;
+  services: ServiceApi[],
+  setServices: Dispatch<SetStateAction<ServiceApi[]>>;
 };
 export type DayOff = {
   selectedDate: string;

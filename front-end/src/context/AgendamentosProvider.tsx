@@ -1,4 +1,4 @@
-import React, {  useRef, useState } from "react";
+import React, {  useEffect, useRef, useState } from "react";
 import AgendamentosContext from "./AgendamentosContext";
 import {
   AgendamentosProviderProps,
@@ -7,7 +7,8 @@ import {
 } from "../types/AgendamentosProvider";
 import dayjs from "dayjs";
 import { OffDay } from "../types/dashboard";
-import { FetchAPiGet } from "../types/ApiReturn";
+import { FetchAPiGet, ServiceApi } from "../types/ApiReturn";
+import { fetchAPiGetAllServices } from "../utils/fetchApi";
 
 function AgendamentosProvider({ children }: AgendamentosProviderProps) {
   const [servicesSelected, setServicesSelected] = useState<string[]>([]);
@@ -79,6 +80,7 @@ function AgendamentosProvider({ children }: AgendamentosProviderProps) {
     localStorage.setItem("agendamentos", JSON.stringify([values]));
   };
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const [services, setServices] = useState<ServiceApi[]>([]);
 
   const resetStates = () => {
     setInputValue("");
@@ -113,7 +115,13 @@ function AgendamentosProvider({ children }: AgendamentosProviderProps) {
     setCanRender(false);
     setMsgServices(false);
   };
-
+  useEffect(() => {
+    const fetchServices = async () => {
+      const response = await fetchAPiGetAllServices();
+      setServices(response);
+    };
+    fetchServices();
+  }, [servicesSelected]);
   return (
     <AgendamentosContext.Provider
       value={{
@@ -127,6 +135,8 @@ function AgendamentosProvider({ children }: AgendamentosProviderProps) {
         setCancellationCandidate,
         typeOffDaySelected,
         setTypeOffDaySelected,
+        services,
+         setServices,
         isOffDaySelected,
         setIsOffDaySelected,
         typeOffDay,
