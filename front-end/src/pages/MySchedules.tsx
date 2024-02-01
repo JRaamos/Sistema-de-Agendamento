@@ -2,17 +2,19 @@ import React, { useContext, useEffect, useState } from "react";
 import arrow from "../images/arrow-1.svg";
 import "../styles/miSchedules.css";
 import { useLocation, useNavigate } from "react-router-dom";
-import servicesJson from "../utils/services.json";
+// import servicesJson from "../utils/services.json";
 import { parse, format } from "date-fns";
 import ptBR from "date-fns/locale/pt-BR";
 import AgendamentosContext from "../context/AgendamentosContext";
 import { Agendamentos } from "../types/MeusAgendamentos";
 import {
   fetchAPiCancel,
+  fetchAPiGetAllServices,
   fetchAPiGetId,
   fetchAPiGoogleEventDelete,
 } from "../utils/fetchApi";
 import AgendamentosCard from "../components/AgendamentosCard";
+import { ServiceApi } from "../types/ApiReturn";
 
 function MiSchedules() {
   const location = useLocation();
@@ -28,13 +30,19 @@ function MiSchedules() {
   const [cancelar, setCancelar] = useState(false);
   const [hour, setHour] = useState<string | number>(0);
   const [date, setDate] = useState<string>("");
+  const [servicesJson, setServicesJson] = useState<ServiceApi[]>([]);
   
   useEffect(() => {
     const values = handleSchedulesOld();
-    if (values) {
-      handleUpdateSchedules(values);
+ const fetchServices = async () => {
+   const services = await fetchAPiGetAllServices();
+   if (values) {
+     handleUpdateSchedules(values, services);
     }
+  };
+  fetchServices();
   }, [cancelar]);
+
 
   // Remove agendamentos antigos
   const handleSchedulesOld = () => {
@@ -55,26 +63,33 @@ function MiSchedules() {
     }
   } 
   // Atualiza agendamentos colocando o preço e a data formatada para exibição no card
-  const handleUpdateSchedules = (schedules: Agendamentos[] ) => {
+  const handleUpdateSchedules = (schedules: Agendamentos[], servicesJson: ServiceApi[]) => {
     const updatedAgendamentos = schedules.map((agendamento: Agendamentos) => {
       const inputDate = new Date(agendamento.date);
-  
+
       const formattedDate = format(inputDate, "EEE, dd/MM/yyy", {
         locale: ptBR,
       });
       agendamento.date = `${formattedDate} as ${agendamento.hour}`;
 
       const services = servicesJson.filter((service) =>
-        agendamento.services.includes(service.services)
+        agendamento.services.includes(service.service)
       );
+
       const prices = services.map((service) => service.price);
+      console.log(prices);
+
       const total = prices.reduce((acc, current) => acc + current, 0);
+      console.log(total);
+
       agendamento.price = total;
 
+      console.log(agendamento);
+
       return agendamento;
-    });        
-    setAgendamentos(updatedAgendamentos); 
-  }
+    });
+    setAgendamentos(updatedAgendamentos);
+  };
 
 
   const formatDate = (date: string) => {

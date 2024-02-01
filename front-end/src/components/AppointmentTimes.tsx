@@ -15,7 +15,6 @@ const AppointmentTimes = () => {
     afternoonOff: false,
     fullDayOff: false,
   });
-  const [services, setServices] = useState<ServiceApi[]>([]);
 
   const {
     servicesSelected,
@@ -27,11 +26,12 @@ const AppointmentTimes = () => {
     availableTimes,
     setAvailableTimes,
     barberUnavailability,
+    services,
   } = useContext(AgendamentosContext);
 
   // Função para buscar os horários já agendados
   const getBookedTimes = async (date: string | null) => {
-    const response = await fetchAPiGet(date);
+    const response = await fetchAPiGet(date);  
     return response.map((item) => {
       // Calcula a duração total de todos os serviços para este horário
       const totalDuration = item.services.reduce(
@@ -48,13 +48,7 @@ const AppointmentTimes = () => {
     });
   };
 
-  useEffect(() => {
-    const fetchServices = async () => {
-      const response = await fetchAPiGetAllServices();
-      setServices(response);
-    };
-    fetchServices();
-  }, []);
+
   //verifica condições para disponibilizar os horários
   const calculateAvailableTimes = async () => {
     if (servicesSelected.length === 0 || !selectedDate) {
@@ -66,6 +60,7 @@ const AppointmentTimes = () => {
    return;
  }
     const bookedTimes = await getBookedTimes(selectedDate);
+    
     const dayOfWeek = dayjs(selectedDate).format("dddd");
     const totalDuration = getTotalDuration(servicesSelected);
     const times = generateTimes(dayOfWeek, totalDuration);
@@ -111,15 +106,22 @@ const AppointmentTimes = () => {
       return !isDuringLunch && !isPastDayEnd && !isOverlappingBooked;
     });
 
+    
     setAvailableTimes(availableTimes);
   };
 
 // Função para calcular a duração total dos serviços selecionados
   const getTotalDuration = (selectedServices: string[]) => {
+    console.log(selectedServices);
+    console.log(services);
+    
+    
     return selectedServices.reduce((acc, servicesSelected) => {
       const serviceInfo = services.find(
         (service) => service.service === servicesSelected
       );
+      console.log(serviceInfo);
+      
       if (serviceInfo) {
         const serviceDuration = serviceInfo.duration;
         return acc + (serviceDuration || 0);
