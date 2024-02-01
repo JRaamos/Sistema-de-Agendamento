@@ -10,7 +10,7 @@ export type Values = {
   services: string[];
   eventId: string;
   agendamentos: string;
-  deviceId: string | null | undefined;
+  deviceId?: string | null | undefined;
 }
 
 export type AgendamentosContextType = {

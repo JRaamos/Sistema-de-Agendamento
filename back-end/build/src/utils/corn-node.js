@@ -11,15 +11,15 @@ const sendNotification = async (deviceIds, message) => {
     const headers = {
         'Content-Type': 'application/json; charset=utf-8',
         // localHost
-        Authorization: 'Basic OTMyOTFjZjctYWI3MS00YmU5LWJhOWEtY2IxMjgzY2JiNDlh',
+        // Authorization: 'Basic OTMyOTFjZjctYWI3MS00YmU5LWJhOWEtY2IxMjgzY2JiNDlh',
         // produção
-        // "Authorization": `Basic NzAzNTI5YmEtYjY4MC00NDZmLWEwOGItNGFjNGI4NWI1MjIz`
+        Authorization: 'Basic NzAzNTI5YmEtYjY4MC00NDZmLWEwOGItNGFjNGI4NWI1MjIz',
     };
     const data = {
         // produção
-        // app_id: "2f865a87-c988-43e8-a60c-2138cc52199b",
+        app_id: '2f865a87-c988-43e8-a60c-2138cc52199b',
         // localHost
-        app_id: 'dd8d9c1d-7da4-4aa3-800e-bd5ebe075063',
+        // app_id: 'dd8d9c1d-7da4-4aa3-800e-bd5ebe075063',
         include_player_ids: deviceIds,
         contents: { en: message },
     };

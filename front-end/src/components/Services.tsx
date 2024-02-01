@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import "../styles/services.css";
 import AgendamentosContext from "../context/AgendamentosContext";
-import services from "../utils/services.json";
+import { fetchAPiGetAllServices } from "../utils/fetchApi";
+import { ServiceApi } from "../types/ApiReturn";
 
 function Services() {
+  const [services, setServices] = useState<ServiceApi[]>([]);
   const {
     servicesSelected,
     setServicesSelected,
@@ -26,11 +28,19 @@ function Services() {
       setIsServicesSelected(false);
     }
   };
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      const response = await fetchAPiGetAllServices()
+      setServices(response);
+    };
+    fetchServices();
+  }, []);
   return (
     <div>
       <div>
-        {services.map((service: any) => (
-          <div key={service.id}>
+        {services.map((service: ServiceApi ) => (
+          <div key={service.service}>
             <div className="container-services">
               <label className="label-services">
                 <input
@@ -40,18 +50,18 @@ function Services() {
                   onChange={({ target }) => {
                     renderServices(target);
                   }}
-                  value={service.services}
+                  value={service.service}
                 />
-                {service.services}
+                {service.service}
               </label>
             </div>
             <div className="container-reference">
-              {service.services === "Pigmentação" ? (
+              {service.service === "Pigmentação" ? (
                 <p className="pigmentacao">{`A partir de R$ ${service.price}`}</p>
               ) : (
                 <p>{`R$ ${service.price},00`}</p>
               )}
-              {service.services === "Pigmentação" ? (
+              {service.service === "Pigmentação" ? (
                 ""
               ) : (
                 <p>{`${service.duration}min`}</p>

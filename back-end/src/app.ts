@@ -6,6 +6,7 @@ import routerCancellation from './routers/cancellation.routers';
 import routerLogin from './routers/login';
 import routerGoogleEvent from './routers/googleEvent.routers';
 import routerDayOff from './routers/dayOff.routers';
+import routerService from './routers/service.routers';
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
+app.use(routerService);
 app.use(routerRegistre);
 app.use(routerSchedules);
 app.use(routerCancellation);

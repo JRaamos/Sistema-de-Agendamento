@@ -1,4 +1,7 @@
-const MenuHamburguer = ({ isMenuOpen, toggleMenu }) => {
+const MenuHamburguer = ({ isMenuOpen, toggleMenu }: {
+  isMenuOpen: boolean;
+  toggleMenu: () => void;
+}  ) => {
   return (
     <div
       className={`menu-hamburguer ${isMenuOpen ? 'open' : ''}`}

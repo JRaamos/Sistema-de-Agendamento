@@ -1,8 +1,10 @@
-export type Service = {
+export type ServiceApi = {
+  seviceId: number,
   service: string,
-  price: string,
-  duration: string
+  price: number,
+  duration: number
 }
+
 export type User = {
   name: string,
   phone: string,
@@ -14,7 +16,7 @@ export type FetchAPiGet = {
   hour: string,
   eventId: string,
   userId: number,
-  services: Service[]
+  services: ServiceApi[]
   user: User
 }
 
@@ -30,5 +32,5 @@ export type FetchAPi = {
 }
 
 export type FetchAPiLogin = {
-  token: string
+  mensage: string,
 }

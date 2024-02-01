@@ -1,0 +1,34 @@
+version: '3'
+services:
+  backend:
+    container_name: backend_development
+    tty: true
+    stdin_open: true
+    build:
+      context: .
+      dockerfile: Dockerfile 
+    restart: always
+
+    volumes:
+      - ./:/app-backend
+    ports:
+      - 3001:3001
+    depends_on:
+      - database
+    environment:
+        MYSQL_PORT: 3306
+        JWT_SECRET: ${JWT_SECRET}
+        CALENDAR_ID: ${CALENDAR_ID}
+        MYSQL_USER: root
+        MYSQL_PASSWORD: password
+        MYSQL_HOST: database
+        MYSQL_DB_NAME: Sistema-db
+  database:
+    image: mysql:8.0.19
+    container_name: database
+    platform: linux/x86_64
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: password

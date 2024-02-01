@@ -2,11 +2,11 @@ import React, { FC, useContext, useEffect, useState } from "react";
 import moment from "moment-timezone";
 
 import dayjs from "dayjs";
-import services from "../utils/services.json";
+// import services from "../utils/services.json";
 import "../styles/appointmentTimes.css";
 import AgendamentosContext from "../context/AgendamentosContext";
-import { fetchAPiGet } from "../utils/fetchApi";
-import { Service } from "../types/ApiReturn";
+import { fetchAPiGet, fetchAPiGetAllServices } from "../utils/fetchApi";
+import { ServiceApi } from "../types/ApiReturn";
 
 const AppointmentTimes = () => {
   const [selectedTimes, setSelectedTimes] = useState<any[]>([]);
@@ -15,6 +15,8 @@ const AppointmentTimes = () => {
     afternoonOff: false,
     fullDayOff: false,
   });
+  const [services, setServices] = useState<ServiceApi[]>([]);
+
   const {
     servicesSelected,
     values,
@@ -33,7 +35,7 @@ const AppointmentTimes = () => {
     return response.map((item) => {
       // Calcula a duração total de todos os serviços para este horário
       const totalDuration = item.services.reduce(
-        (total: number, service: Service) => {
+        (total: number, service: ServiceApi) => {
           return total + Number(service.duration);
         },
         0
@@ -46,6 +48,13 @@ const AppointmentTimes = () => {
     });
   };
 
+  useEffect(() => {
+    const fetchServices = async () => {
+      const response = await fetchAPiGetAllServices();
+      setServices(response);
+    };
+    fetchServices();
+  }, []);
   //verifica condições para disponibilizar os horários
   const calculateAvailableTimes = async () => {
     if (servicesSelected.length === 0 || !selectedDate) {
@@ -109,7 +118,7 @@ const AppointmentTimes = () => {
   const getTotalDuration = (selectedServices: string[]) => {
     return selectedServices.reduce((acc, servicesSelected) => {
       const serviceInfo = services.find(
-        (service) => service.services === servicesSelected
+        (service) => service.service === servicesSelected
       );
       if (serviceInfo) {
         const serviceDuration = serviceInfo.duration;

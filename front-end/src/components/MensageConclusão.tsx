@@ -52,6 +52,7 @@ function MensageConclusão() {
     }, 40);
     return () => clearInterval(typingInterval);
   }, [values.phone]);
+  
   useEffect(() => {
     if (containerRef.current) {
       const container = containerRef.current;

@@ -18,11 +18,11 @@ const ServiceModel: ServiceSequelizeModelCreator = db.define('Service', {
     allowNull: false,
   },
   price: {
-    type: DataTypes.STRING(128),
+    type: DataTypes.NUMBER,
     allowNull: false,
   },
   duration: {
-    type: DataTypes.STRING(128),
+    type: DataTypes.NUMBER,
     allowNull: false,
   },
 

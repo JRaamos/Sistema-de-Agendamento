@@ -2,8 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import AgendamentosContext from "../context/AgendamentosContext";
 import { fetchAPiCancel, fetchAPiGet } from "../utils/fetchApi";
 import "../styles/scheduleCard.css";
-import { FetchAPiGet, Service } from "../types/ApiReturn";
-import { convertDateFormat } from "../utils/functions";
+import { FetchAPiGet, ServiceApi } from "../types/ApiReturn";
+import { convertDateFormat } from "../utils/functionsFormatDate";
 import dayjs from "dayjs";
 import Loading from "./Loading";
 
@@ -26,7 +26,7 @@ function ScheduleCard() {
   }, [selectedOffDays, loading]);
 
   // Função para formatar a string de serviços
-  const formatServices = (services: Service[]) => {
+  const formatServices = (services: ServiceApi[]) => {
     return services
       .map((service, index, array) =>
         index === array.length - 1 && array.length > 1

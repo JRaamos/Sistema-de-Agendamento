@@ -51,7 +51,6 @@ function DashboardScheduleChart() {
     <div>
       {token && (
         <div>
-          <h2 className="title">Agendamentos</h2>
           <DashboardChartType
             chartType={chartType}
             setChartType={setChartType}

@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 function mapStatusHTTP(status) {
-    var _a;
-    const statusHTTPMap = {
-        INVALID_DATA: 400,
-        UNAUTHORIZED: 401,
-        NOT_FOUND: 404,
-        INVALIDARGUMENTEXCEPTION: 422,
-    };
-    return (_a = statusHTTPMap[status]) !== null && _a !== void 0 ? _a : 500;
+    switch (status) {
+        case 'SUCCESSFUL': return 200;
+        case 'INVALID_DATA': return 401;
+        case 'CREATED': return 201;
+        case 'NOT_FOUND': return 404;
+        case 'CONFLICT': return 409;
+        default: return 500;
+    }
 }
 exports.default = mapStatusHTTP;
