@@ -7,11 +7,12 @@ import { Service } from "../types/Service";
 import Loading from "./Loading";
 import EditeService from "./EditeService";
 import "../styles/barberService.css";
+import { ServiceApi } from "../types/ApiReturn";
 
 
 function BarberService() {
   const token = localStorage.getItem("token");
-  const [services, setServices] = useState<Service[]>([]);
+  const [services, setServices] = useState<ServiceApi[]>([]);
   const [serviceSelected, setServiceSelected] = useState<Service>(
     {} as Service
   );
@@ -58,7 +59,7 @@ function BarberService() {
     e.preventDefault();
     const service = e.target.value;
     const serviceSelected = services.find((item) => item.service === service);
-    setServiceSelected(serviceSelected as Service);
+    setServiceSelected(serviceSelected as unknown as Service);
     restoredService();
     setResponseMessage("");
   };

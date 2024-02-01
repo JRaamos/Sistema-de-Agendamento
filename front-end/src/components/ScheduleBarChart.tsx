@@ -7,7 +7,7 @@ import {
   CategoryScale,
   LinearScale,
   BarElement,
-  Title as ChartTitle, 
+  Title as ChartTitle,
   Tooltip,
   Legend,
   ChartOptions,
@@ -18,7 +18,7 @@ ChartJS.register(
   CategoryScale,
   LinearScale,
   BarElement,
-  ChartTitle, 
+  ChartTitle,
   Tooltip,
   Legend
 );
@@ -28,8 +28,6 @@ function ScheduleBarChart({
   cancellationsData,
   futureSchedulesData,
 }: ChartProps) {
-
-
   const data = {
     labels: [`realizados`, "cancelados", "futuros"],
     datasets: [
